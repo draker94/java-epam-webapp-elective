@@ -30,14 +30,14 @@ FOREIGN KEY (`id`) REFERENCES `users`(`id`)
 ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=INNODB DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE `admins`(
+/* CREATE TABLE `admins`(
 `id` INTEGER PRIMARY KEY NOT NULL,
 `surname` VARCHAR(100) NOT NULL,
 `name` VARCHAR(100) NOT NULL,
 `position` VARCHAR(150) NOT NULL,
 FOREIGN KEY (`id`) REFERENCES `users`(`id`)
 ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=INNODB DEFAULT CHARACTER SET utf8;
+) ENGINE=INNODB DEFAULT CHARACTER SET utf8; */
 
 CREATE TABLE `courses`(
 `id` INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -83,6 +83,7 @@ VALUES
 INSERT INTO `instructors`
 (`id`, `surname`, `name`, `rank`)
 VALUES
+(0,    "Павел", "Павлович", "Другое");
 (1,    "Иван", "Иванов", "Профессор"),
 (2,    "Андрей", "Андреев", "Доцент");
 
@@ -92,10 +93,12 @@ VALUES
 (3,    "Сергей", "Сергеев", 2),
 (4,    "Егор", "Егоров", 2);
 
+/*
 INSERT INTO `admins`
 (`id`, `surname`, `name`, `position`)
 VALUES
 (0,    "Павел", "Павлович", "Лаборант");
+ */
 
 INSERT INTO `courses`
 (`name`, `hours`, `description`, `instructor_id`)
