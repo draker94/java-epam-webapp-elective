@@ -83,6 +83,7 @@ CREATE TABLE `results`
 ) ENGINE = INNODB
   DEFAULT CHARACTER SET utf8;
 
+
 INSERT INTO `users`
     (`id`, `login`, `password`, `role`)
 VALUES (0, "admin", "12345", 0),
@@ -93,7 +94,7 @@ VALUES (0, "admin", "12345", 0),
 
 INSERT INTO `instructors`
     (`id`, `surname`, `name`, `rank`)
-VALUES (0, "Татьяна", "Иванова", "Другое"),
+VALUES (0, "Татьяна", "Иванова", "Другое")
        (1, "Павел", "Макаров", "Профессор"),
        (2, "Андрей", "Вербицкий", "Доцент");
 
