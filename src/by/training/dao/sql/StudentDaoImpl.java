@@ -1,8 +1,9 @@
 package by.training.dao.sql;
 
 import by.training.dao.DaoException;
-import by.training.dao.InstructorDao;
+import by.training.dao.StudentDao;
 import by.training.domain.Instructor;
+import by.training.domain.Student;
 import by.training.enums.Ranks;
 
 import java.sql.PreparedStatement;
@@ -12,25 +13,25 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
+public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
     @Override
-    public List<Instructor> getInstructorsList() throws DaoException {
-        String sql = "SELECT `id`, `surname`, `name`, `rank` FROM `instuctors`";
+    public List<Student> getStudentsList() throws DaoException {
+        String sql = "SELECT `id`, `surname`, `name`, `study_year` FROM `students`";
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
-            List<Instructor> instructors = new ArrayList<>();
+            List<Student> students = new ArrayList<>();
             while (resultSet.next()) {
-                Instructor instructor = new Instructor();
-                instructor.setId(resultSet.getLong("id"));
-                instructor.setSurname(resultSet.getString("surname"));
-                instructor.setName(resultSet.getString("name"));
-                instructor.setRank(Ranks.values()[resultSet.getInt("rank")]);
-                instructors.add(instructor);
+                Student student = new Student();
+                student.setId(resultSet.getLong("id"));
+                student.setSurname(resultSet.getString("surname"));
+                student.setName(resultSet.getString("name"));
+                student.setStudyYear(resultSet.getInt("study_year"));
+                students.add(student);
             }
-            return instructors;
+            return students;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -46,23 +47,23 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
     }
 
     @Override
-    public Instructor getBySurname(String surname) throws DaoException {
-        String sql = "SELECT `id`, `surname`, `name`, `role` FROM `instructors` WHERE `surname` = ?";
+    public Student getBySurname(String surname) throws DaoException {
+        String sql = "SELECT `id`, `surname`, `name`, `study_year` FROM `students` WHERE `surname` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, surname);
             resultSet = statement.executeQuery();
-            Instructor instructor = null;
+            Student student = null;
             if (resultSet.next()) {
-                instructor = new Instructor();
-                instructor.setId(resultSet.getLong("id"));
-                instructor.setSurname(resultSet.getString("surname"));
-                instructor.setName(resultSet.getString("name"));
-                instructor.setRank(Ranks.values()[resultSet.getInt("rank")]);
+                student = new Student();
+                student.setId(resultSet.getLong("id"));
+                student.setSurname(resultSet.getString("surname"));
+                student.setName(resultSet.getString("name"));
+                student.setStudyYear(resultSet.getInt("study_year"));
             }
-            return instructor;
+            return student;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -78,8 +79,8 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
     }
 
     @Override
-    public Long create(Instructor entity) throws DaoException {
-        String sql = "INSERT INTO `instructors` (`id`, `surname`, `name`, `rank`) VALUES (?, ?, ?, ?)";
+    public Long create(Student entity) throws DaoException {
+        String sql = "INSERT INTO `students` (`id`, `surname`, `name`, `study_year`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
@@ -87,7 +88,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             statement.setLong(1, entity.getId());
             statement.setString(2, entity.getSurname());
             statement.setString(3, entity.getName());
-            statement.setLong(4, entity.getRank().getId());
+            statement.setLong(4, entity.getStudyYear());
             statement.executeUpdate();
             return entity.getId();
         } catch (SQLException e) {
@@ -105,23 +106,23 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
     }
 
     @Override
-    public Instructor read(Long id) throws DaoException {
-        String sql = "SELECT `id`, `surname`, `name`, `rank` FROM `instructors` WHERE `id` = ?";
+    public Student read(Long id) throws DaoException {
+        String sql = "SELECT `id`, `surname`, `name`, `study_year` FROM `students` WHERE `id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
-            Instructor instructor = null;
+            Student student = null;
             if (resultSet.next()) {
-                instructor = new Instructor();
-                instructor.setId(resultSet.getLong("id"));
-                instructor.setSurname(resultSet.getString("surname"));
-                instructor.setName(resultSet.getString("name"));
-                instructor.setRank(Ranks.values()[resultSet.getInt("rank")]);
+                student = new Student();
+                student.setId(resultSet.getLong("id"));
+                student.setSurname(resultSet.getString("surname"));
+                student.setName(resultSet.getString("name"));
+                student.setStudyYear(resultSet.getInt("study_year"));
             }
-            return instructor;
+            return student;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -137,14 +138,14 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
     }
 
     @Override
-    public void update(Instructor entity) throws DaoException {
-        String sql = "UPDATE `instructors` SET `surname` = ?, `name` = ?, `rank` = ? WHERE `id` = ?";
+    public void update(Student entity) throws DaoException {
+        String sql = "UPDATE `students` SET `surname` = ?, `name` = ?, `study_year` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, entity.getSurname());
             statement.setString(2, entity.getName());
-            statement.setLong(3, entity.getRank().getId());
+            statement.setInt(3, entity.getStudyYear());
             statement.setLong(4, entity.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -159,7 +160,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
 
     @Override
     public void delete(Long id) throws DaoException {
-        String sql = "DELETE FROM `instructors` WHERE `id` = ?";
+        String sql = "DELETE FROM `students` WHERE `id` = ?";
         PreparedStatement statement = null;
         try {
             statement = statement.getConnection().prepareStatement(sql);

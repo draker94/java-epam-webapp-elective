@@ -1,19 +1,23 @@
 package by.training.enums;
 
 public enum Ranks {
-        FULL_PROFESSOR("Профессор"),
-        ASSOCIATE_PROFESSOR("Доцент"),
-        SENIOR_LECTURER("Старший лектор"),
-        LECTURER("Лектор"),
-        OTHER("Другое");
+    FULL_PROFESSOR("Профессор"),
+    ASSOCIATE_PROFESSOR("Доцент"),
+    SENIOR_LECTURER("Старший лектор"),
+    LECTURER("Лектор"),
+    OTHER("Другое");
 
-        private String name;
+    private String name;
 
-        private Ranks(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
+    private Ranks(String name) {
+        this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getId() {
+        return Long.valueOf(ordinal());
+    }
+}

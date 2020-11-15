@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface InstructorDao extends Dao<Instructor, Long> {
     List<Instructor> getInstructorsList() throws DaoException;
-    Instructor getBySurname(String login) throws DaoException;
+    Instructor getBySurname(String surname) throws DaoException;
 }
