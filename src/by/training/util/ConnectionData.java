@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -12,6 +13,7 @@ public class ConnectionData {
     private static ConnectionData instance = null;
     private BlockingQueue<Connection> connectionQueue = null;
     private static int poolSize = 10;
+    private static final String PROPERTIES = "by.training.resources.database";
 
     public static int getPoolSize() {
         return poolSize;
@@ -21,18 +23,14 @@ public class ConnectionData {
         ConnectionData.poolSize = poolSize;
     }
 
-    public void initConnections(String property) {
+    public static void initConnections() {
         if (instance == null) {
             Properties prop = new Properties();
-            try {
-                prop.load(getClass().getClassLoader().getResourceAsStream("database.properties"));
-                String url = prop.getProperty("url");
-                String username = prop.getProperty("username");
-                String password = prop.getProperty("password");
-                instance = new ConnectionData(url, username, password);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ResourceBundle resourceBundle = ResourceBundle.getBundle(PROPERTIES);
+            String url = resourceBundle.getString("url");
+            String username = resourceBundle.getString("username");
+            String password = resourceBundle.getString("password");
+            instance = new ConnectionData(url, username, password);
         }
     }
 
