@@ -2,9 +2,7 @@ package by.training.dao.sql;
 
 import by.training.dao.DaoException;
 import by.training.dao.StudentDao;
-import by.training.domain.Instructor;
 import by.training.domain.Student;
-import by.training.enums.Ranks;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,18 +77,18 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
     }
 
     @Override
-    public Long create(Student entity) throws DaoException {
+    public Long create(Student student) throws DaoException {
         String sql = "INSERT INTO `students` (`id`, `surname`, `name`, `study_year`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            statement = getConnection().prepareStatement(sql);
-            statement.setLong(1, entity.getId());
-            statement.setString(2, entity.getSurname());
-            statement.setString(3, entity.getName());
-            statement.setLong(4, entity.getStudyYear());
+            statement = getConnection().prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, student.getId());
+            statement.setString(2, student.getSurname());
+            statement.setString(3, student.getName());
+            statement.setLong(4, student.getStudyYear());
             statement.executeUpdate();
-            return entity.getId();
+            return student.getId();
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -138,33 +136,15 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
     }
 
     @Override
-    public void update(Student entity) throws DaoException {
+    public void update(Student student) throws DaoException {
         String sql = "UPDATE `students` SET `surname` = ?, `name` = ?, `study_year` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
         try {
             statement = getConnection().prepareStatement(sql);
-            statement.setString(1, entity.getSurname());
-            statement.setString(2, entity.getName());
-            statement.setInt(3, entity.getStudyYear());
-            statement.setLong(4, entity.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        } finally {
-            try {
-                statement.close();
-            } catch (Exception e) {
-            }
-        }
-    }
-
-    @Override
-    public void delete(Long id) throws DaoException {
-        String sql = "DELETE FROM `students` WHERE `id` = ?";
-        PreparedStatement statement = null;
-        try {
-            statement = statement.getConnection().prepareStatement(sql);
-            statement.setLong(1, id);
+            statement.setString(1, student.getSurname());
+            statement.setString(2, student.getName());
+            statement.setInt(3, student.getStudyYear());
+            statement.setLong(4, student.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);

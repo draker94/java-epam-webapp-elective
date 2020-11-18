@@ -30,4 +30,14 @@ public class Instructor extends Entity {
     public void setRank(Ranks rank) {
         this.rank = rank;
     }
+
+    @Override
+    public String toString() {
+        return "Instructor{" +
+                "id=" + getId() +
+                ", surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", rank=" + rank +
+                '}';
+    }
 }

@@ -37,4 +37,15 @@ public class Course extends Entity {
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + getId() +
+                ", name='" + name + '\'' +
+                ", hours=" + hours +
+                ", description='" + description + '\'' +
+                ", instructor=" + instructor +
+                '}';
+    }
 }

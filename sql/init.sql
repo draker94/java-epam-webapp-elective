@@ -6,7 +6,7 @@ USE `elective`;
 
 CREATE TABLE `users`
 (
-    `id`       INTEGER PRIMARY KEY NOT NULL,
+    `id`       INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `login`    VARCHAR(255)        NOT NULL,
     `password` VARCHAR(255)        NOT NULL,
     `e-mail`   VARCHAR(255),
@@ -85,23 +85,23 @@ CREATE TABLE `results`
 
 
 INSERT INTO `users`
-    (`id`, `login`, `password`, `role`)
-VALUES (0, "admin", "12345", 0),
-       (1, "teacher1", "12345", 1),
-       (2, "teacher2", "12345", 1),
-       (3, "student1", "12345", 2),
-       (4, "student2", "12345", 2);
+    (`login`, `password`, `role`)
+VALUES ("admin", "12345", 0),
+       ("teacher1", "12345", 1),
+       ("teacher2", "12345", 1),
+       ("student1", "12345", 2),
+       ("student2", "12345", 2);
 
 INSERT INTO `instructors`
     (`id`, `surname`, `name`, `rank`)
-VALUES (0, "Татьяна", "Иванова", "Другое")
-       (1, "Павел", "Макаров", "Профессор"),
-       (2, "Андрей", "Вербицкий", "Доцент");
+VALUES (1, "Татьяна", "Иванова", "Другое"),
+       (2, "Павел", "Макаров", "Профессор"),
+       (3, "Андрей", "Вербицкий", "Доцент");
 
 INSERT INTO `students`
     (`id`, `surname`, `name`, `study_year`)
-VALUES (3, "Алиса", "Арамзанцева", 2),
-       (4, "Егор", "Егоров", 2);
+VALUES (4, "Алиса", "Арамзанцева", 2),
+       (5, "Егор", "Егоров", 2);
 
 /*
 INSERT INTO `admins`
@@ -113,14 +113,14 @@ VALUES
 INSERT INTO `courses`
     (`name`, `hours`, `description`, `instructor_id`)
 VALUES ("JAVA Collections", 6,
-        "На данном курсе вы познакомитесь с основными типами коллекций JAVA, их методами и особенностями", 1),
+        "На данном курсе вы познакомитесь с основными типами коллекций JAVA, их методами и особенностями", 2),
        ("JAVA Multithreading", 12, "На данном курсе вы познакомитесь с многопоточном программировании на языке JAVA",
-        2);
+        3);
 
 INSERT INTO `assignments`
     (`student_id`, `course_id`, `begin`, `end`)
-VALUES (3, 1, "2021-03-31", "2021-04-14"),
-       (4, 2, "2021-02-21", "2021-03-20");
+VALUES (4, 1, "2021-03-31", "2021-04-14"),
+       (5, 2, "2021-02-21", "2021-03-20");
 
 INSERT INTO `results`
     (`assignment_id`, `mark`, `review`, `date`)

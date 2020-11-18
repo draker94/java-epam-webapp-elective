@@ -78,18 +78,18 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
     }
 
     @Override
-    public Long create(Instructor entity) throws DaoException {
+    public Long create(Instructor instructor) throws DaoException {
         String sql = "INSERT INTO `instructors` (`id`, `surname`, `name`, `rank`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            statement = getConnection().prepareStatement(sql);
-            statement.setLong(1, entity.getId());
-            statement.setString(2, entity.getSurname());
-            statement.setString(3, entity.getName());
-            statement.setLong(4, entity.getRank().getId());
+            statement = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, instructor.getId());
+            statement.setString(2, instructor.getSurname());
+            statement.setString(3, instructor.getName());
+            statement.setLong(4, instructor.getRank().getId());
             statement.executeUpdate();
-            return entity.getId();
+            return instructor.getId();
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -137,33 +137,15 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
     }
 
     @Override
-    public void update(Instructor entity) throws DaoException {
+    public void update(Instructor instructor) throws DaoException {
         String sql = "UPDATE `instructors` SET `surname` = ?, `name` = ?, `rank` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
         try {
             statement = getConnection().prepareStatement(sql);
-            statement.setString(1, entity.getSurname());
-            statement.setString(2, entity.getName());
-            statement.setLong(3, entity.getRank().getId());
-            statement.setLong(4, entity.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        } finally {
-            try {
-                statement.close();
-            } catch (Exception e) {
-            }
-        }
-    }
-
-    @Override
-    public void delete(Long id) throws DaoException {
-        String sql = "DELETE FROM `instructors` WHERE `id` = ?";
-        PreparedStatement statement = null;
-        try {
-            statement = statement.getConnection().prepareStatement(sql);
-            statement.setLong(1, id);
+            statement.setString(1, instructor.getSurname());
+            statement.setString(2, instructor.getName());
+            statement.setLong(3, instructor.getRank().getId());
+            statement.setLong(4, instructor.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);

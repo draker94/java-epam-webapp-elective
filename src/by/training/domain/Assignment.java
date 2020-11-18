@@ -39,4 +39,15 @@ public class Assignment extends Entity {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public String toString() {
+        return "Assignment{" +
+                "id=" + getId() +
+                ", student=" + student +
+                ", course=" + course +
+                ", beginDate=" + beginDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }

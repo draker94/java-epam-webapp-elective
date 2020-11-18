@@ -1,7 +1,9 @@
 package by.training.dao.sql;
 
+import by.training.dao.CourseDao;
 import by.training.dao.DaoException;
-import by.training.dao.UserDao;
+import by.training.domain.Course;
+import by.training.domain.Instructor;
 import by.training.domain.User;
 import by.training.enums.Roles;
 
@@ -12,26 +14,27 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImpl extends BaseDaoImpl implements UserDao {
+public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
     @Override
-    public List<User> getUsersList() throws DaoException {
-        String sql = "SELECT `id`, `login`, `password`, `e-mail`, `role` FROM `users`";
+    public List<Course> getCoursesList() throws DaoException {
+        String sql = "SELECT `id`, `name`, `hours`, `description`, `instructor_id` FROM `courses`";
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
-            List<User> users = new ArrayList<>();
+            List<Course> courses = new ArrayList<>();
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getLong("id"));
-                user.setLogin(resultSet.getString("login"));
-                user.setPassword(resultSet.getString("password"));
-                user.setMail(resultSet.getString("e-mail"));
-                user.setRole(Roles.values()[resultSet.getInt("role")]);
-                users.add(user);
+                Course course = new Course();
+                course.setId(resultSet.getLong("id"));
+                course.setName(resultSet.getString("name"));
+                course.setHours(resultSet.getInt("hours"));
+                course.setDescription(resultSet.getString("description"));
+                course.setInstructor(new Instructor());
+                course.getInstructor().setId(resultSet.getLong("instructor_id"));
+                courses.add(course);
             }
-            return users;
+            return courses;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -47,24 +50,26 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public User getByLogin(String login) throws DaoException {
-        String sql = "SELECT `id`, `password`, `e-mail`, `role` FROM `users` WHERE `login` = ?";
+    public List<Course> getInstructorCoursesList(Long id) throws DaoException {
+        String sql = "SELECT `id`, `name`, `hours`, `description` FROM `courses` WHERE `instructor_id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             statement = getConnection().prepareStatement(sql);
-            statement.setString(1, login);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
-            User user = null;
-            if (resultSet.next()) {
-                user = new User();
-                user.setId(resultSet.getLong("id"));
-                user.setLogin(login);
-                user.setPassword(resultSet.getString("password"));
-                user.setMail(resultSet.getString("e-mail"));
-                user.setRole(Roles.values()[resultSet.getInt("role")]);
+            List<Course> courses = new ArrayList<>();
+            while (resultSet.next()) {
+                Course course = new Course();
+                course.setId(resultSet.getLong("id"));
+                course.setName(resultSet.getString("name"));
+                course.setHours(resultSet.getInt("hours"));
+                course.setDescription(resultSet.getString("description"));
+                course.setInstructor(new Instructor());
+                course.getInstructor().setId(id);
+                courses.add(course);
             }
-            return user;
+            return courses;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -80,16 +85,16 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public Long create(User user) throws DaoException {
-        String sql = "INSERT INTO `users` (`login`, `password`, `e-mail`, `role`) VALUES (?, ?, ?, ?)";
+    public Long create(Course course) throws DaoException {
+        String sql = "INSERT INTO `courses` (`name`, `hours`, `description`, `instructor_id`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             statement = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, user.getLogin());
-            statement.setString(2, user.getPassword());
-            statement.setString(3, user.getMail());
-            statement.setLong(4, user.getRole().getId());
+            statement.setString(1, course.getName());
+            statement.setInt(2, course.getHours());
+            statement.setString(3, course.getDescription());
+            statement.setLong(4, course.getInstructor().getId());
             statement.executeUpdate();
             Long id = null;
             resultSet = statement.getGeneratedKeys();
@@ -112,24 +117,25 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public User read(Long id) throws DaoException {
-        String sql = "SELECT `login`, `password`, `e-mail`, `role` FROM `users` WHERE `id` = ?";
+    public Course read(Long id) throws DaoException {
+        String sql = "SELECT `name`, `hours`, `description`, `instructor_id` FROM `courses` WHERE `id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
-            User user = null;
+            Course course = null;
             if (resultSet.next()) {
-                user = new User();
-                user.setId(id);
-                user.setLogin(resultSet.getString("login"));
-                user.setPassword(resultSet.getString("password"));
-                user.setMail(resultSet.getString("e-mail"));
-                user.setRole(Roles.values()[resultSet.getInt("role")]);
+                course = new Course();
+                course.setId(id);
+                course.setName(resultSet.getString("name"));
+                course.setHours(resultSet.getInt("hours"));
+                course.setDescription(resultSet.getString("description"));
+                course.setInstructor(new Instructor());
+                course.getInstructor().setId(resultSet.getLong("instructor_id"));
             }
-            return user;
+            return course;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -145,16 +151,16 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public void update(User user) throws DaoException {
-        String sql = "UPDATE `users` SET `login` = ?, `password` = ?, `e-mail` = ?, `role` = ? WHERE `id` = ?";
+    public void update(Course course) throws DaoException {
+        String sql = "UPDATE `courses` SET `name` = ?, `hours` = ?, `description` = ?, `instructor_id` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
         try {
             statement = getConnection().prepareStatement(sql);
-            statement.setString(1, user.getLogin());
-            statement.setString(2, user.getPassword());
-            statement.setString(3, user.getPassword());
-            statement.setLong(4, user.getRole().getId());
-            statement.setLong(5, user.getId());
+            statement.setString(1, course.getName());
+            statement.setInt(2, course.getHours());
+            statement.setString(3, course.getDescription());
+            statement.setLong(4, course.getInstructor().getId());
+            statement.setLong(5, course.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -165,4 +171,4 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
         }
     }
-}
+    }

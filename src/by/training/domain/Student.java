@@ -28,4 +28,14 @@ public class Student extends Entity {
     public void setStudyYear(int studyYear) {
         this.studyYear = studyYear;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + getId() +
+                ", surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", studyYear=" + studyYear +
+                '}';
+    }
 }
