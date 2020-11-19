@@ -16,9 +16,9 @@ import java.util.List;
 
 public class test {
     public static void main(String[] args) throws DaoException {
-        ConnectionData.initConnections();
+        /* ConnectionData.initConnections();
         Connection connection = ConnectionData.getInstance().getConnection();
-        /* UserDaoImpl userDao = new UserDaoImpl();
+        UserDaoImpl userDao = new UserDaoImpl();
         userDao.setConnection(connection);
 
         List<User> list = userDao.getUsersList();
@@ -99,6 +99,9 @@ public class test {
 
         assignmentDao.delete(4L, "assignments"); */
 
+         ConnectionData connectionData = ConnectionData.getInstance().getConnection();
+         Connection connection = connectionData.getConnection();
+
         ResultDaoImpl resultDao = new ResultDaoImpl();
         resultDao.setConnection(connection);
 
@@ -125,6 +128,8 @@ public class test {
         resultDao.update(result1);
 
         resultDao.delete(4L, "results");
+
+
 
 
     }
