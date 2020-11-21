@@ -1,4 +1,4 @@
-package by.training.util;
+package by.training.connection;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -11,8 +11,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-public final class ConnectionData {
-    private static ConnectionData instance = new ConnectionData();
+public final class ConnectionPool {
+    private static ConnectionPool instance = new ConnectionPool();
     private Queue<Connection> freeConnection = new ConcurrentLinkedQueue<>();
     private Collection<Connection> usedConnection = new ConcurrentSkipListSet<>();
     private String jdbcUrl;
@@ -23,10 +23,10 @@ public final class ConnectionData {
     private int minSize;
     private int validConTimeout;
 
-    private ConnectionData() {
+    private ConnectionPool() {
     }
 
-    public static ConnectionData getInstance() {
+    public static ConnectionPool getInstance() {
         return instance;
     }
 
@@ -103,7 +103,7 @@ public final class ConnectionData {
         } catch (SQLException e) {
             try {
                 connection.close();
-            } catch (SQLException e) {
+            } catch (SQLException e1) {
 
             }
         }

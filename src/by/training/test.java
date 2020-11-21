@@ -1,21 +1,18 @@
 package by.training;
 
+import by.training.connection.ConnectionPoolException;
 import by.training.dao.DaoException;
-import by.training.dao.ResultDao;
-import by.training.dao.sql.AssignmentDaoImpl;
 import by.training.dao.sql.ResultDaoImpl;
 import by.training.domain.Assignment;
-import by.training.domain.Course;
 import by.training.domain.Result;
-import by.training.domain.Student;
-import by.training.util.ConnectionData;
+import by.training.connection.ConnectionPool;
 
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 
 public class test {
-    public static void main(String[] args) throws DaoException {
+    public static void main(String[] args) throws DaoException, ConnectionPoolException {
         /* ConnectionData.initConnections();
         Connection connection = ConnectionData.getInstance().getConnection();
         UserDaoImpl userDao = new UserDaoImpl();
@@ -99,8 +96,9 @@ public class test {
 
         assignmentDao.delete(4L, "assignments"); */
 
-         ConnectionData connectionData = ConnectionData.getInstance().getConnection();
-         Connection connection = connectionData.getConnection();
+         ConnectionPool connectionPool = ConnectionPool.getInstance();
+         connectionPool.initConnections("by.training.resources.database", 10, 50, 1);
+         Connection connection = connectionPool.getConnection();
 
         ResultDaoImpl resultDao = new ResultDaoImpl();
         resultDao.setConnection(connection);
@@ -113,7 +111,7 @@ public class test {
         result.setAssignment(new Assignment());
         result.getAssignment().setId(1L);
         result.setMark(4);
-        result.setDate(LocalDate.of(2021, 4, 10));
+        result.setDate(LocalDate.of(2021, 4, 11));
         result.setReview("Тож ниасилил");
         resultDao.create(result);
 
@@ -127,7 +125,7 @@ public class test {
         result1.setMark(10);
         resultDao.update(result1);
 
-        resultDao.delete(4L, "results");
+        //resultDao.delete(4L, "results");
 
 
 

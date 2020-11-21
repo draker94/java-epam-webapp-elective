@@ -7,9 +7,9 @@ USE `elective`;
 CREATE TABLE `users`
 (
     `id`       INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `login`    VARCHAR(255)        NOT NULL,
+    `login`    VARCHAR(255)        NOT NULL UNIQUE,
     `password` VARCHAR(255)        NOT NULL,
-    `e-mail`   VARCHAR(255),
+    `e-mail`   VARCHAR(255) UNIQUE,
     `role`     INTEGER             NOT NULL
 ) ENGINE = INNODB
   DEFAULT CHARACTER SET utf8;
@@ -48,7 +48,7 @@ ON DELETE RESTRICT ON UPDATE RESTRICT
 CREATE TABLE `courses`
 (
     `id`            INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `name`          VARCHAR(100)        NOT NULL,
+    `name`          VARCHAR(100)        NOT NULL UNIQUE,
     `hours`         INTEGER             NOT NULL,
     `description`   TEXT                NOT NULL,
     `instructor_id` INTEGER,
@@ -64,6 +64,7 @@ CREATE TABLE `assignments`
     `course_id`  INTEGER             NOT NULL,
     `begin`      DATE                NOT NULL,
     `end`        DATE                NOT NULL,
+    UNIQUE KEY (`student_id`, `course_id`),
     FOREIGN KEY (`student_id`) REFERENCES `students` (`id`)
         ON DELETE CASCADE ON UPDATE RESTRICT,
     FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`)
@@ -78,6 +79,7 @@ CREATE TABLE `results`
     `mark`          INTEGER             NOT NULL,
     `review`        TEXT                NOT NULL,
     `date`          DATE                NOT NULL,
+    UNIQUE KEY (`assignment_id`, `date`),
     FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`id`)
         ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = INNODB
