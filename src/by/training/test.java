@@ -1,20 +1,24 @@
 package by.training;
 
+import by.training.connection.ConnectionPool;
 import by.training.connection.ConnectionPoolException;
 import by.training.dao.DaoException;
-import by.training.dao.sql.ResultDaoImpl;
-import by.training.domain.Assignment;
-import by.training.domain.Result;
-import by.training.connection.ConnectionPool;
+import by.training.dao.sql.InstructorDaoImpl;
+import by.training.dao.sql.UserDaoImpl;
+import by.training.domain.Instructor;
+import by.training.domain.User;
+import by.training.enums.Ranks;
+import by.training.enums.Roles;
 
 import java.sql.Connection;
-import java.time.LocalDate;
 import java.util.List;
 
 public class test {
     public static void main(String[] args) throws DaoException, ConnectionPoolException {
-        /* ConnectionData.initConnections();
-        Connection connection = ConnectionData.getInstance().getConnection();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        connectionPool.initConnections("by.training.resources.database", 10, 50, 1);
+        Connection connection = connectionPool.getConnection();
+        /*
         UserDaoImpl userDao = new UserDaoImpl();
         userDao.setConnection(connection);
 
@@ -96,11 +100,8 @@ public class test {
 
         assignmentDao.delete(4L, "assignments"); */
 
-         ConnectionPool connectionPool = ConnectionPool.getInstance();
-         connectionPool.initConnections("by.training.resources.database", 10, 50, 1);
-         Connection connection = connectionPool.getConnection();
 
-        ResultDaoImpl resultDao = new ResultDaoImpl();
+        /* ResultDaoImpl resultDao = new ResultDaoImpl();
         resultDao.setConnection(connection);
 
         List<Result> list = resultDao.getResultsList();
@@ -125,9 +126,45 @@ public class test {
         result1.setMark(10);
         resultDao.update(result1);
 
-        //resultDao.delete(4L, "results");
+        resultDao.delete(4L, "results"); /
 
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        connectionPool.initConnections("by.training.resources.database", 10, 50, 1);
+        Connection connection = connectionPool.getConnection();
+        UserDaoImpl userDao = new UserDaoImpl();
+        userDao.setConnection(connection); */
 
+        InstructorDaoImpl instructorDao = new InstructorDaoImpl();
+        instructorDao.setConnection(connection);
+
+        List<Instructor> list = instructorDao.getInstructorsList();
+        list.forEach(System.out::println);
+
+        Instructor instructor = instructorDao.getBySurname("Иванова");
+        System.out.println(instructor.getSurname());
+
+        Instructor instructor1 = new Instructor();
+        UserDaoImpl userDao = new UserDaoImpl();
+        userDao.setConnection(connection);
+        User user1 = new User();
+        user1.setLogin("hors88");
+        user1.setPassword("tesmaster88");
+        user1.setMail("dreadno@gmail.com");
+        user1.setRole(Roles.ADMINISTRATOR);
+        userDao.create(user1);
+        instructor1.setId(6L);
+        instructor1.setSurname("Ключников");
+        instructor1.setName("Андрей");
+        instructor1.setRank(Ranks.ASSOCIATE_PROFESSOR);
+        instructorDao.create(instructor1);
+
+        Instructor instructor2 = instructorDao.read(6L);
+        System.out.println(instructor2);
+
+        instructor2.setSurname("Багров");
+        instructorDao.update(instructor2);
+
+        //instructorDao.delete(6L, "instructors");
 
 
     }

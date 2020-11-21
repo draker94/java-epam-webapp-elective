@@ -8,13 +8,14 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Queue;
 import java.util.ResourceBundle;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 public final class ConnectionPool {
     private static ConnectionPool instance = new ConnectionPool();
     private Queue<Connection> freeConnection = new ConcurrentLinkedQueue<>();
-    private Collection<Connection> usedConnection = new ConcurrentSkipListSet<>();
+    private Collection<Connection> usedConnection = new ArrayBlockingQueue<>(10);
     private String jdbcUrl;
     private String user;
     private String password;

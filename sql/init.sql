@@ -19,7 +19,7 @@ CREATE TABLE `instructors`
     `id`      INTEGER PRIMARY KEY NOT NULL,
     `surname` VARCHAR(100)        NOT NULL,
     `name`    VARCHAR(100)        NOT NULL,
-    `rank`    VARCHAR(150)        NOT NULL,
+    `rank`    INTEGER        NOT NULL,
     FOREIGN KEY (`id`) REFERENCES `users` (`id`)
         ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE = INNODB
@@ -96,14 +96,14 @@ VALUES ("admin", "12345", 0),
 
 INSERT INTO `instructors`
     (`id`, `surname`, `name`, `rank`)
-VALUES (1, "Татьяна", "Иванова", "Другое"),
-       (2, "Павел", "Макаров", "Профессор"),
-       (3, "Андрей", "Вербицкий", "Доцент");
+VALUES (1, "Иванова", "Татьяна", 4),
+       (2, "Макаров", "Павел", 1),
+       (3, "Вербицкий", "Андрей", 3);
 
 INSERT INTO `students`
     (`id`, `surname`, `name`, `study_year`)
-VALUES (4, "Алиса", "Арамзанцева", 2),
-       (5, "Егор", "Егоров", 2);
+VALUES (4, "Арамзанцева", "Алиса", 2),
+       (5, "Егоров", "Егор", 2);
 
 /*
 INSERT INTO `admins`

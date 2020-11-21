@@ -15,7 +15,7 @@ import java.util.List;
 public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
     @Override
     public List<Instructor> getInstructorsList() throws DaoException {
-        String sql = "SELECT `id`, `surname`, `name`, `rank` FROM `instuctors`";
+        String sql = "SELECT `id`, `surname`, `name`, `rank` FROM `instructors`";
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -47,7 +47,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
 
     @Override
     public Instructor getBySurname(String surname) throws DaoException {
-        String sql = "SELECT `id`, `surname`, `name`, `role` FROM `instructors` WHERE `surname` = ?";
+        String sql = "SELECT `id`, `surname`, `name`, `rank` FROM `instructors` WHERE `surname` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
