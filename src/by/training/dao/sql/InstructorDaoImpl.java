@@ -12,6 +12,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
     @Override
     public List<Instructor> getInstructorsList() throws DaoException {
@@ -46,7 +50,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
     }
 
     @Override
-    public Instructor getBySurname(String surname) throws DaoException {
+    public List<Instructor> getBySurname(String surname) throws DaoException {
         String sql = "SELECT `id`, `surname`, `name`, `rank` FROM `instructors` WHERE `surname` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -54,15 +58,16 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, surname);
             resultSet = statement.executeQuery();
-            Instructor instructor = null;
-            if (resultSet.next()) {
-                instructor = new Instructor();
+            List<Instructor> instructors = new ArrayList<>();
+            while (resultSet.next()) {
+                Instructor instructor = new Instructor();
                 instructor.setId(resultSet.getLong("id"));
                 instructor.setSurname(resultSet.getString("surname"));
                 instructor.setName(resultSet.getString("name"));
                 instructor.setRank(Ranks.values()[resultSet.getInt("rank")]);
+                instructors.add(instructor);
             }
-            return instructor;
+            return instructors;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {

@@ -14,6 +14,10 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
     @Override
     public List<Assignment> getAssignmentsList() throws DaoException {
@@ -88,7 +92,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
     }
 
     @Override
-    public List<Assignment> getAssignmentsByEntDate(LocalDate from, LocalDate to) throws DaoException {
+    public List<Assignment> getAssignmentsByEndDate(LocalDate from, LocalDate to) throws DaoException {
         String sql = "SELECT `id`, `student_id`, `course_id`, `begin`, `end` FROM `assignments` WHERE `end` >= ? AND `end` <= ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;

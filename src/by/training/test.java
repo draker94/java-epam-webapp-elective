@@ -11,10 +11,11 @@ import by.training.enums.Ranks;
 import by.training.enums.Roles;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class test {
-    public static void main(String[] args) throws DaoException, ConnectionPoolException {
+    public static void main(String[] args) throws DaoException, ConnectionPoolException, SQLException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         connectionPool.initConnections("by.training.resources.database", 10, 50, 1);
         Connection connection = connectionPool.getConnection();
@@ -165,7 +166,7 @@ public class test {
         instructorDao.update(instructor2);
 
         //instructorDao.delete(6L, "instructors");
-
+        connection.close();
 
     }
 

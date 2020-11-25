@@ -2,6 +2,10 @@ package by.training.domain;
 
 import by.training.enums.Roles;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class User extends Entity {
     private String login;
     private String password;

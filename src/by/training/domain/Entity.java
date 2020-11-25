@@ -1,5 +1,9 @@
 package by.training.domain;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public abstract class Entity {
 private Long id;
 

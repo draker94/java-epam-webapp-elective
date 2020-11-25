@@ -1,21 +1,29 @@
 package by.training.connection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Queue;
 import java.util.ResourceBundle;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentSkipListSet;
+
+/**
+ * @author Andrey Kliuchnikov
+ */
 
 public final class ConnectionPool {
     private static ConnectionPool instance = new ConnectionPool();
     private Queue<Connection> freeConnection = new ConcurrentLinkedQueue<>();
-    private Collection<Connection> usedConnection = new ArrayBlockingQueue<>(10);
+    private Collection<Connection> usedConnection = new ConcurrentSkipListSet<>(Comparator.comparingInt(Object::hashCode));
+    //Поискать Concurrent коллекцию на основе хэштаблиц
     private String jdbcUrl;
     private String user;
     private String password;
@@ -23,6 +31,8 @@ public final class ConnectionPool {
     private int maxSize;
     private int minSize;
     private int validConTimeout;
+
+    Logger logger = LogManager.getLogger();
 
     private ConnectionPool() {
     }
@@ -47,9 +57,9 @@ public final class ConnectionPool {
             for (int i = 0; i < minSize; i++) {
                 freeConnection.add(newConnection());
             }
+            logger.info("Пул соединений успешно проинициализирован");
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                 NoSuchMethodException | ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -77,7 +87,7 @@ public final class ConnectionPool {
             }
         }
         usedConnection.add(connection);
-        return connection;
+        return new ConnectionWrapper(connection);
     }
 
     public void destroy() {
@@ -96,7 +106,7 @@ public final class ConnectionPool {
         }
     }
 
-    public void freeConnection(Connection connection) {
+    void freeConnection(Connection connection) {
         try {
             connection.clearWarnings();
             usedConnection.remove(connection);

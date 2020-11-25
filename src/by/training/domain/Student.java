@@ -1,5 +1,9 @@
 package by.training.domain;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class Student extends Entity {
     private String surname;
     private String name;

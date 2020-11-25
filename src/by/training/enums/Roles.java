@@ -1,6 +1,8 @@
 package by.training.enums;
 
-import javax.management.relation.Role;
+/**
+ * @author Andrey Kliuchnikov
+ */
 
 public enum Roles {
     ADMINISTRATOR("Одмен"),

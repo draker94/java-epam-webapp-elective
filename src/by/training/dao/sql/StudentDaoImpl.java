@@ -11,6 +11,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
     @Override
     public List<Student> getStudentsList() throws DaoException {

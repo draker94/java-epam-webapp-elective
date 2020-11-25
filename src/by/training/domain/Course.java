@@ -1,5 +1,9 @@
 package by.training.domain;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class Course extends Entity {
     private String name;
     private int hours;

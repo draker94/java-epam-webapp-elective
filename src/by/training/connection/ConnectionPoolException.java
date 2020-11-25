@@ -1,5 +1,9 @@
 package by.training.connection;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class ConnectionPoolException extends Exception {
     public ConnectionPoolException() {
         super();

@@ -2,6 +2,10 @@ package by.training.domain;
 
 import by.training.enums.Ranks;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class Instructor extends Entity {
     private String surname;
     private String name;

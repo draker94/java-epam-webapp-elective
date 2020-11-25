@@ -1,5 +1,9 @@
 package by.training.enums;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public enum Ranks {
     FULL_PROFESSOR("Профессор"),
     ASSOCIATE_PROFESSOR("Доцент"),

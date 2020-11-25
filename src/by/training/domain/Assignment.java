@@ -2,6 +2,10 @@ package by.training.domain;
 
 import java.time.LocalDate;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class Assignment extends Entity {
     private Student student;
     private Course course;

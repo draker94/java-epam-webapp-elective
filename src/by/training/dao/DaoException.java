@@ -1,5 +1,9 @@
 package by.training.dao;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class DaoException extends Exception {
     public DaoException() {
     }

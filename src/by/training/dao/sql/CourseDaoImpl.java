@@ -4,8 +4,6 @@ import by.training.dao.CourseDao;
 import by.training.dao.DaoException;
 import by.training.domain.Course;
 import by.training.domain.Instructor;
-import by.training.domain.User;
-import by.training.enums.Roles;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +11,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * @author Andrey Kliuchnikov
+ */
 
 public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
     @Override

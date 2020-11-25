@@ -6,9 +6,12 @@ import by.training.domain.Assignment;
 import by.training.domain.Result;
 
 import java.sql.*;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * @author Andrey Kliuchnikov
+ */
 
 public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
     @Override
