@@ -5,21 +5,24 @@ import by.training.connection.ConnectionPoolException;
 import by.training.dao.DaoException;
 import by.training.dao.sql.InstructorDaoImpl;
 import by.training.dao.sql.UserDaoImpl;
+import by.training.di.ServiceCreationException;
+import by.training.di.ServiceCreator;
 import by.training.domain.Instructor;
 import by.training.domain.User;
 import by.training.enums.Ranks;
 import by.training.enums.Roles;
+import by.training.service.UserService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 public class test {
-    public static void main(String[] args) throws DaoException, ConnectionPoolException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+    public static void main(String[] args) throws Exception {
+               /* ConnectionPool connectionPool = ConnectionPool.getInstance();
         connectionPool.initConnections("by.training.resources.database", 10, 50, 1);
         Connection connection = connectionPool.getConnection();
-        /*
+
         UserDaoImpl userDao = new UserDaoImpl();
         userDao.setConnection(connection);
 
@@ -135,7 +138,7 @@ public class test {
         UserDaoImpl userDao = new UserDaoImpl();
         userDao.setConnection(connection); */
 
-        InstructorDaoImpl instructorDao = new InstructorDaoImpl();
+        /* InstructorDaoImpl instructorDao = new InstructorDaoImpl();
         instructorDao.setConnection(connection);
 
         List<Instructor> list = instructorDao.getInstructorsList();
@@ -165,9 +168,17 @@ public class test {
         instructor2.setSurname("Багров");
         instructorDao.update(instructor2);
 
-        //instructorDao.delete(6L, "instructors");
-        connection.close();
+        instructorDao.delete(6L, "instructors");
+        connection.close(); */
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        connectionPool.initConnections("by.training.resources.database", 10, 50, 1);
+        try (ServiceCreator sc = new ServiceCreator()){
+            UserService userService = sc.getUserService();
+            List<User> users = userService.findAll();
+            users.forEach(System.out::println);
+        }
+        catch (ServiceCreationException | SecurityException e) {
 
+        }
     }
-
 }
