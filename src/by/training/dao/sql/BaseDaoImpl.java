@@ -1,5 +1,6 @@
 package by.training.dao.sql;
 
+import by.training.dao.Dao;
 import by.training.dao.DaoException;
 
 import java.sql.Connection;

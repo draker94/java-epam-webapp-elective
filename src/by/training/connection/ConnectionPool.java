@@ -57,7 +57,7 @@ public final class ConnectionPool {
             for (int i = 0; i < minSize; i++) {
                 freeConnection.add(newConnection());
             }
-            logger.info("Пул соединений успешно проинициализирован");
+            //logger.info("Пул соединений успешно проинициализирован");
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                 NoSuchMethodException | ClassNotFoundException | SQLException e) {
         }

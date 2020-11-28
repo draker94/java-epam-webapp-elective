@@ -19,8 +19,8 @@ public interface UserService {
 
     User findByLogin(String login) throws ServiceException;
 
-    void changePassword(Long userId, String oldPassword, String newPassword) throws ServiceException;
+    boolean changePassword(String  login, String oldPassword, String newPassword) throws ServiceException;
 
-    void changeMail(Long userId, String mail) throws ServiceException;
+    boolean changeMail(String login, String mail) throws ServiceException;
 
 }
