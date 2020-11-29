@@ -49,7 +49,7 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
     }
 
     @Override
-    public Student getBySurname(String surname) throws DaoException {
+    public List<Student> getBySurname(String surname) throws DaoException {
         String sql = "SELECT `id`, `surname`, `name`, `study_year` FROM `students` WHERE `surname` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -57,15 +57,16 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, surname);
             resultSet = statement.executeQuery();
-            Student student = null;
-            if (resultSet.next()) {
-                student = new Student();
+            List<Student> studentList = new ArrayList<>();
+            while (resultSet.next()) {
+                Student student = new Student();
                 student.setId(resultSet.getLong("id"));
                 student.setSurname(resultSet.getString("surname"));
                 student.setName(resultSet.getString("name"));
                 student.setStudyYear(resultSet.getInt("study_year"));
+                studentList.add(student);
             }
-            return student;
+            return studentList;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {

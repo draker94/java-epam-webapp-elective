@@ -11,7 +11,7 @@ import java.util.List;
 public interface ResultService {
     List<Result> findAll() throws ServiceException;
 
-    List<Result> findByMark(int mark) throws ServiceException;
+    List<Result> findByMark(int from, int to) throws ServiceException;
 
     Result findById(Long id) throws ServiceException;
 

@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(Long id) throws ServiceException {
         try {
-            userDao.delete(id, "Users");
+            userDao.delete(id, "users");
             UserDao userDao1 = new UserDaoImpl();
             userDao1.delete(1L, "dada");
         } catch (DaoException e) {

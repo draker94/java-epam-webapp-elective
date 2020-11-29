@@ -19,5 +19,5 @@ public interface StudentService {
 
     void delete(Long id) throws ServiceException;
 
-    Student findBySurname(String surname) throws ServiceException;
+    List<Student> findBySurname(String surname) throws ServiceException;
 }

@@ -19,5 +19,5 @@ public interface InstructorService {
 
     void delete(Long id) throws ServiceException;
 
-    Instructor findBySurname(String surname) throws ServiceException;
+    List<Instructor> findBySurname(String surname) throws ServiceException;
 }

@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface StudentDao extends Dao<Student, Long> {
     List<Student> getStudentsList() throws DaoException;
-    Student getBySurname(String surname) throws DaoException;
+    List<Student> getBySurname(String surname) throws DaoException;
 }
