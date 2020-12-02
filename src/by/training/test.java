@@ -173,7 +173,7 @@ public class test {
 
 
 
-        /* ConnectionPool connectionPool = ConnectionPool.getInstance();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
         connectionPool.initConnections("by.training.resources.database", 10, 50, 1);
         try (ServiceCreator sc = new ServiceCreator()){
             UserService userService = sc.getUserService();
@@ -182,6 +182,6 @@ public class test {
         }
         catch (ServiceCreationException | SecurityException e) {
 
-        } */
+        }
     }
 }
