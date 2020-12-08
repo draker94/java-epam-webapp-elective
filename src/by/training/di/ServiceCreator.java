@@ -8,6 +8,7 @@ import by.training.service.*;
 import by.training.service.logic.*;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class ServiceCreator implements AutoCloseable {
     private Connection connection = null;
@@ -149,10 +150,11 @@ public class ServiceCreator implements AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws ServiceCreationException {
         try {
             connection.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            throw new ServiceCreationException(e);
         }
     }
 }

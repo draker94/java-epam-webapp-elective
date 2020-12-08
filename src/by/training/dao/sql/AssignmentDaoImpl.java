@@ -5,12 +5,11 @@ import by.training.dao.DaoException;
 import by.training.domain.Assignment;
 import by.training.domain.Course;
 import by.training.domain.Student;
-import by.training.domain.User;
-import by.training.enums.Roles;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +18,14 @@ import java.util.List;
  */
 
 public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
+    private static final Logger LOGGER = LogManager.getLogger(AssignmentDaoImpl.class);
+
     @Override
     public List<Assignment> getAssignmentsList() throws DaoException {
         String sql = "SELECT `id`, `student_id`, `course_id`, `begin`, `end` FROM `assignments`";
         Statement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
@@ -41,6 +43,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             }
             return assignments;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -59,6 +62,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
         String sql = "SELECT `id`, `student_id`, `course_id`, `begin`, `end` FROM `assignments` WHERE `begin` >= ? AND `begin` <= ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setDate(1, Date.valueOf(from));
@@ -78,6 +82,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             }
             return assignments;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -96,6 +101,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
         String sql = "SELECT `id`, `student_id`, `course_id`, `begin`, `end` FROM `assignments` WHERE `end` >= ? AND `end` <= ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setDate(1, Date.valueOf(from));
@@ -115,6 +121,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             }
             return assignments;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -133,6 +140,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
         String sql = "INSERT INTO `assignments` (`student_id`, `course_id`, `begin`, `end`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setLong(1, assignment.getStudent().getId());
@@ -147,6 +155,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             }
             return id;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -165,6 +174,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
         String sql = "SELECT `student_id`, `course_id`, `begin`, `end` FROM `assignments` WHERE `id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
@@ -182,6 +192,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             }
             return assignment;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -199,6 +210,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
     public void update(Assignment assignment) throws DaoException {
         String sql = "UPDATE `assignments` SET `student_id` = ?, `course_id` = ?, `begin` = ?, `end` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, assignment.getStudent().getId());
@@ -208,6 +220,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             statement.setLong(5, assignment.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -216,4 +229,4 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             }
         }
     }
-    }
+}

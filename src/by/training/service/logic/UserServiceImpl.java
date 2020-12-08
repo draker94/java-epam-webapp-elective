@@ -6,6 +6,8 @@ import by.training.dao.sql.UserDaoImpl;
 import by.training.domain.User;
 import by.training.service.ServiceException;
 import by.training.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
  */
 
 public class UserServiceImpl implements UserService {
+    private final static Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
     private UserDao userDao;
 
     public void setUserDao(UserDao userDao) {
@@ -22,6 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return userDao.getUsersList();
         } catch (DaoException e) {
@@ -32,6 +36,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long save(User user) throws ServiceException {
         Long id = user.getId();
+        LOGGER.debug("Method entering.");
         try {
             if (id != null) {
                 userDao.update(user);
@@ -46,6 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return userDao.read(id);
         } catch (DaoException e) {
@@ -55,6 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long id) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             userDao.delete(id, "users");
             UserDao userDao1 = new UserDaoImpl();
@@ -67,6 +74,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByLogin(String login) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return userDao.getByLogin(login);
         } catch (DaoException e) {
@@ -77,6 +85,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean changePassword(String login, String oldPassword, String newPassword) throws ServiceException {
         boolean isChanged = false;
+        LOGGER.debug("Method entering.");
         try {
             User user = userDao.getByLogin(login);
             if (user.getPassword().equals(oldPassword) && !(newPassword.isEmpty())) {
@@ -94,6 +103,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean changeMail(String login, String mail) throws ServiceException {
         boolean isChanged = false;
+        LOGGER.debug("Method entering.");
         try {
             User user = userDao.getByLogin(login);
             if (user.getLogin().equals(login) &&

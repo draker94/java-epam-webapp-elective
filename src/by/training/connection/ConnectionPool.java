@@ -9,30 +9,26 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author Andrey Kliuchnikov
  */
 
 public final class ConnectionPool {
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private static ConnectionPool instance = new ConnectionPool();
     private Queue<Connection> freeConnection = new ConcurrentLinkedQueue<>();
-    private Collection<Connection> usedConnection = new ConcurrentSkipListSet<>(Comparator.comparingInt(Object::hashCode));
-    //Поискать Concurrent коллекцию на основе хэштаблиц
+    private Collection<Connection> usedConnection = new CopyOnWriteArraySet<>();
     private String jdbcUrl;
     private String user;
     private String password;
-    private String settingsPath;
     private int maxSize;
     private int minSize;
     private int validConTimeout;
-
-    Logger logger = LogManager.getLogger();
 
     private ConnectionPool() {
     }
@@ -41,13 +37,12 @@ public final class ConnectionPool {
         return instance;
     }
 
-    public void initConnections(String settingsPath, int minSize, int maxSize, int validConTimeout) {
+    public void initConnections(String propertyConfig, int minSize, int maxSize, int validConTimeout) {
         destroy();
         try {
             Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver").getConstructor().newInstance();
             DriverManager.registerDriver(driver);
-            this.settingsPath = settingsPath;
-            ResourceBundle resourceBundle = ResourceBundle.getBundle(settingsPath);
+            ResourceBundle resourceBundle = ResourceBundle.getBundle(propertyConfig);
             this.jdbcUrl = resourceBundle.getString("url");
             this.user = resourceBundle.getString("username");
             this.password = resourceBundle.getString("password");
@@ -57,9 +52,10 @@ public final class ConnectionPool {
             for (int i = 0; i < minSize; i++) {
                 freeConnection.add(newConnection());
             }
-            //logger.info("Пул соединений успешно проинициализирован");
+            LOGGER.info("Connection pool has been successfully initialized.");
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                 NoSuchMethodException | ClassNotFoundException | SQLException e) {
+            LOGGER.error("Connection pool initialized error");
         }
     }
 
@@ -72,21 +68,24 @@ public final class ConnectionPool {
                     if (!connection.isValid(validConTimeout)) {
                         try {
                             connection.close();
-                            // посмотреть где free connect
                         } catch (SQLException e) {
+                            LOGGER.error("Error handling invalid connection.");
                         }
                         connection = null;
                     }
-                } else if (usedConnection.size() < maxSize) { //подумоть о синхронизации
+                } else if (usedConnection.size() < maxSize) {
                     connection = newConnection();
                 } else {
-                    throw new ConnectionPoolException("The database connections number exceeded(истёк) limit");
+                    LOGGER.error("The maximum number of connections has been reached.");
+                    throw new ConnectionPoolException("The maximum number of connections has been reached.");
                 }
             } catch (SQLException e) {
+                LOGGER.error("Error getting connection.");
                 throw new ConnectionPoolException(e);
             }
         }
         usedConnection.add(connection);
+        LOGGER.debug("Connection pool returns connection.");
         return new ConnectionWrapper(connection);
     }
 
@@ -98,10 +97,11 @@ public final class ConnectionPool {
                     try {
                         connection.close();
                     } catch (SQLException e) {
-
+                        LOGGER.error("Connection closing error while clearing the connection pool");
                     }
                 }
                 usedConnection.clear();
+                LOGGER.info("Connection pool successfully destroyed.");
             }
         }
     }
@@ -111,16 +111,18 @@ public final class ConnectionPool {
             connection.clearWarnings();
             usedConnection.remove(connection);
             freeConnection.add(connection);
+            LOGGER.trace("Returned the connection to the pool.");
         } catch (SQLException e) {
             try {
                 connection.close();
             } catch (SQLException e1) {
-
+                LOGGER.error("Connection closing error while handling the return of the collection to the pool");
             }
         }
     }
 
     private Connection newConnection() throws SQLException {
+        LOGGER.info("Create a connection.");
         return DriverManager.getConnection(jdbcUrl, user, password);
     }
 }

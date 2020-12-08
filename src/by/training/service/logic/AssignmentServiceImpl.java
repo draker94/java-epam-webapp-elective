@@ -5,11 +5,14 @@ import by.training.dao.DaoException;
 import by.training.domain.Assignment;
 import by.training.service.AssignmentService;
 import by.training.service.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class AssignmentServiceImpl implements AssignmentService {
+    private final static Logger LOGGER = LogManager.getLogger(AssignmentServiceImpl.class);
     private AssignmentDao assignmentDao;
 
     public void setAssignmentDao(AssignmentDao assignmentDao) {
@@ -18,6 +21,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public List<Assignment> findAll() throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return assignmentDao.getAssignmentsList();
         } catch (DaoException e) {
@@ -27,6 +31,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public List<Assignment> findByStartDate(LocalDate from, LocalDate to) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return assignmentDao.getAssignmentsByStartDate(from, to);
         } catch (DaoException e) {
@@ -36,6 +41,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public List<Assignment> findByEndDate(LocalDate from, LocalDate to) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return assignmentDao.getAssignmentsByEndDate(from, to);
         } catch (DaoException e) {
@@ -45,6 +51,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public Assignment findById(Long id) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return assignmentDao.read(id);
         } catch (DaoException e) {
@@ -55,6 +62,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public Long save(Assignment assignment) throws ServiceException {
         Long id = assignment.getId();
+        LOGGER.debug("Method entering.");
         try {
             if(id != null) {
                 assignmentDao.update(assignment);
@@ -70,6 +78,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public void delete(Long id) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             assignmentDao.delete(id, "assignments");
         } catch (DaoException e) {

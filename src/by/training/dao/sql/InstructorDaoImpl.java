@@ -4,6 +4,8 @@ import by.training.dao.DaoException;
 import by.training.dao.InstructorDao;
 import by.training.domain.Instructor;
 import by.training.enums.Ranks;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,11 +19,15 @@ import java.util.List;
  */
 
 public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
+    private static final Logger LOGGER = LogManager.getLogger(InstructorDaoImpl.class);
+
+
     @Override
     public List<Instructor> getInstructorsList() throws DaoException {
         String sql = "SELECT `id`, `surname`, `name`, `rank` FROM `instructors`";
         Statement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
@@ -36,6 +42,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             }
             return instructors;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -54,6 +61,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
         String sql = "SELECT `id`, `surname`, `name`, `rank` FROM `instructors` WHERE `surname` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, surname);
@@ -69,6 +77,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             }
             return instructors;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -87,6 +96,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
         String sql = "INSERT INTO `instructors` (`id`, `surname`, `name`, `rank`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setLong(1, instructor.getId());
@@ -96,6 +106,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             statement.executeUpdate();
             return instructor.getId();
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -114,6 +125,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
         String sql = "SELECT `id`, `surname`, `name`, `rank` FROM `instructors` WHERE `id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
@@ -128,6 +140,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             }
             return instructor;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -145,6 +158,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
     public void update(Instructor instructor) throws DaoException {
         String sql = "UPDATE `instructors` SET `surname` = ?, `name` = ?, `rank` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, instructor.getSurname());
@@ -153,6 +167,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             statement.setLong(4, instructor.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {

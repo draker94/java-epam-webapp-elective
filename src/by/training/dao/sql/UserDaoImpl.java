@@ -4,6 +4,8 @@ import by.training.dao.DaoException;
 import by.training.dao.UserDao;
 import by.training.domain.User;
 import by.training.enums.Roles;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,11 +19,15 @@ import java.util.List;
  */
 
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {
+    private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
+
+
     @Override
     public List<User> getUsersList() throws DaoException {
         String sql = "SELECT `id`, `login`, `password`, `e-mail`, `role` FROM `users`";
         Statement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
@@ -37,6 +43,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
             return users;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -55,6 +62,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         String sql = "SELECT `id`, `password`, `e-mail`, `role` FROM `users` WHERE `login` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, login);
@@ -70,6 +78,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
             return user;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -88,6 +97,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         String sql = "INSERT INTO `users` (`login`, `password`, `e-mail`, `role`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getLogin());
@@ -102,6 +112,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
             return id;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -120,6 +131,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         String sql = "SELECT `login`, `password`, `e-mail`, `role` FROM `users` WHERE `id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
@@ -135,6 +147,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
             return user;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -152,6 +165,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     public void update(User user) throws DaoException {
         String sql = "UPDATE `users` SET `login` = ?, `password` = ?, `e-mail` = ?, `role` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, user.getLogin());
@@ -161,6 +175,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.setLong(5, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {

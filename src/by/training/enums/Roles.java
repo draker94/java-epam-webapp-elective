@@ -5,8 +5,8 @@ package by.training.enums;
  */
 
 public enum Roles {
-    ADMINISTRATOR("Одмен"),
-    INSTRUCTOR("Препод"),
+    ADMINISTRATOR("Администратор"),
+    INSTRUCTOR("Преподаватель"),
     STUDENT("Студент");
 
     private String name;

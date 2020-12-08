@@ -5,10 +5,13 @@ import by.training.dao.ResultDao;
 import by.training.domain.Result;
 import by.training.service.ResultService;
 import by.training.service.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class ResultServiceImpl implements ResultService {
+    private final static Logger LOGGER = LogManager.getLogger(ResultServiceImpl.class);
     private ResultDao resultDao;
 
     public void setResultDao(ResultDao resultDao) {
@@ -17,6 +20,7 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public List<Result> findAll() throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return resultDao.getResultsList();
         } catch (DaoException e) {
@@ -26,6 +30,7 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public List<Result> findByMark(int from, int to) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return resultDao.getListByMark(from, to);
         } catch (DaoException e) {
@@ -35,6 +40,7 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public Result findById(Long id) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return resultDao.read(id);
         } catch (DaoException e) {
@@ -45,6 +51,7 @@ public class ResultServiceImpl implements ResultService {
     @Override
     public Long save(Result result) throws ServiceException {
         Long id = result.getId();
+        LOGGER.debug("Method entering.");
         try {
             if (id != null) {
                 resultDao.update(result);
@@ -59,6 +66,7 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public void delete(Long id) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             resultDao.delete(id, "results");
         } catch (DaoException e) {

@@ -2,13 +2,17 @@ package by.training.service.logic;
 
 import by.training.dao.DaoException;
 import by.training.dao.InstructorDao;
+import by.training.dao.sql.InstructorDaoImpl;
 import by.training.domain.Instructor;
 import by.training.service.InstructorService;
 import by.training.service.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class InstructorServiceImpl implements InstructorService {
+    private final static Logger LOGGER = LogManager.getLogger(InstructorServiceImpl.class);
     private InstructorDao instructorDao;
 
     public void setInstructorDao(InstructorDao instructorDao) {
@@ -17,6 +21,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public List<Instructor> findAll() throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return instructorDao.getInstructorsList();
         } catch (DaoException e) {
@@ -26,6 +31,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public Instructor findById(Long id) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return instructorDao.read(id);
         } catch (DaoException e) {
@@ -35,6 +41,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public Long create(Instructor instructor) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return instructorDao.create(instructor);
         } catch (DaoException e) {
@@ -44,6 +51,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public void update(Instructor instructor) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             instructorDao.update(instructor);
         } catch (DaoException e) {
@@ -53,6 +61,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public void delete(Long id) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             instructorDao.delete(id, "instructors");
         } catch (DaoException e) {
@@ -62,6 +71,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public List<Instructor> findBySurname(String surname) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return instructorDao.getBySurname(surname);
         } catch (DaoException e) {

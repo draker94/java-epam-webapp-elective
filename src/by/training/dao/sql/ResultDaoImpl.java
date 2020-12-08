@@ -4,6 +4,8 @@ import by.training.dao.DaoException;
 import by.training.dao.ResultDao;
 import by.training.domain.Assignment;
 import by.training.domain.Result;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,11 +16,15 @@ import java.util.List;
  */
 
 public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
+    private static final Logger LOGGER = LogManager.getLogger(ResultDaoImpl.class);
+
+
     @Override
     public List<Result> getResultsList() throws DaoException {
         String sql = "SELECT `id`, `assignment_id`, `mark`, `review`, `date` FROM `results`";
         Statement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
@@ -35,6 +41,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             }
             return results;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -53,6 +60,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
         String sql = "SELECT `id`, `assignment_id`, `mark`, `review`, `date` FROM `results` WHERE `mark` >= ? AND `mark` <= ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setInt(1, fromMark);
@@ -71,6 +79,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             }
             return results;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -89,6 +98,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
         String sql = "INSERT INTO `results` (`assignment_id`, `mark`, `review`, `date`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setLong(1, result.getAssignment().getId());
@@ -103,6 +113,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             }
             return id;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -121,6 +132,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
         String sql = "SELECT `assignment_id`, `mark`, `review`, `date` FROM `results` WHERE `id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
@@ -137,6 +149,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             }
             return result;
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {
@@ -154,6 +167,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
     public void update(Result result) throws DaoException {
         String sql = "UPDATE `results` SET `assignment_id` = ?, `mark` = ?, `review` = ?, `date` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
+        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, result.getAssignment().getId());
@@ -163,6 +177,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             statement.setLong(5, result.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
             throw new DaoException(e);
         } finally {
             try {

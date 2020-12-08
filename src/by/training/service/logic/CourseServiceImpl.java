@@ -7,11 +7,14 @@ import by.training.domain.Course;
 import by.training.domain.Instructor;
 import by.training.service.CourseService;
 import by.training.service.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CourseServiceImpl implements CourseService {
+    private final static Logger LOGGER = LogManager.getLogger(CourseServiceImpl.class);
     private CourseDao courseDao;
     private InstructorDao instructorDao;
 
@@ -25,6 +28,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> findAll() throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return courseDao.getCoursesList();
         } catch (DaoException e) {
@@ -36,6 +40,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> findByInstructor(String condition) throws ServiceException {
         List<Course> courseListByInstructor = new ArrayList<>();
+        LOGGER.debug("Method entering.");
         try {
             if (condition.matches("\\d++")) {
                 courseListByInstructor = courseDao.getInstructorCoursesList(Long.parseLong(condition));
@@ -55,6 +60,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course findById(Long id) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             return courseDao.read(id);
         } catch (DaoException e) {
@@ -65,6 +71,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Long save(Course course) throws ServiceException {
         Long id = course.getId();
+        LOGGER.debug("Method entering.");
         try {
             if (id != null) {
                 courseDao.update(course);
@@ -79,6 +86,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void delete(Long id) throws ServiceException {
+        LOGGER.debug("Method entering.");
         try {
             courseDao.delete(id, "courses");
         } catch (DaoException e) {
