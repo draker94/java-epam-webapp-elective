@@ -8,11 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>Система "Факультет"</title>
   </head>
   <body>
   <p><a href="${pageContext.request.contextPath}/user/list.html">User List</a></p>
-  <p><a href="${pageContext.request.contextPath}/instructor/InstructorListServlet.html">Instructor List</a></p>
-  <p><a href="${pageContext.request.contextPath}/instructor/view/InstructorAddView.html">Add New Instructor</a></p>
   </body>
 </html>

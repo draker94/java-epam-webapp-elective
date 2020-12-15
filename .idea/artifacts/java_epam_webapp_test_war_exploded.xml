@@ -12,6 +12,7 @@
           <element id="library" level="project" name="log4j-core-2.14.0" />
           <element id="library" level="project" name="mysql-connector-java-8.0.19" />
           <element id="library" level="project" name="servlet-api" />
+          <element id="library" level="project" name="jstl-1.2" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="java-epam-webapp-test/javaeeApplication/javaEEApplication" />
