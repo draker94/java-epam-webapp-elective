@@ -39,7 +39,6 @@ public class UserEditAction extends Action {
                 }
             }
             request.setAttribute("roles", Roles.values());
-            LOGGER.debug("--------------------------- id - " + id);
         return null;
     }
 }

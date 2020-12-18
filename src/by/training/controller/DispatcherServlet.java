@@ -51,7 +51,7 @@ public class DispatcherServlet extends HttpServlet {
                 action.setServiceCreator(serviceCreator);
                 forward = action.execute(request, response);
             } catch (Exception e) {
-                LOGGER.error(e.getMessage()); // проверить!!! Где-то бросается лишнее исключение при невозможности клоснуть соединение. Отрабатывает метод execute и пытаемся клоснуть соединение, которое УЖЕ закрыто. Второй раз пытается клоснуть соединение
+                LOGGER.error(e.getMessage());
             }
         }
         if (forward != null && forward.isRedirect()) {
