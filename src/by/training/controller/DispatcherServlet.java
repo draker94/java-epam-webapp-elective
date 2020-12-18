@@ -3,6 +3,7 @@ package by.training.controller;
 import by.training.connection.ConnectionPool;
 import by.training.di.ServiceCreationException;
 import by.training.di.ServiceCreator;
+import by.training.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,8 +50,8 @@ public class DispatcherServlet extends HttpServlet {
             try (ServiceCreator serviceCreator = new ServiceCreator()) {
                 action.setServiceCreator(serviceCreator);
                 forward = action.execute(request, response);
-            } catch (ServiceCreationException e) {
-                throw new ServletException();
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage()); // проверить!!! Где-то бросается лишнее исключение при невозможности клоснуть соединение. Отрабатывает метод execute и пытаемся клоснуть соединение, которое УЖЕ закрыто. Второй раз пытается клоснуть соединение
             }
         }
         if (forward != null && forward.isRedirect()) {

@@ -9,7 +9,7 @@ CREATE TABLE `users`
     `id`       INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `login`    VARCHAR(255)        NOT NULL UNIQUE,
     `password` VARCHAR(255)        NOT NULL,
-    `e-mail`   VARCHAR(255) UNIQUE,
+    `e-mail`   VARCHAR(255),
     `role`     INTEGER             NOT NULL
 ) ENGINE = INNODB
   DEFAULT CHARACTER SET utf8;

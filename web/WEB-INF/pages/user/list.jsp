@@ -21,6 +21,7 @@
     </c:url>
     <li><a href="${userEditUrl}">${user.login}</a> [${user.role}]</li>
 </c:forEach>
+<c:url var="userEditUrl" value="/user/edit.html"/>
 <a href="${userEditUrl}">Добавить юзера</a>
 </body>
 </html>

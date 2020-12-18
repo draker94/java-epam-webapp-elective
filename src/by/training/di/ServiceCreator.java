@@ -6,11 +6,16 @@ import by.training.dao.*;
 import by.training.dao.sql.*;
 import by.training.service.*;
 import by.training.service.logic.*;
+import com.mysql.cj.log.Log;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ServiceCreator implements AutoCloseable {
+    private static final Logger LOGGER = LogManager.getLogger(ServiceCreator.class);
+
     private Connection connection = null;
 
     private UserService userService = null;
@@ -109,7 +114,6 @@ public class ServiceCreator implements AutoCloseable {
         return courseService;
     }
 
-
     private CourseDao getCourseDao() throws ServiceCreationException {
         if (courseDao == null) {
             CourseDaoImpl courseDaoImpl = new CourseDaoImpl();
@@ -153,8 +157,9 @@ public class ServiceCreator implements AutoCloseable {
     public void close() throws ServiceCreationException {
         try {
             connection.close();
+            LOGGER.debug("Connection is close");
         } catch (SQLException e) {
-            throw new ServiceCreationException(e);
+            LOGGER.error(e);
         }
     }
 }

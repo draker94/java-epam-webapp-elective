@@ -21,7 +21,6 @@ import java.util.List;
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
 
-
     @Override
     public List<User> getUsersList() throws DaoException {
         String sql = "SELECT `id`, `login`, `password`, `e-mail`, `role` FROM `users`";
@@ -170,7 +169,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
-            statement.setString(3, user.getPassword());
+            statement.setString(3, user.getMail());
             statement.setLong(4, user.getRole().getId());
             statement.setLong(5, user.getId());
             statement.executeUpdate();

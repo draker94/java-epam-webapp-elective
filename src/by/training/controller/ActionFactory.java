@@ -2,6 +2,7 @@ package by.training.controller;
 
 import by.training.controller.user.UserEditAction;
 import by.training.controller.user.UserListAction;
+import by.training.controller.user.UserSaveAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +17,7 @@ public class ActionFactory {
     static {
         actions.put("/user/list", UserListAction.class);
         actions.put("/user/edit", UserEditAction.class);
+        actions.put("/user/save", UserSaveAction.class);
     }
 
     public static Action getAction(String url) throws ServletException {
