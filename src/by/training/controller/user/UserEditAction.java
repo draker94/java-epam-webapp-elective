@@ -10,7 +10,6 @@ import by.training.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.management.relation.Role;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,24 +20,25 @@ public class UserEditAction extends Action {
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOGGER.debug("Method entering.");
         String id = request.getParameter("id");
+        try {
+            UserService userService = getServiceCreator().getUserService();
             if (id != null) {
-                try {
-                    UserService userService = getServiceCreator().getUserService();
-                    User user = userService.findById(Long.parseLong(id));
-                    if (user != null) {
-                        request.setAttribute("user", user);
-                    } else {
-                        throw new IllegalArgumentException();
-                    }
-                } catch (ServiceException | ServiceCreationException e) {
-                    throw new ServletException(e);
-                } catch (IllegalArgumentException e) {
-                    response.sendError(404);
-                    return null;
+                User user = userService.findById(Long.parseLong(id));
+                if (user != null) {
+                    request.setAttribute("user", user);
+                } else {
+                    throw new IllegalArgumentException();
                 }
             }
-            request.setAttribute("roles", Roles.values());
+        } catch (ServiceException | ServiceCreationException e) {
+            throw new ServletException(e);
+        } catch (IllegalArgumentException e) {
+            response.sendError(404);
+            return null;
+        }
+        request.setAttribute("roles", Roles.values());
         return null;
     }
 }

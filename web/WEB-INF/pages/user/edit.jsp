@@ -44,7 +44,7 @@
                             <c:remove var="selected"/>
                         </c:otherwise>
                     </c:choose>
-                    <option value="${role}" ${selected}>${role.name}</option>>
+                    <option value="${role}"${selected}>${role.name}</option>
                 </c:forEach>>
             </select>
     </p>

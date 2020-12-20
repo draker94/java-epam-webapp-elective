@@ -21,7 +21,6 @@ import java.util.List;
 public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
     private static final Logger LOGGER = LogManager.getLogger(InstructorDaoImpl.class);
 
-
     @Override
     public List<Instructor> getInstructorsList() throws DaoException {
         String sql = "SELECT `id`, `surname`, `name`, `rank` FROM `instructors`";

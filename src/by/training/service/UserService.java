@@ -23,4 +23,5 @@ public interface UserService {
 
     boolean changeMail(String login, String mail) throws ServiceException;
 
+    List<User> findAllFreeUsers() throws ServiceException;
 }

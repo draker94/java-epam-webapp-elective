@@ -118,4 +118,14 @@ public class UserServiceImpl implements UserService {
             return isChanged;
         }
     }
+
+    @Override
+    public List<User> findAllFreeUsers() throws ServiceException {
+        LOGGER.debug("Method entering.");
+        try {
+            return userDao.getFreeUsersList();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

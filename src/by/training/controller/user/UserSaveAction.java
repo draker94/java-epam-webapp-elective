@@ -20,6 +20,7 @@ public class UserSaveAction extends Action {
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOGGER.debug("Method entering.");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String mail = request.getParameter("mail");

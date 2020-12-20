@@ -12,5 +12,6 @@
   </head>
   <body>
   <p><a href="${pageContext.request.contextPath}/user/list.html">User List</a></p>
+  <p><a href="${pageContext.request.contextPath}/instructor/list.html">Instructor List</a></p>
   </body>
 </html>

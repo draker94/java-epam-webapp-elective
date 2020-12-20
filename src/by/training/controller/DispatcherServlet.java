@@ -50,8 +50,10 @@ public class DispatcherServlet extends HttpServlet {
             try (ServiceCreator serviceCreator = new ServiceCreator()) {
                 action.setServiceCreator(serviceCreator);
                 forward = action.execute(request, response);
+                LOGGER.error("Action execute is done.");
             } catch (Exception e) {
                 LOGGER.error(e.getMessage());
+                throw new ServletException(e);
             }
         }
         if (forward != null && forward.isRedirect()) {

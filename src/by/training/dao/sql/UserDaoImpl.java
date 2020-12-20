@@ -183,4 +183,40 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
         }
     }
+
+    @Override
+    public List<User> getFreeUsersList() throws DaoException {
+        String sql = "SELECT `id`, `login`, `password`, `e-mail`, `role` FROM `users` " +
+                "WHERE `id` NOT IN (SELECT `id` FROM `instructors`) AND `id` NOT IN (SELECT `id` FROM `students`)";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sql);
+            List<User> users = new ArrayList<>();
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getLong("id"));
+                user.setLogin(resultSet.getString("login"));
+                user.setPassword(resultSet.getString("password"));
+                user.setMail(resultSet.getString("e-mail"));
+                user.setRole(Roles.values()[resultSet.getInt("role")]);
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception e) {
+            }
+            try {
+                resultSet.close();
+            } catch (Exception e) {
+            }
+        }
+    }
 }
