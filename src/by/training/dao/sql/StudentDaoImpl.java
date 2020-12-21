@@ -175,4 +175,39 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
             }
         }
     }
+
+    @Override
+    public List<Student> getFreeStudentsList() throws DaoException {
+        String sql = "SELECT `id`, `surname`, `name`, `study_year` FROM `students`" +
+                "WHERE `id` NOT IN (SELECT `student_id` FROM `assignments`)";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sql);
+            List<Student> students = new ArrayList<>();
+            while (resultSet.next()) {
+                Student student = new Student();
+                student.setId(resultSet.getLong("id"));
+                student.setSurname(resultSet.getString("surname"));
+                student.setName(resultSet.getString("name"));
+                student.setStudyYear(resultSet.getInt("study_year"));
+                students.add(student);
+            }
+            return students;
+        } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception e) {
+            }
+            try {
+                resultSet.close();
+            } catch (Exception e) {
+            }
+        }
+    }
 }

@@ -15,7 +15,7 @@ public interface UserService {
 
     Long save(User user) throws ServiceException;
 
-    void delete(Long id) throws ServiceException;
+    void delete(List<Long> ids) throws ServiceException;
 
     User findByLogin(String login) throws ServiceException;
 

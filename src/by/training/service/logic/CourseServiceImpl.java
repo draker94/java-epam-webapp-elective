@@ -85,10 +85,22 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void delete(Long id) throws ServiceException {
+    public void delete(List<Long> ids) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            courseDao.delete(id, "courses");
+            for(Long id : ids) {
+                courseDao.delete(id, "courses");
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Course> findAllFreeCourses() throws ServiceException {
+        LOGGER.debug("Method entering.");
+        try {
+            return courseDao.getFreeCoursesList();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

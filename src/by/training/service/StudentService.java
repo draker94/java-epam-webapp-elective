@@ -17,7 +17,9 @@ public interface StudentService {
 
     void update(Student student) throws ServiceException;
 
-    void delete(Long id) throws ServiceException;
+    void delete(List<Long> ids) throws ServiceException;
 
     List<Student> findBySurname(String surname) throws ServiceException;
+
+    List<Student> findAllFreeStudents() throws ServiceException;
 }

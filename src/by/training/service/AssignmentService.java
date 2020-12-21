@@ -20,5 +20,7 @@ public interface AssignmentService {
 
     Long save(Assignment assignment) throws ServiceException;
 
-    void delete(Long id) throws ServiceException;
+    void delete(List<Long> ids) throws ServiceException;
+
+    List<Assignment> findAllFreeAssignments() throws ServiceException;
 }

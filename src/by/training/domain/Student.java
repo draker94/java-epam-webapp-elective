@@ -34,6 +34,26 @@ public class Student extends Entity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+
+        Student student = (Student) o;
+
+        if (studyYear != student.studyYear) return false;
+        if (surname != null ? !surname.equals(student.surname) : student.surname != null) return false;
+        return name != null ? name.equals(student.name) : student.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = surname != null ? surname.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + studyYear;
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Student{" +
                 "id=" + getId() +

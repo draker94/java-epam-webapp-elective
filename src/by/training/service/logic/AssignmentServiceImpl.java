@@ -77,10 +77,22 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     @Override
-    public void delete(Long id) throws ServiceException {
+    public void delete(List<Long> ids) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            assignmentDao.delete(id, "assignments");
+            for(Long id : ids) {
+                assignmentDao.delete(id, "assignments");
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Assignment> findAllFreeAssignments() throws ServiceException {
+        LOGGER.debug("Method entering.");
+        try {
+            return assignmentDao.getFreeAssignmentsList();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

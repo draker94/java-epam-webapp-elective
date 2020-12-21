@@ -11,6 +11,10 @@ import java.util.List;
 
 public interface AssignmentDao extends Dao<Assignment, Long> {
     List<Assignment> getAssignmentsList() throws DaoException;
+
     List<Assignment> getAssignmentsByStartDate(LocalDate from, LocalDate to) throws DaoException;
+
     List<Assignment> getAssignmentsByEndDate(LocalDate from, LocalDate to) throws DaoException;
+
+    List<Assignment> getFreeAssignmentsList() throws DaoException;
 }

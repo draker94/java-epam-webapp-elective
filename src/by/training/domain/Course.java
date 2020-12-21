@@ -43,6 +43,28 @@ public class Course extends Entity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Course)) return false;
+
+        Course course = (Course) o;
+
+        if (hours != course.hours) return false;
+        if (name != null ? !name.equals(course.name) : course.name != null) return false;
+        if (description != null ? !description.equals(course.description) : course.description != null) return false;
+        return instructor != null ? instructor.equals(course.instructor) : course.instructor == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + hours;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (instructor != null ? instructor.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Course{" +
                 "id=" + getId() +

@@ -17,5 +17,7 @@ public interface CourseService {
 
     Long save(Course course) throws ServiceException;
 
-    void delete(Long id) throws ServiceException;
+    void delete(List<Long> ids) throws ServiceException;
+
+    List<Course> findAllFreeCourses() throws ServiceException;
 }

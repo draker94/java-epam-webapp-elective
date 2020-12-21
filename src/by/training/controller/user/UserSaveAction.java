@@ -28,29 +28,27 @@ public class UserSaveAction extends Action {
         try {
             role = Roles.valueOf(request.getParameter("role"));
         } catch (NullPointerException | IllegalArgumentException e) {
+            LOGGER.error(e.getLocalizedMessage());
         }
-
-        if (login != null && !login.isBlank() && password != null && !password.isBlank() && role != null) {
-            Long id = null;
-            try {
-                id = Long.parseLong(request.getParameter("id"));
-            }
-            catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-            User user = new User();
-            user.setId(id);
-            user.setLogin(login);
-            user.setPassword(password);
-            user.setMail(mail);
-            user.setRole(role);
-            try {
-                UserService userService = getServiceCreator().getUserService();
-                LOGGER.debug(user);
+        try {
+            UserService userService = getServiceCreator().getUserService();
+            if (login != null && !login.isBlank() && password != null && !password.isBlank() && role != null) {
+                Long id = null;
+                try {
+                    id = Long.parseLong(request.getParameter("id"));
+                } catch (NumberFormatException e) {
+                    LOGGER.error(e.getLocalizedMessage());
+                }
+                User user = new User();
+                user.setId(id);
+                user.setLogin(login);
+                user.setPassword(password);
+                user.setMail(mail);
+                user.setRole(role);
                 userService.save(user);
-            } catch (ServiceException | ServiceCreationException e) {
-                e.printStackTrace();
             }
+        } catch (ServiceException | ServiceCreationException e) {
+            LOGGER.error(e.getLocalizedMessage());
         }
         return new Forward("/user/list.html");
     }

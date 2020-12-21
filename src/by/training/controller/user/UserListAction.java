@@ -25,7 +25,9 @@ public class UserListAction extends Action {
         try {
             UserService userService = getServiceCreator().getUserService();
             List<User> users = userService.findAll();
+            List<User> freeUsers = userService.findAllFreeUsers();
             request.setAttribute("users", users);
+            request.setAttribute("freeUsers", freeUsers);
             return null;
         } catch (ServiceCreationException | ServiceException e) {
             throw new ServletException(e);

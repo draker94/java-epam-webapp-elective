@@ -60,16 +60,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Long id) throws ServiceException {
+    public void delete(List<Long> ids) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            userDao.delete(id, "users");
-            UserDao userDao1 = new UserDaoImpl();
-            userDao1.delete(1L, "dada");
+            for(Long id : ids) {
+                userDao.delete(id, "users");
+            }
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-
     }
 
     @Override

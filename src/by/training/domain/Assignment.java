@@ -45,6 +45,28 @@ public class Assignment extends Entity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Assignment)) return false;
+
+        Assignment that = (Assignment) o;
+
+        if (student != null ? !student.equals(that.student) : that.student != null) return false;
+        if (course != null ? !course.equals(that.course) : that.course != null) return false;
+        if (beginDate != null ? !beginDate.equals(that.beginDate) : that.beginDate != null) return false;
+        return endDate != null ? endDate.equals(that.endDate) : that.endDate == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = student != null ? student.hashCode() : 0;
+        result = 31 * result + (course != null ? course.hashCode() : 0);
+        result = 31 * result + (beginDate != null ? beginDate.hashCode() : 0);
+        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Assignment{" +
                 "id=" + getId() +

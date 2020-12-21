@@ -187,4 +187,41 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             }
         }
     }
+
+    @Override
+    public List<Course> getFreeCoursesList() throws DaoException {
+        String sql = "SELECT `id`, `name`, `hours`, `description`, `instructor_id` FROM `courses`" +
+                "WHERE `id` NOT IN (SELECT `course_id` FROM `assignments`)";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sql);
+            List<Course> courses = new ArrayList<>();
+            while (resultSet.next()) {
+                Course course = new Course();
+                course.setId(resultSet.getLong("id"));
+                course.setName(resultSet.getString("name"));
+                course.setHours(resultSet.getInt("hours"));
+                course.setDescription(resultSet.getString("description"));
+                course.setInstructor(new Instructor());
+                course.getInstructor().setId(resultSet.getLong("instructor_id"));
+                courses.add(course);
+            }
+            return courses;
+        } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception e) {
+            }
+            try {
+                resultSet.close();
+            } catch (Exception e) {
+            }
+        }
+    }
 }

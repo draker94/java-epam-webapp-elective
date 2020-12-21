@@ -1,6 +1,7 @@
 package by.training.dao;
 
 import by.training.domain.Student;
+import by.training.domain.User;
 
 import java.util.List;
 
@@ -10,5 +11,8 @@ import java.util.List;
 
 public interface StudentDao extends Dao<Student, Long> {
     List<Student> getStudentsList() throws DaoException;
+
     List<Student> getBySurname(String surname) throws DaoException;
+
+    List<Student> getFreeStudentsList() throws DaoException;
 }

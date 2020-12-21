@@ -10,5 +10,9 @@ import java.util.List;
 
 public interface CourseDao extends Dao<Course, Long> {
     List<Course> getCoursesList() throws DaoException;
+
     List<Course> getInstructorCoursesList(Long id) throws DaoException;
+
+    List<Course> getFreeCoursesList() throws DaoException;
+
 }

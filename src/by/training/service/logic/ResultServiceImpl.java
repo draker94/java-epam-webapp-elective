@@ -65,10 +65,12 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public void delete(Long id) throws ServiceException {
+    public void delete(List<Long> ids) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            resultDao.delete(id, "results");
+            for(Long id : ids) {
+                resultDao.delete(id, "results");
+            }
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

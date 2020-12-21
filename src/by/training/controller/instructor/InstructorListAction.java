@@ -22,7 +22,9 @@ public class InstructorListAction extends Action {
             try {
                 InstructorService instructorService = getServiceCreator().getInstructorService();
                 List<Instructor> instructors = instructorService.findAll();
+                List<Instructor> freeInstructors = instructorService.findAllFreeInstructors();
                 request.setAttribute("instructors", instructors);
+                request.setAttribute("freeInstructors", instructors);
                 return null;
             } catch (ServiceCreationException | ServiceException e) {
                 throw new ServletException(e);

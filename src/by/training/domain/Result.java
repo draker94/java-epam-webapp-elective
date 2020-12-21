@@ -45,6 +45,28 @@ public class Result extends Entity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Result)) return false;
+
+        Result result = (Result) o;
+
+        if (mark != result.mark) return false;
+        if (assignment != null ? !assignment.equals(result.assignment) : result.assignment != null) return false;
+        if (review != null ? !review.equals(result.review) : result.review != null) return false;
+        return date != null ? date.equals(result.date) : result.date == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = assignment != null ? assignment.hashCode() : 0;
+        result = 31 * result + mark;
+        result = 31 * result + (review != null ? review.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Result{" +
                 "id=" + getId() +

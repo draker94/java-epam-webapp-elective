@@ -175,4 +175,39 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             }
         }
     }
+
+    @Override
+    public List<Instructor> getFreeInstructorsList() throws DaoException {
+        String sql = "SELECT `id`, `surname`, `name`, `rank` FROM `instructors` " +
+                "WHERE `id` NOT IN (SELECT `instructor_id` FROM `courses`)";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sql);
+            List<Instructor> instructors = new ArrayList<>();
+            while (resultSet.next()) {
+                Instructor instructor = new Instructor();
+                instructor.setId(resultSet.getLong("id"));
+                instructor.setSurname(resultSet.getString("surname"));
+                instructor.setName(resultSet.getString("name"));
+                instructor.setRank(Ranks.values()[resultSet.getInt("rank")]);
+                instructors.add(instructor);
+            }
+            return instructors;
+        } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception e) {
+            }
+            try {
+                resultSet.close();
+            } catch (Exception e) {
+            }
+        }
+    }
 }

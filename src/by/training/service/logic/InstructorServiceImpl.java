@@ -2,7 +2,6 @@ package by.training.service.logic;
 
 import by.training.dao.DaoException;
 import by.training.dao.InstructorDao;
-import by.training.dao.sql.InstructorDaoImpl;
 import by.training.domain.Instructor;
 import by.training.service.InstructorService;
 import by.training.service.ServiceException;
@@ -60,10 +59,12 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public void delete(Long id) throws ServiceException {
+    public void delete(List<Long> ids) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            instructorDao.delete(id, "instructors");
+            for(Long id : ids) {
+                instructorDao.delete(id, "instructors");
+            }
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -74,6 +75,16 @@ public class InstructorServiceImpl implements InstructorService {
         LOGGER.debug("Method entering.");
         try {
             return instructorDao.getBySurname(surname);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Instructor> findAllFreeInstructors() throws ServiceException {
+        LOGGER.debug("Method entering.");
+        try {
+            return instructorDao.getFreeInstructorsList();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

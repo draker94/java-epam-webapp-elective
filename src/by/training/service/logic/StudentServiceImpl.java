@@ -59,10 +59,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void delete(Long id) throws ServiceException {
+    public void delete(List<Long> ids) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            studentDao.delete(id, "students");
+            for(Long id : ids) {
+                studentDao.delete(id, "students");
+            }
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -73,6 +75,16 @@ public class StudentServiceImpl implements StudentService {
         LOGGER.debug("Method entering.");
         try {
             return studentDao.getBySurname(surname);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Student> findAllFreeStudents() throws ServiceException {
+        LOGGER.debug("Method entering.");
+        try {
+            return studentDao.getFreeStudentsList();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

@@ -17,7 +17,9 @@ public interface InstructorService {
 
     void update(Instructor instructor) throws ServiceException;
 
-    void delete(Long id) throws ServiceException;
+    void delete(List<Long> ids) throws ServiceException;
 
     List<Instructor> findBySurname(String surname) throws ServiceException;
+
+    List<Instructor> findAllFreeInstructors() throws ServiceException;
 }

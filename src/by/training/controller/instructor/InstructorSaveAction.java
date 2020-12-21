@@ -27,31 +27,30 @@ public class InstructorSaveAction extends Action {
         try {
             rank = Ranks.valueOf(request.getParameter("rank"));
         } catch (NullPointerException | IllegalArgumentException e) {
+            LOGGER.error(e.getLocalizedMessage());
         }
-        if (name != null && !name.isBlank() && surname != null && !surname.isBlank() && rank != null) {
-            Long id = null;
-            try {
-                id = Long.parseLong(request.getParameter("id"));
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-            Instructor instructor = new Instructor();
-            instructor.setId(id);
-            instructor.setName(name);
-            instructor.setSurname(surname);
-            instructor.setRank(rank);
-            LOGGER.debug(instructor);
-            try {
-                InstructorService instructorService = getServiceCreator().getInstructorService();
-                LOGGER.debug(request.getParameter("isNewInstructor"));
+        try {
+            InstructorService instructorService = getServiceCreator().getInstructorService();
+            if (name != null && !name.isBlank() && surname != null && !surname.isBlank() && rank != null) {
+                Long id = null;
+                try {
+                    id = Long.parseLong(request.getParameter("id"));
+                } catch (NumberFormatException e) {
+                    LOGGER.error(e.getLocalizedMessage());
+                }
+                Instructor instructor = new Instructor();
+                instructor.setId(id);
+                instructor.setName(name);
+                instructor.setSurname(surname);
+                instructor.setRank(rank);
                 if (Boolean.parseBoolean(request.getParameter("isNewInstructor"))) {
                     instructorService.create(instructor);
                 } else {
                     instructorService.update(instructor);
                 }
-            } catch (ServiceException | ServiceCreationException e) {
-                e.printStackTrace();
             }
+        } catch (ServiceException | ServiceCreationException e) {
+            LOGGER.error(e.getLocalizedMessage());
         }
         return new Forward("/instructor/list.html");
     }

@@ -17,5 +17,5 @@ public interface ResultService {
 
     Long save(Result result) throws ServiceException;
 
-    void delete(Long id) throws ServiceException;
+    void delete(List<Long> ids) throws ServiceException;
 }
