@@ -48,6 +48,7 @@ public class Assignment extends Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Assignment)) return false;
+        if (!super.equals(o)) return false;
 
         Assignment that = (Assignment) o;
 
@@ -59,7 +60,8 @@ public class Assignment extends Entity {
 
     @Override
     public int hashCode() {
-        int result = student != null ? student.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (student != null ? student.hashCode() : 0);
         result = 31 * result + (course != null ? course.hashCode() : 0);
         result = 31 * result + (beginDate != null ? beginDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);

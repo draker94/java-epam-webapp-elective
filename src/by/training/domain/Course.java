@@ -46,6 +46,7 @@ public class Course extends Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Course)) return false;
+        if (!super.equals(o)) return false;
 
         Course course = (Course) o;
 
@@ -57,7 +58,8 @@ public class Course extends Entity {
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + hours;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (instructor != null ? instructor.hashCode() : 0);

@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class InstructorListAction extends Action {
-
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             try {

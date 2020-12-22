@@ -23,6 +23,7 @@ public class InstructorSaveAction extends Action {
         LOGGER.debug("Method entering.");
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
+        Long id = Long.parseLong(request.getParameter("id"));
         Ranks rank = null;
         try {
             rank = Ranks.valueOf(request.getParameter("rank"));
@@ -32,12 +33,6 @@ public class InstructorSaveAction extends Action {
         try {
             InstructorService instructorService = getServiceCreator().getInstructorService();
             if (name != null && !name.isBlank() && surname != null && !surname.isBlank() && rank != null) {
-                Long id = null;
-                try {
-                    id = Long.parseLong(request.getParameter("id"));
-                } catch (NumberFormatException e) {
-                    LOGGER.error(e.getLocalizedMessage());
-                }
                 Instructor instructor = new Instructor();
                 instructor.setId(id);
                 instructor.setName(name);

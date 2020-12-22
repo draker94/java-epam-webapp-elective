@@ -1,9 +1,17 @@
 package by.training.controller;
 
+import by.training.controller.course.CourseDeleteAction;
+import by.training.controller.course.CourseEditAction;
+import by.training.controller.course.CourseListAction;
+import by.training.controller.course.CourseSaveAction;
 import by.training.controller.instructor.InstructorDeleteAction;
 import by.training.controller.instructor.InstructorEditAction;
 import by.training.controller.instructor.InstructorListAction;
 import by.training.controller.instructor.InstructorSaveAction;
+import by.training.controller.student.StudentDeleteAction;
+import by.training.controller.student.StudentEditAction;
+import by.training.controller.student.StudentListAction;
+import by.training.controller.student.StudentSaveAction;
 import by.training.controller.user.UserDeleteAction;
 import by.training.controller.user.UserEditAction;
 import by.training.controller.user.UserListAction;
@@ -28,6 +36,14 @@ public class ActionFactory {
         actions.put("/instructor/edit", InstructorEditAction.class);
         actions.put("/instructor/save", InstructorSaveAction.class);
         actions.put("/instructor/delete", InstructorDeleteAction.class);
+        actions.put("/student/list", StudentListAction.class);
+        actions.put("/student/edit", StudentEditAction.class);
+        actions.put("/student/save", StudentSaveAction.class);
+        actions.put("/student/delete", StudentDeleteAction.class);
+        actions.put("/course/list", CourseListAction.class);
+        actions.put("/course/edit", CourseEditAction.class);
+        actions.put("/course/save", CourseSaveAction.class);
+        actions.put("/course/delete", CourseDeleteAction.class);
     }
 
     public static Action getAction(String url) throws ServletException {

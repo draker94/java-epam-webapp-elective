@@ -48,6 +48,7 @@ public class User extends Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
+        if (!super.equals(o)) return false;
 
         User user = (User) o;
 
@@ -59,7 +60,8 @@ public class User extends Entity {
 
     @Override
     public int hashCode() {
-        int result = login != null ? login.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (mail != null ? mail.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);

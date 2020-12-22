@@ -39,6 +39,7 @@ public class Instructor extends Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Instructor)) return false;
+        if (!super.equals(o)) return false;
 
         Instructor that = (Instructor) o;
 
@@ -49,7 +50,8 @@ public class Instructor extends Entity {
 
     @Override
     public int hashCode() {
-        int result = surname != null ? surname.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (rank != null ? rank.hashCode() : 0);
         return result;
