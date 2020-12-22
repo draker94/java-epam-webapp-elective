@@ -7,10 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="canSave" value="${true}"/>
-<c:url var="courseSaveUrl" value="/course/save.html">
-    <c:param name="isNewCourse" value="${(empty course) ? true : false}"/>
-</c:url>
+<c:url var="courseSaveUrl" value="/course/save.html"/>
 <c:choose>
     <c:when test="${not empty course}">
         <c:set var="title" value="Редактирование курса ${course.name}"/>
@@ -47,11 +44,11 @@
             </c:forEach>
         </select>
     <p>Колличество часов:
-        <input type="number" name="hours" value="${course.hours}"></p>
+        <input type="number" max="256" name="hours" value="${course.hours}"></p>
     </p>
     <p>Описание:
         <input type="text" size="100" maxlength="512" name="description" value="${course.description}"></p>
-    <button ${canSave ? ""  : "disabled=&quot;&quot;"} type="submit">Сохранить</button>
+    <button type="submit">Сохранить</button>
 </form>
 <c:url var="back" value="/course/list.html"/>
 <a href="${back}">Назад</a>
