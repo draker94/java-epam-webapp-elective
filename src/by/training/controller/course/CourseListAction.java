@@ -22,20 +22,10 @@ public class CourseListAction extends Action {
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             CourseService courseService = getServiceCreator().getCourseService();
-            InstructorService instructorService = getServiceCreator().getInstructorService();
             List<Course> coursesList = courseService.findAll();
             List<Course> freeCourses = courseService.findAllFreeCourses();
-            List<Instructor> instructorList = instructorService.findAll();
-            Map<Course, Instructor> courseInstructorMap = new HashMap<>();
-            for(Course course : coursesList) {
-                for(Instructor instructor : instructorList) {
-                    if(course.getInstructor().getId().equals(instructor.getId())) {
-                        courseInstructorMap.put(course, instructor);
-                    }
-                }
-            }
             request.setAttribute("freeCourses", freeCourses);
-            request.setAttribute("courseInstructorMap", courseInstructorMap);
+            request.setAttribute("coursesList", coursesList);
             return null;
         } catch (ServiceCreationException | ServiceException e) {
             throw new ServletException(e);

@@ -4,6 +4,7 @@ import by.training.connection.ConnectionPool;
 import by.training.connection.ConnectionPoolException;
 import by.training.dao.*;
 import by.training.dao.sql.*;
+import by.training.domain.Instructor;
 import by.training.service.*;
 import by.training.service.logic.*;
 import com.mysql.cj.log.Log;
@@ -109,6 +110,7 @@ public class ServiceCreator implements AutoCloseable {
         if (courseService == null) {
             CourseServiceImpl courseServiceImpl = new CourseServiceImpl();
             courseServiceImpl.setCourseDao(getCourseDao());
+            courseServiceImpl.setInstructorDao(getInstructorDao());
             courseService = courseServiceImpl;
         }
         return courseService;

@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserDao extends Dao<User, Long> {
     List<User> getUsersList() throws DaoException;
 
-    User getByLogin(String login) throws DaoException;
+    User getByLoginAndPass(String login, String password) throws DaoException;
 
     List<User> getFreeUsersList() throws DaoException;
 }

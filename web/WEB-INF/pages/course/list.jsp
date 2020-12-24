@@ -17,17 +17,17 @@
 <h1>Список курсов</h1>
 <c:url var="courseDeleteUrl" value="/course/delete.html"/>
 <form action="${courseDeleteUrl}" method="post">
-    <c:forEach var="entry" items="${courseInstructorMap}">
+    <c:forEach var="course" items="${coursesList}">
         <c:url var="courseEditUrl" value="/course/edit.html">
-            <c:param name="id" value="${entry.key.id}"/>
+            <c:param name="id" value="${course.id}"/>
         </c:url>
         <c:set var="contains" value="${false}"/>
-        <c:if test="${fn:contains(freeCourses, entry.key)}">
+        <c:if test="${fn:contains(freeCourses, course)}">
             <c:set var="contains" value="${true}"/>
         </c:if>
-        <li><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id" value="${entry.key.id}">
-            <a href="${courseEditUrl}">${entry.key.name}</a> ${entry.value.surname} ${entry.value.name} Длительность курса - ${entry.key.hours} часов
-            <details>${entry.key.description}</details>
+        <li><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id" value="${course.id}">
+            <a href="${courseEditUrl}">${course.name}</a> ${course.instructor.surname} ${course.instructor.name} Длительность курса - ${course.hours} часов
+            <details>${course.description}</details>
         </li>
     </c:forEach>
     <c:url var="courseEditUrl" value="/course/edit.html"/>

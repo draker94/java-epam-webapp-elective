@@ -72,21 +72,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByLogin(String login) throws ServiceException {
+    public User findByLoginAndPass(String login, String password) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            return userDao.getByLogin(login);
+            return userDao.getByLoginAndPass(login, password);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public boolean changePassword(String login, String oldPassword, String newPassword) throws ServiceException {
+    public boolean changePassword(Long id, String oldPassword, String newPassword) throws ServiceException {
         boolean isChanged = false;
         LOGGER.debug("Method entering.");
         try {
-            User user = userDao.getByLogin(login);
+            User user = userDao.read(id);
             if (user.getPassword().equals(oldPassword) && !(newPassword.isEmpty())) {
                 user.setPassword(newPassword);
                 userDao.update(user);
@@ -100,13 +100,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean changeMail(String login, String mail) throws ServiceException {
+    public boolean changeMail(Long id, String mail) throws ServiceException {
         boolean isChanged = false;
         LOGGER.debug("Method entering.");
         try {
-            User user = userDao.getByLogin(login);
-            if (user.getLogin().equals(login) &&
-                    mail.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\\b")) {
+            User user = userDao.read(id);
+            if (mail.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\\b")) {
                 user.setMail(mail);
                 userDao.update(user);
                 isChanged = true;

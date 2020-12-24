@@ -57,21 +57,22 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public User getByLogin(String login) throws DaoException {
-        String sql = "SELECT `id`, `password`, `e-mail`, `role` FROM `users` WHERE `login` = ?";
+    public User getByLoginAndPass(String login, String password) throws DaoException {
+        String sql = "SELECT `id`, `role`, `e-mail` FROM `users` WHERE `login` = ? AND  `password` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, login);
+            statement.setString(2, password);
             resultSet = statement.executeQuery();
             User user = null;
             if (resultSet.next()) {
                 user = new User();
                 user.setId(resultSet.getLong("id"));
                 user.setLogin(login);
-                user.setPassword(resultSet.getString("password"));
+                user.setPassword(password);
                 user.setMail(resultSet.getString("e-mail"));
                 user.setRole(Roles.values()[resultSet.getInt("role")]);
             }
@@ -184,6 +185,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         }
     }
 
+    //Возможно, следует сделать проверку на свободныз юзеров в сервисе?
     @Override
     public List<User> getFreeUsersList() throws DaoException {
         String sql = "SELECT `id`, `login`, `password`, `e-mail`, `role` FROM `users` " +

@@ -17,11 +17,11 @@ public interface UserService {
 
     void delete(List<Long> ids) throws ServiceException;
 
-    User findByLogin(String login) throws ServiceException;
+    User findByLoginAndPass(String login, String password) throws ServiceException;
 
-    boolean changePassword(String  login, String oldPassword, String newPassword) throws ServiceException;
+    boolean changePassword(Long id, String oldPassword, String newPassword) throws ServiceException;
 
-    boolean changeMail(String login, String mail) throws ServiceException;
+    boolean changeMail(Long id, String mail) throws ServiceException;
 
     List<User> findAllFreeUsers() throws ServiceException;
 }

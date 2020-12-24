@@ -1,9 +1,7 @@
 package by.training.controller;
 
 import by.training.connection.ConnectionPool;
-import by.training.di.ServiceCreationException;
 import by.training.di.ServiceCreator;
-import by.training.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -53,15 +51,11 @@ public class DispatcherServlet extends HttpServlet {
                 LOGGER.error("Action execute is done.");
             } catch (Exception e) {
                 LOGGER.error(e.getMessage());
-                throw new ServletException(e);
             }
         }
-        if (forward != null && forward.isRedirect()) {
+        if (forward != null) {
             response.sendRedirect(contextPath + forward.getUrl());
         } else {
-            if (forward != null && forward.getUrl() != null) {
-                requestURI = forward.getUrl();
-            }
             request.getRequestDispatcher("/WEB-INF/pages" + requestURI + ".jsp").forward(request, response);
         }
     }

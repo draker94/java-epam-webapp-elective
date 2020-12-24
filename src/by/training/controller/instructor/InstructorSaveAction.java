@@ -32,7 +32,7 @@ public class InstructorSaveAction extends Action {
         }
         try {
             InstructorService instructorService = getServiceCreator().getInstructorService();
-            if (name != null && !name.isBlank() && surname != null && !surname.isBlank() && rank != null) {
+            if (name != null && !name.isBlank() && surname != null && !surname.isBlank()) {
                 Instructor instructor = new Instructor();
                 instructor.setId(id);
                 instructor.setName(name);

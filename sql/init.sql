@@ -19,7 +19,7 @@ CREATE TABLE `instructors`
     `id`      INTEGER PRIMARY KEY NOT NULL,
     `surname` VARCHAR(100)        NOT NULL,
     `name`    VARCHAR(100)        NOT NULL,
-    `rank`    INTEGER        NOT NULL,
+    `rank`    INTEGER             NOT NULL,
     FOREIGN KEY (`id`) REFERENCES `users` (`id`)
         ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE = INNODB
@@ -36,24 +36,15 @@ CREATE TABLE `students`
 ) ENGINE = INNODB
   DEFAULT CHARACTER SET utf8;
 
-/* CREATE TABLE `admins`(
-`id` INTEGER PRIMARY KEY NOT NULL,
-`surname` VARCHAR(100) NOT NULL,
-`name` VARCHAR(100) NOT NULL,
-`position` VARCHAR(150) NOT NULL,
-FOREIGN KEY (`id`) REFERENCES `users`(`id`)
-ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=INNODB DEFAULT CHARACTER SET utf8; */
-
 CREATE TABLE `courses`
 (
     `id`            INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `name`          VARCHAR(100)        NOT NULL UNIQUE,
     `hours`         INTEGER             NOT NULL,
     `description`   TEXT                NOT NULL,
-    `instructor_id` INTEGER,
+    `instructor_id` INTEGER             NOT NULL,
     FOREIGN KEY (`instructor_id`) REFERENCES `instructors` (`id`)
-        ON DELETE SET NULL ON UPDATE RESTRICT
+        ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE = INNODB
   DEFAULT CHARACTER SET utf8;
 
@@ -104,13 +95,6 @@ INSERT INTO `students`
     (`id`, `surname`, `name`, `study_year`)
 VALUES (4, "Арамзанцева", "Алиса", 2),
        (5, "Егоров", "Егор", 2);
-
-/*
-INSERT INTO `admins`
-(`id`, `surname`, `name`, `position`)
-VALUES
-(0,    "Павел", "Павлович", "Лаборант");
- */
 
 INSERT INTO `courses`
     (`name`, `hours`, `description`, `instructor_id`)

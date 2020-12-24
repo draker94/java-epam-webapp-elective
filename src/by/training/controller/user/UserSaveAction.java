@@ -32,7 +32,7 @@ public class UserSaveAction extends Action {
         }
         try {
             UserService userService = getServiceCreator().getUserService();
-            if (login != null && !login.isBlank() && password != null && !password.isBlank() && role != null) {
+            if (login != null && !login.isBlank() && password != null && !password.isBlank()) {
                 Long id = null;
                 try {
                     id = Long.parseLong(request.getParameter("id"));
