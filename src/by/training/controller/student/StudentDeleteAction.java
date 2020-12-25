@@ -32,6 +32,7 @@ public class StudentDeleteAction extends Action {
             studentService.delete(idStrArr);
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e.getLocalizedMessage());
+            throw new ServletException(e);
         }
         return new Forward("/student/list.html");
     }

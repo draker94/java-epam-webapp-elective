@@ -28,7 +28,7 @@ public class UserSaveAction extends Action {
         try {
             role = Roles.valueOf(request.getParameter("role"));
         } catch (NullPointerException | IllegalArgumentException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            LOGGER.error(e);
         }
         try {
             UserService userService = getServiceCreator().getUserService();
@@ -37,7 +37,7 @@ public class UserSaveAction extends Action {
                 try {
                     id = Long.parseLong(request.getParameter("id"));
                 } catch (NumberFormatException e) {
-                    LOGGER.error(e.getLocalizedMessage());
+                    LOGGER.error(e);
                 }
                 User user = new User();
                 user.setId(id);
@@ -48,7 +48,8 @@ public class UserSaveAction extends Action {
                 userService.save(user);
             }
         } catch (ServiceException | ServiceCreationException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            LOGGER.error(e);
+            throw new ServletException(e);
         }
         return new Forward("/user/list.html");
     }

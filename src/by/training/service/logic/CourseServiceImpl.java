@@ -31,13 +31,8 @@ public class CourseServiceImpl implements CourseService {
         LOGGER.debug("Method entering.");
         try {
             List<Course> courseList = courseDao.getCoursesList();
-            List<Instructor> instructorsList = instructorDao.getInstructorsList();
-            for(Course course : courseList) {
-                for(Instructor instructor : instructorsList) {
-                    if(course.getInstructor().getId().equals(instructor.getId())) {
-                        course.setInstructor(instructor);
-                    }
-                }
+            for (Course course : courseList) {
+                course.setInstructor(instructorDao.read(course.getInstructor().getId()));
             }
             return courseList;
         } catch (DaoException e) {
@@ -54,7 +49,7 @@ public class CourseServiceImpl implements CourseService {
             if (condition.matches("\\d++")) {
                 Long id = Long.parseLong(condition);
                 courseListByInstructor = courseDao.getInstructorCoursesList(id);
-                for(Course course : courseListByInstructor) {
+                for (Course course : courseListByInstructor) {
                     course.setInstructor(instructorDao.read(id));
                 }
             } else {
@@ -77,9 +72,8 @@ public class CourseServiceImpl implements CourseService {
         LOGGER.debug("Method entering.");
         try {
             Course course = courseDao.read(id);
-            if(course != null) {
-                Instructor instructor = instructorDao.read(course.getInstructor().getId());
-                course.setInstructor(instructor);
+            if (course != null) {
+                course.setInstructor(instructorDao.read(course.getInstructor().getId()));
             }
             return course;
         } catch (DaoException e) {
@@ -107,7 +101,7 @@ public class CourseServiceImpl implements CourseService {
     public void delete(List<Long> ids) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            for(Long id : ids) {
+            for (Long id : ids) {
                 courseDao.delete(id, "courses");
             }
         } catch (DaoException e) {
@@ -120,13 +114,8 @@ public class CourseServiceImpl implements CourseService {
         LOGGER.debug("Method entering.");
         try {
             List<Course> freeCoursesList = courseDao.getFreeCoursesList();
-            List<Instructor> instructorsList = instructorDao.getInstructorsList();
-            for(Course course : freeCoursesList) {
-                for(Instructor instructor : instructorsList) {
-                    if(course.getInstructor().getId().equals(instructor.getId())) {
-                        course.setInstructor(instructor);
-                    }
-                }
+            for (Course course : freeCoursesList) {
+                course.setInstructor(instructorDao.read(course.getInstructor().getId()));
             }
             return freeCoursesList;
         } catch (DaoException e) {

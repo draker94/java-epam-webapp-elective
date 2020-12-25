@@ -1,5 +1,9 @@
 package by.training.controller;
 
+import by.training.controller.assignment.AssignmentDeleteAction;
+import by.training.controller.assignment.AssignmentEditAction;
+import by.training.controller.assignment.AssignmentListAction;
+import by.training.controller.assignment.AssignmentSaveAction;
 import by.training.controller.course.CourseDeleteAction;
 import by.training.controller.course.CourseEditAction;
 import by.training.controller.course.CourseListAction;
@@ -47,6 +51,10 @@ public class ActionFactory {
         actions.put("/course/edit", CourseEditAction.class);
         actions.put("/course/save", CourseSaveAction.class);
         actions.put("/course/delete", CourseDeleteAction.class);
+        actions.put("/assignment/list", AssignmentListAction.class);
+        actions.put("/assignment/edit", AssignmentEditAction.class);
+        actions.put("/assignment/save", AssignmentSaveAction.class);
+        actions.put("/assignment/delete", AssignmentDeleteAction.class);
     }
 
     public static Action getAction(String url) throws ServletException {

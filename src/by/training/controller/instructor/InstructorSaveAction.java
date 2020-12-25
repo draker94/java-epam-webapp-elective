@@ -46,6 +46,7 @@ public class InstructorSaveAction extends Action {
             }
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e.getLocalizedMessage());
+            throw new ServletException(e);
         }
         return new Forward("/instructor/list.html");
     }

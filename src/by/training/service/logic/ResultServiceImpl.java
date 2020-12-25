@@ -1,7 +1,9 @@
 package by.training.service.logic;
 
+import by.training.dao.AssignmentDao;
 import by.training.dao.DaoException;
 import by.training.dao.ResultDao;
+import by.training.domain.Assignment;
 import by.training.domain.Result;
 import by.training.service.ResultService;
 import by.training.service.ServiceException;
@@ -13,16 +15,25 @@ import java.util.List;
 public class ResultServiceImpl implements ResultService {
     private final static Logger LOGGER = LogManager.getLogger(ResultServiceImpl.class);
     private ResultDao resultDao;
+    private AssignmentDao assignmentDao;
 
     public void setResultDao(ResultDao resultDao) {
         this.resultDao = resultDao;
+    }
+
+    public void setAssignmentDao(AssignmentDao assignmentDao) {
+        this.assignmentDao = assignmentDao;
     }
 
     @Override
     public List<Result> findAll() throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            return resultDao.getResultsList();
+            List<Result> resultList = resultDao.getResultsList();
+            for(Result result : resultList) {
+                result.setAssignment(assignmentDao.read(result.getAssignment().getId()));
+            }
+            return resultList;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -32,7 +43,11 @@ public class ResultServiceImpl implements ResultService {
     public List<Result> findByMark(int from, int to) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            return resultDao.getListByMark(from, to);
+            List<Result> resultListByMark = resultDao.getListByMark(from, to);
+            for(Result result : resultListByMark) {
+                result.setAssignment(assignmentDao.read(result.getAssignment().getId()));
+            }
+            return resultListByMark;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -42,7 +57,9 @@ public class ResultServiceImpl implements ResultService {
     public Result findById(Long id) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            return resultDao.read(id);
+            Result result = resultDao.read(id);
+            result.setAssignment(assignmentDao.read(result.getAssignment().getId()));
+            return result;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

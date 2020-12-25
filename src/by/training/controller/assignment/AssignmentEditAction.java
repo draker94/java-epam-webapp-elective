@@ -1,14 +1,14 @@
-package by.training.controller.student;
+package by.training.controller.assignment;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
+import by.training.controller.user.UserSaveAction;
 import by.training.di.ServiceCreationException;
+import by.training.domain.Assignment;
+import by.training.domain.Course;
+import by.training.domain.Instructor;
 import by.training.domain.Student;
-import by.training.domain.User;
-import by.training.enums.Roles;
-import by.training.service.ServiceException;
-import by.training.service.StudentService;
-import by.training.service.UserService;
+import by.training.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,28 +18,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class StudentEditAction extends Action {
-    private static final Logger LOGGER = LogManager.getLogger(StudentEditAction.class);
+public class AssignmentEditAction extends Action {
+    private static final Logger LOGGER = LogManager.getLogger(AssignmentEditAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         try {
+            AssignmentService assignmentService = getServiceCreator().getAssignmentService();
             StudentService studentService = getServiceCreator().getStudentService();
+            CourseService courseService = getServiceCreator().getCourseService();
+            List<Student> studentList = studentService.findAll();
+            List<Course> courseList = courseService.findAll();
+            request.setAttribute("studentList", studentList);
+            request.setAttribute("courseList", courseList);
             if (id != null) {
-                Student student = studentService.findById(Long.parseLong(id));
-                if (student != null) {
-                    request.setAttribute("student", student);
+                Assignment assignment = assignmentService.findById(Long.parseLong(id));
+                LOGGER.debug(assignment);
+                if (assignment != null) {
+                    request.setAttribute("assignment", assignment);
                 } else {
                     throw new IllegalArgumentException();
                 }
-            } else {
-                UserService userService = getServiceCreator().getUserService();
-                List<User> freeUsersList = userService.findAllFreeUsers();
-                freeUsersList.removeIf(user -> user.getRole() == Roles.ADMINISTRATOR || user.getRole() == Roles.INSTRUCTOR);
-                LOGGER.debug("Free Users List cases (for Students): ");
-                freeUsersList.forEach(LOGGER::debug);
-                request.setAttribute("freeUsersList", freeUsersList);
             }
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);

@@ -30,6 +30,7 @@ public class InstructorDeleteAction extends Action {
             instructorService.delete(idStrArr);
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e.getLocalizedMessage());
+            throw new ServletException(e);
         }
         return new Forward("/instructor/list.html");
     }

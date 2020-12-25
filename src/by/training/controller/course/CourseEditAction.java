@@ -42,8 +42,10 @@ public class CourseEditAction extends Action {
                 }
             }
         } catch (ServiceException | ServiceCreationException e) {
+            LOGGER.error(e);
             throw new ServletException(e);
         } catch (IllegalArgumentException e) {
+            LOGGER.error(e);
             response.sendError(404);
             return null;
         }

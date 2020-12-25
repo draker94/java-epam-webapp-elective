@@ -74,6 +74,7 @@ public class ServiceCreator implements AutoCloseable {
         if (resultService == null) {
             ResultServiceImpl resultServiceImpl = new ResultServiceImpl();
             resultServiceImpl.setResultDao(getResultDao());
+            resultServiceImpl.setAssignmentDao(getAssignmentDao());
             resultService = resultServiceImpl;
         }
         return resultService;
@@ -129,11 +130,12 @@ public class ServiceCreator implements AutoCloseable {
         if (assignmentDao == null) {
             AssignmentServiceImpl assignmentServiceImpl = new AssignmentServiceImpl();
             assignmentServiceImpl.setAssignmentDao(getAssignmentDao());
+            assignmentServiceImpl.setStudentDao(getStudentDao());
+            assignmentServiceImpl.setCourseDao(getCourseDao());
             assignmentService = assignmentServiceImpl;
         }
         return assignmentService;
     }
-
 
     private AssignmentDao getAssignmentDao() throws ServiceCreationException {
         if (assignmentDao == null) {

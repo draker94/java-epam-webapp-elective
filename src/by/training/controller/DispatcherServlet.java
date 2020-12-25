@@ -48,12 +48,16 @@ public class DispatcherServlet extends HttpServlet {
             try (ServiceCreator serviceCreator = new ServiceCreator()) {
                 action.setServiceCreator(serviceCreator);
                 forward = action.execute(request, response);
-                LOGGER.error("Action execute is done.");
+                LOGGER.debug("Action execute is done.");
             } catch (Exception e) {
-                LOGGER.error(e.getMessage());
+                LOGGER.error(e);
+                request.setAttribute("error", e.getLocalizedMessage());
+                request.setAttribute("url", contextPath + "/");
+                requestURI = "/error";
             }
         }
         if (forward != null) {
+            LOGGER.debug(contextPath + forward.getUrl());
             response.sendRedirect(contextPath + forward.getUrl());
         } else {
             request.getRequestDispatcher("/WEB-INF/pages" + requestURI + ".jsp").forward(request, response);

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class StudentSaveAction extends Action {
-    private static final Logger LOGGER = LogManager.getLogger(InstructorSaveAction.class);
+    private static final Logger LOGGER = LogManager.getLogger(StudentSaveAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,6 +41,7 @@ public class StudentSaveAction extends Action {
             }
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e.getLocalizedMessage());
+            throw new ServletException(e);
         }
         return new Forward("/student/list.html");
     }

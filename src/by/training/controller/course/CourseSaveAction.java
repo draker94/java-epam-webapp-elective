@@ -45,7 +45,8 @@ public class CourseSaveAction extends Action {
                 courseService.save(course);
             }
         } catch (ServiceException | ServiceCreationException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            LOGGER.error(e);
+            throw new ServletException(e);
         }
         return new Forward("/course/list.html");
     }

@@ -1,10 +1,12 @@
-package by.training.controller.user;
+package by.training.controller.assignment;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
+import by.training.controller.course.CourseDeleteAction;
 import by.training.di.ServiceCreationException;
+import by.training.service.AssignmentService;
+import by.training.service.CourseService;
 import by.training.service.ServiceException;
-import by.training.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,24 +17,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDeleteAction extends Action {
-    private static final Logger LOGGER = LogManager.getLogger(UserDeleteAction.class);
+public class AssignmentDeleteAction extends Action {
+    private static final Logger LOGGER = LogManager.getLogger(AssignmentDeleteAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idStr[] = request.getParameterValues("id");
         List<Long> idStrArr = new ArrayList<>(idStr.length);
         try {
-            UserService userService = getServiceCreator().getUserService();
-            for(String id : idStr) {
+            AssignmentService assignmentService = getServiceCreator().getAssignmentService();
+            for (String id : idStr) {
                 idStrArr.add(Long.valueOf(id));
             }
-            userService.delete(idStrArr);
-        }
-        catch (ServiceCreationException | ServiceException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            assignmentService.delete(idStrArr);
+        } catch (ServiceCreationException | ServiceException e) {
+            LOGGER.error(e);
             throw new ServletException(e);
         }
-        return new Forward("/user/list.html");
+        return new Forward("/assignment/list.html");
     }
 }
