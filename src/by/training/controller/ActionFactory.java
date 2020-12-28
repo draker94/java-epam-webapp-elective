@@ -12,6 +12,10 @@ import by.training.controller.instructor.InstructorDeleteAction;
 import by.training.controller.instructor.InstructorEditAction;
 import by.training.controller.instructor.InstructorListAction;
 import by.training.controller.instructor.InstructorSaveAction;
+import by.training.controller.result.ResultDeleteAction;
+import by.training.controller.result.ResultEditAction;
+import by.training.controller.result.ResultListAction;
+import by.training.controller.result.ResultSaveAction;
 import by.training.controller.student.StudentDeleteAction;
 import by.training.controller.student.StudentEditAction;
 import by.training.controller.student.StudentListAction;
@@ -24,6 +28,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +60,10 @@ public class ActionFactory {
         actions.put("/assignment/edit", AssignmentEditAction.class);
         actions.put("/assignment/save", AssignmentSaveAction.class);
         actions.put("/assignment/delete", AssignmentDeleteAction.class);
+        actions.put("/result/list", ResultListAction.class);
+        actions.put("/result/edit", ResultEditAction.class);
+        actions.put("/result/save", ResultSaveAction.class);
+        actions.put("/result/delete", ResultDeleteAction.class);
     }
 
     public static Action getAction(String url) throws ServletException {
@@ -62,8 +71,8 @@ public class ActionFactory {
         LOGGER.debug("Action - " + url);
         if (aClass != null) {
             try {
-                return (Action) aClass.newInstance();
-            } catch (IllegalAccessException | InstantiationException e) {
+                return (Action) aClass.getConstructor().newInstance();
+            } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
                 throw new ServletException(e);
             }
         }

@@ -27,7 +27,7 @@ public class StudentSaveAction extends Action {
         int studyYear = Integer.parseInt(request.getParameter("studyYear"));
         try {
             StudentService studentService = getServiceCreator().getStudentService();
-            if (name != null && !name.isBlank() && surname != null && !surname.isBlank()) {
+            if (name != null && !name.isBlank() && surname != null && !surname.isBlank() && studyYear != 0) {
                 Student student = new Student();
                 student.setId(id);
                 student.setName(name);

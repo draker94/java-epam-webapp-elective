@@ -43,6 +43,7 @@
                 <option value="${instructor.id}" ${selected}>${instructor.name} ${instructor.surname}</option>
             </c:forEach>
         </select>
+    </p>
     <p>Колличество часов:
         <input type="number" max="256" name="hours" value="${course.hours}"></p>
     </p>

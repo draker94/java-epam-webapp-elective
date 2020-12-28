@@ -11,26 +11,41 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Instructors List</title>
+    <title>Список преподавателей</title>
 </head>
 <body>
-<h1>Instructors List</h1>
 <c:url var="instructorDeleteUrl" value="/instructor/delete.html"/>
 <form action="${instructorDeleteUrl}" method="post">
-    <c:forEach var="instructor" items="${instructors}">
-        <c:url var="instructorEditUrl" value="/instructor/edit.html">
-            <c:param name="id" value="${instructor.id}"/>
-        </c:url>
-        <c:set var="contains" value="${false}"/>
-        <c:if test="${fn:contains(freeInstructors, instructor)}">
-            <c:set var="contains" value="${true}"/>
-        </c:if>
-        <li><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id" value="${instructor.id}">
-            <a href="${instructorEditUrl}">${instructor.name} ${instructor.surname}</a></li>
-    </c:forEach>
-    <c:url var="instructorEditUrl" value="/instructor/edit.html"/>
-    <a href="${instructorEditUrl}">Добавить преподавателя</a>
+    <table border="1">
+        <caption>Список преподавателей</caption>
+        <tr>
+            <th>Удалить</th>
+            <th>Редактивать</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Учёное звание</th>
+        </tr>
+        <c:forEach var="instructor" items="${instructors}">
+            <c:url var="instructorEditUrl" value="/instructor/edit.html">
+                <c:param name="id" value="${instructor.id}"/>
+            </c:url>
+            <c:set var="contains" value="${false}"/>
+            <c:if test="${fn:contains(freeInstructors, instructor)}">
+                <c:set var="contains" value="${true}"/>
+            </c:if>
+            <tr>
+                <td><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id"
+                           value="${instructor.id}"></td>
+                <td><a href="${instructorEditUrl}">ред.</a></td>
+                <td>${instructor.surname}</td>
+                <td>${instructor.name}</td>
+                <td>${instructor.rank.name}</td>
+            </tr>
+        </c:forEach>
+    </table>
     <button type="submit">Удалить</button>
 </form>
+<c:url var="instructorEditUrl" value="/instructor/edit.html"/>
+<a href="${instructorEditUrl}">Добавить преподавателя</a>
 </body>
 </html>

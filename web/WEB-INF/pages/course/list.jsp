@@ -14,25 +14,40 @@
     <title>Список курсов</title>
 </head>
 <body>
-<h1>Список курсов</h1>
 <c:url var="courseDeleteUrl" value="/course/delete.html"/>
 <form action="${courseDeleteUrl}" method="post">
-    <c:forEach var="course" items="${coursesList}">
-        <c:url var="courseEditUrl" value="/course/edit.html">
-            <c:param name="id" value="${course.id}"/>
-        </c:url>
-        <c:set var="contains" value="${false}"/>
-        <c:if test="${fn:contains(freeCourses, course)}">
-            <c:set var="contains" value="${true}"/>
-        </c:if>
-        <li><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id" value="${course.id}">
-            <a href="${courseEditUrl}">${course.name}</a> ${course.instructor.surname} ${course.instructor.name} Длительность курса - ${course.hours} часов
-            <details>${course.description}</details>
-        </li>
-    </c:forEach>
-    <c:url var="courseEditUrl" value="/course/edit.html"/>
-    <a href="${courseEditUrl}">Создать новый курс</a>
-    <p><button type="submit">Удалить</button></p>
+    <table border="1">
+        <caption>Список курсов</caption>
+        <tr>
+            <th>Удалить</th>
+            <th>Редактивать</th>
+            <th>Название</th>
+            <th>Колличество часов</th>
+            <th>Преподаватель</th>
+            <th>Описание</th>
+        </tr>
+        <c:forEach var="course" items="${coursesList}">
+            <c:url var="courseEditUrl" value="/course/edit.html">
+                <c:param name="id" value="${course.id}"/>
+            </c:url>
+            <c:set var="contains" value="${false}"/>
+            <c:if test="${fn:contains(freeCourses, course)}">
+                <c:set var="contains" value="${true}"/>
+            </c:if>
+            <tr>
+                <td><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id" value="${course.id}">
+                </td>
+                <td><a href="${courseEditUrl}">ред.</a></td>
+                <td>${course.name}</td>
+                <td>${course.hours}</td>
+                <td>${course.instructor.surname} ${course.instructor.name}</td>
+                <td>${course.description}</td>
+            </tr>
+        </c:forEach>
+    </table>
+    <button type="submit">Удалить</button>
 </form>
+<c:url var="courseEditUrl" value="/course/edit.html"/>
+<a href="${courseEditUrl}">Создать новый курс</a>
 </body>
 </html>

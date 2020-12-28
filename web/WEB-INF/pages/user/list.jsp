@@ -11,13 +11,22 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>User List</title>
+    <title>Список пользователей</title>
 </head>
-<body>
-<h1>User List</h1>
 <c:url var="userDeleteUrl" value="/user/delete.html"/>
 <form action="${userDeleteUrl}" method="post">
-    <c:forEach var="user" items="${users}">
+    <table border="1">
+        <caption>Список пользователей</caption>
+        <tr>
+            <th>Удалить</th>
+            <th>Редактивать</th>
+            <th>ID</th>
+            <th>Логин</th>
+            <th>Пароль</th>
+            <th>E-mail</th>
+            <th>Роль</th>
+        </tr>
+        <c:forEach var="user" items="${users}">
         <c:url var="userEditUrl" value="/user/edit.html">
             <c:param name="id" value="${user.id}"/>
         </c:url>
@@ -25,12 +34,20 @@
         <c:if test="${fn:contains(freeUsers, user)}">
             <c:set var="contains" value="${true}"/>
         </c:if>
-        <li> <input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id" value="${user.id}">
-            <a href="${userEditUrl}">${user.login}</a> [${user.role}]</li>
-    </c:forEach>
-    <c:url var="userEditUrl" value="/user/edit.html"/>
-    <a href="${userEditUrl}">Добавить юзера</a>
+        <tr>
+            <td><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id" value="${user.id}"></td>
+            <td><a href="${userEditUrl}">ред.</a></td>
+            <td>${user.id}</td>
+            <td>${user.login}</td>
+            <td>${user.password}</td>
+            <td>${user.mail}</td>
+            <td>${user.role.name}</td>
+            </c:forEach>
+        </tr>
+    </table>
     <button type="submit">Удалить</button>
 </form>
+<c:url var="userEditUrl" value="/user/edit.html"/>
+<a href="${userEditUrl}">Добавить пользователя</a>
 </body>
 </html>

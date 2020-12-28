@@ -58,12 +58,12 @@
             <c:otherwise>
                 <select name="id">
                     <c:forEach var="user" items="${freeUsersList}">
-                        <option value="${user.id}">${user.id} ${user.login} [${user.role}]</option>
+                        <option value="${user.id}">${user.login} [${user.role.name}]</option>
                     </c:forEach>
                 </select>
             </c:otherwise>
         </c:choose>
-    </c:if>>
+    </c:if>
     <button ${canSave ? ""  : "disabled=&quot;&quot;"} type="submit">Сохранить</button>
 </form>
 <c:url var="back" value="/instructor/list.html"/>

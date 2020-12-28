@@ -43,7 +43,6 @@
                 <option value="${student.id}" ${selected}>${student.name} ${student.surname}</option>
             </c:forEach>
         </select>
-
     </p>
     <p>Курс:
         <select name="courseId">

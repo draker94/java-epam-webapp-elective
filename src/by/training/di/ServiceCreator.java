@@ -75,6 +75,8 @@ public class ServiceCreator implements AutoCloseable {
             ResultServiceImpl resultServiceImpl = new ResultServiceImpl();
             resultServiceImpl.setResultDao(getResultDao());
             resultServiceImpl.setAssignmentDao(getAssignmentDao());
+            resultServiceImpl.setCourseDao(getCourseDao());
+            resultServiceImpl.setStudentDao(getStudentDao());
             resultService = resultServiceImpl;
         }
         return resultService;

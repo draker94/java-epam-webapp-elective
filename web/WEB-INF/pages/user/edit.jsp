@@ -45,7 +45,7 @@
                         </c:otherwise>
                     </c:choose>
                     <option value="${role}"${selected}>${role.name}</option>
-                </c:forEach>>
+                </c:forEach>
             </select>
     </p>
     <button type="submit">Сохранить</button>

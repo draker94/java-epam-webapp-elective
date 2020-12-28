@@ -1,8 +1,6 @@
 package by.training.service.logic;
 
-import by.training.dao.AssignmentDao;
-import by.training.dao.DaoException;
-import by.training.dao.ResultDao;
+import by.training.dao.*;
 import by.training.domain.Assignment;
 import by.training.domain.Result;
 import by.training.service.ResultService;
@@ -16,6 +14,8 @@ public class ResultServiceImpl implements ResultService {
     private final static Logger LOGGER = LogManager.getLogger(ResultServiceImpl.class);
     private ResultDao resultDao;
     private AssignmentDao assignmentDao;
+    private StudentDao studentDao;
+    private CourseDao courseDao;
 
     public void setResultDao(ResultDao resultDao) {
         this.resultDao = resultDao;
@@ -25,6 +25,14 @@ public class ResultServiceImpl implements ResultService {
         this.assignmentDao = assignmentDao;
     }
 
+    public void setStudentDao(StudentDao studentDao) {
+        this.studentDao = studentDao;
+    }
+
+    public void setCourseDao(CourseDao courseDao) {
+        this.courseDao = courseDao;
+    }
+
     @Override
     public List<Result> findAll() throws ServiceException {
         LOGGER.debug("Method entering.");
@@ -32,6 +40,8 @@ public class ResultServiceImpl implements ResultService {
             List<Result> resultList = resultDao.getResultsList();
             for(Result result : resultList) {
                 result.setAssignment(assignmentDao.read(result.getAssignment().getId()));
+                result.getAssignment().setCourse(courseDao.read(result.getAssignment().getCourse().getId()));
+                result.getAssignment().setStudent(studentDao.read(result.getAssignment().getStudent().getId()));
             }
             return resultList;
         } catch (DaoException e) {
@@ -46,6 +56,8 @@ public class ResultServiceImpl implements ResultService {
             List<Result> resultListByMark = resultDao.getListByMark(from, to);
             for(Result result : resultListByMark) {
                 result.setAssignment(assignmentDao.read(result.getAssignment().getId()));
+                result.getAssignment().setCourse(courseDao.read(result.getAssignment().getCourse().getId()));
+                result.getAssignment().setStudent(studentDao.read(result.getAssignment().getStudent().getId()));
             }
             return resultListByMark;
         } catch (DaoException e) {
@@ -59,6 +71,8 @@ public class ResultServiceImpl implements ResultService {
         try {
             Result result = resultDao.read(id);
             result.setAssignment(assignmentDao.read(result.getAssignment().getId()));
+            result.getAssignment().setCourse(courseDao.read(result.getAssignment().getCourse().getId()));
+            result.getAssignment().setStudent(studentDao.read(result.getAssignment().getStudent().getId()));
             return result;
         } catch (DaoException e) {
             throw new ServiceException(e);

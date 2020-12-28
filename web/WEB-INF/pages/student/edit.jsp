@@ -63,7 +63,7 @@
                 </select>
             </c:otherwise>
         </c:choose>
-    </c:if>>
+    </c:if>
     <button ${canSave ? ""  : "disabled=&quot;&quot;"} type="submit">Сохранить</button>
 </form>
 <c:url var="back" value="/student/list.html"/>

@@ -11,31 +11,43 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Список записанных на курсы</title>
+    <title>Записи на курсы</title>
 </head>
 <body>
-<h1>Список записанных на курсы</h1>
 <c:url var="assignmentDeleteUrl" value="/assignment/delete.html"/>
 <form action="${assignmentDeleteUrl}" method="post">
-    <c:forEach var="assignment" items="${assignmentList}">
-        <c:url var="assignmentEditUrl" value="/assignment/edit.html">
-            <c:param name="id" value="${assignment.id}"/>
-        </c:url>
-        <c:set var="contains" value="${false}"/>
-        <c:if test="${fn:contains(freeAssignments, assignment)}">
-            <c:set var="contains" value="${true}"/>
-        </c:if>
-        <li><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id" value="${assignment.id}">
-            <a href="${assignmentEditUrl}">ред. </a>
-            Студент - ${assignment.student.surname} ${assignment.student.name} Записан на курс: ${assignment.course.name}
-            Начало обучения - ${assignment.beginDate}, конец ${assignment.endDate}
-        </li>
-    </c:forEach>
-    <c:url var="assignmentEditUrl" value="/assignment/edit.html"/>
-    <a href="${assignmentEditUrl}">Добавить новый курс обучения для студента</a>
-    <p>
-        <button type="submit">Удалить</button>
-    </p>
+    <table border="1">
+        <caption>Записи на курсы</caption>
+        <tr>
+            <th>Удалить</th>
+            <th>Редактивать</th>
+            <th>Курс</th>
+            <th>Студент</th>
+            <th>Начало обучения</th>
+            <th>Конец обучения</th>
+        </tr>
+        <c:forEach var="assignment" items="${assignmentList}">
+            <c:url var="assignmentEditUrl" value="/assignment/edit.html">
+                <c:param name="id" value="${assignment.id}"/>
+            </c:url>
+            <c:set var="contains" value="${false}"/>
+            <c:if test="${fn:contains(freeAssignments, assignment)}">
+                <c:set var="contains" value="${true}"/>
+            </c:if>
+            <tr>
+                <td><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id"
+                           value="${assignment.id}"></td>
+                <td><a href="${assignmentEditUrl}">ред.</a></td>
+                <td>${assignment.course.name}</td>
+                <td>${assignment.student.surname} ${assignment.student.name}</td>
+                <td>${assignment.beginDate}</td>
+                <td>${assignment.endDate}</td>
+            </tr>
+        </c:forEach>
+    </table>
+    <button type="submit">Удалить</button>
 </form>
+<c:url var="assignmentEditUrl" value="/assignment/edit.html"/>
+<a href="${assignmentEditUrl}">Добавить новый курс обучения для студента</a>
 </body>
 </html>
