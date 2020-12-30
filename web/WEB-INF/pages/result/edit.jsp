@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag"%>
 <c:url var="resultSaveUrl" value="/result/save.html"/>
 <c:set var="create" value="${empty result}"/>
 <c:choose>
@@ -19,12 +20,7 @@
         <c:set var="title" value="Выставление новой оценке"/>
     </c:otherwise>
 </c:choose>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>${title}</title>
-</head>
-<body>
+<tag:head title="${title}">
 <h1>${title}</h1>
 <form action="${resultSaveUrl}" method="post">
     <c:if test="${not create}">
@@ -71,5 +67,4 @@
 </form>
 <c:url var="back" value="/result/list.html"/>
 <a href="${back}">Назад</a>
-</body>
-</html>
+</tag:head>

@@ -7,13 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tag/contains-function.tld" prefix="fn" %>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Результаты прохождения курсов</title>
-</head>
-<body>
+<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag"%>
+<tag:head title="Результаты прохождения курсов">
 <c:url var="resultDeleteUrl" value="/result/delete.html"/>
 <form action="${resultDeleteUrl}" method="post">
     <table border="1">
@@ -46,5 +41,4 @@
 </form>
 <c:url var="resultEditUrl" value="/result/edit.html"/>
 <a href="${resultEditUrl}">Выставить новую отметку</a>
-</body>
-</html>
+</tag:head>

@@ -5,7 +5,11 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
         version="2.1">
     <tlib-version>1.0</tlib-version>
-    <short-name>contains</short-name>
+    <short-name>Tags</short-name>
+    <tag-file>
+        <name>head</name>
+        <path>/WEB-INF/tags/head.tag</path>
+    </tag-file>
     <function>
         <name>contains</name>
         <function-class>by.training.util.JstlArrayContainsCheck</function-class>

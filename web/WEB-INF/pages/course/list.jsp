@@ -7,13 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tag/contains-function.tld" prefix="fn" %>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Список курсов</title>
-</head>
-<body>
+<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag"%>
+<tag:head title="Список курсов">
 <c:url var="courseDeleteUrl" value="/course/delete.html"/>
 <form action="${courseDeleteUrl}" method="post">
     <table border="1">
@@ -31,7 +26,7 @@
                 <c:param name="id" value="${course.id}"/>
             </c:url>
             <c:set var="contains" value="${false}"/>
-            <c:if test="${fn:contains(freeCourses, course)}">
+            <c:if test="${tag:contains(freeCourses, course)}">
                 <c:set var="contains" value="${true}"/>
             </c:if>
             <tr>
@@ -49,5 +44,4 @@
 </form>
 <c:url var="courseEditUrl" value="/course/edit.html"/>
 <a href="${courseEditUrl}">Создать новый курс</a>
-</body>
-</html>
+</tag:head>

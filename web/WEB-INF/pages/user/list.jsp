@@ -7,12 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tag/contains-function.tld" prefix="fn" %>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Список пользователей</title>
-</head>
+<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
+<tag:head title="Список пользователей">
 <c:url var="userDeleteUrl" value="/user/delete.html"/>
 <form action="${userDeleteUrl}" method="post">
     <table border="1">
@@ -31,7 +27,7 @@
             <c:param name="id" value="${user.id}"/>
         </c:url>
         <c:set var="contains" value="${false}"/>
-        <c:if test="${fn:contains(freeUsers, user)}">
+        <c:if test="${tag:contains(freeUsers, user)}">
             <c:set var="contains" value="${true}"/>
         </c:if>
         <tr>
@@ -49,5 +45,4 @@
 </form>
 <c:url var="userEditUrl" value="/user/edit.html"/>
 <a href="${userEditUrl}">Добавить пользователя</a>
-</body>
-</html>
+</tag:head>

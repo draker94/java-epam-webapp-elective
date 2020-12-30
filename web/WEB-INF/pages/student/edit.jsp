@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag"%>
 <c:set var="canSave" value="${true}"/>
 <c:url var="studentSaveUrl" value="/student/save.html">
     <c:param name="isNewStudent" value="${(not empty freeUsersList) ? true : false}"/>
@@ -19,13 +20,7 @@
         <c:set var="title" value="Создание профиля студента"/>
     </c:otherwise>
 </c:choose>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>${title}</title>
-</head>
-<body>
-<h1>${title}</h1>
+<tag:head title="${title}">
 <form action="${studentSaveUrl}" method="post">
     <c:if test="${not empty student}">
         <input type="hidden" name="id" value="${student.id}">
@@ -68,5 +63,4 @@
 </form>
 <c:url var="back" value="/student/list.html"/>
 <a href="${back}">Назад</a>
-</body>
-</html>
+</tag:head>

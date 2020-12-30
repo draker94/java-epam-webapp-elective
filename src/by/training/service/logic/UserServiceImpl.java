@@ -2,7 +2,6 @@ package by.training.service.logic;
 
 import by.training.dao.DaoException;
 import by.training.dao.UserDao;
-import by.training.dao.sql.UserDaoImpl;
 import by.training.domain.User;
 import by.training.service.ServiceException;
 import by.training.service.UserService;
@@ -63,7 +62,7 @@ public class UserServiceImpl implements UserService {
     public void delete(List<Long> ids) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            for(Long id : ids) {
+            for (Long id : ids) {
                 userDao.delete(id, "users");
             }
         } catch (DaoException e) {
@@ -82,38 +81,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean changePassword(Long id, String oldPassword, String newPassword) throws ServiceException {
-        boolean isChanged = false;
+    public void changePassword(Long id, String newPassword) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
             User user = userDao.read(id);
-            if (user.getPassword().equals(oldPassword) && !(newPassword.isEmpty())) {
-                user.setPassword(newPassword);
-                userDao.update(user);
-                isChanged = true;
-            }
+            user.setPassword(newPassword);
+            userDao.update(user);
         } catch (DaoException e) {
             throw new ServiceException(e);
-        } finally {
-            return isChanged;
         }
     }
 
     @Override
-    public boolean changeMail(Long id, String mail) throws ServiceException {
-        boolean isChanged = false;
+    public void changeMail(Long id, String mail) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
             User user = userDao.read(id);
-            if (mail.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\\b")) {
-                user.setMail(mail);
-                userDao.update(user);
-                isChanged = true;
-            }
+            user.setMail(mail);
+            userDao.update(user);
         } catch (DaoException e) {
             throw new ServiceException(e);
-        } finally {
-            return isChanged;
         }
     }
 

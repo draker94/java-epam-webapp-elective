@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
 <c:choose>
     <c:when test="${not empty user}">
         <c:set var="title" value="Редактирование пользователя ${user.login}"/>
@@ -15,25 +16,19 @@
         <c:set var="title" value="Создание пользователя"/>
     </c:otherwise>
 </c:choose>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>${title}</title>
-</head>
-<body>
-<h1>${title}</h1>
-<c:url var="userSaveUrl" value="/user/save.html"/>
-<form action="${userSaveUrl}" method="post">
-     <c:if test="${not empty user}">
-        <input type="hidden" name="id" value="${user.id}">
-    </c:if>
-    <p>Имя пользователя:
-        <input type="text" name="login" value="${user.login}"></p>
-    <p>Пароль:
-        <input type="text" name="password" value="${user.password}"></p>
-    <p>E-mail:
-        <input type="text" name="mail" value="${user.mail}"></p>
-    <p>Роль:
+<tag:head title="${title}">
+    <c:url var="userSaveUrl" value="/user/save.html"/>
+    <form action="${userSaveUrl}" method="post">
+        <c:if test="${not empty user}">
+            <input type="hidden" name="id" value="${user.id}">
+        </c:if>
+        <p>Имя пользователя:
+            <input type="text" name="login" value="${user.login}"></p>
+        <p>Пароль:
+            <input type="text" name="password" value="${user.password}"></p>
+        <p>E-mail:
+            <input type="text" name="mail" value="${user.mail}"></p>
+        <p>Роль:
             <select name="role">
                 <c:forEach var="role" items="${roles}">
                     <c:choose>
@@ -47,8 +42,9 @@
                     <option value="${role}"${selected}>${role.name}</option>
                 </c:forEach>
             </select>
-    </p>
-    <button type="submit">Сохранить</button>
-</form>
-</body>
-</html>
+        </p>
+        <button type="submit">Сохранить</button>
+    </form>
+    <c:url var="back" value="/assignment/list.html"/>
+    <a href="${back}">Назад</a>
+</tag:head>

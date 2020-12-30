@@ -7,12 +7,10 @@ import by.training.enums.Roles;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Andrey Kliuchnikov
@@ -58,7 +56,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
     public User getByLoginAndPass(String login, String password) throws DaoException {
-        String sql = "SELECT `id`, `role`, `e-mail` FROM `users` WHERE `login` = ? AND  `password` = ?";
+        String sql = "SELECT `id`, `role`, `e-mail` FROM `users` WHERE `login` = ? AND `password` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         LOGGER.debug("Method entering.");
@@ -185,7 +183,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         }
     }
 
-    //Возможно, следует сделать проверку на свободныз юзеров в сервисе?
     @Override
     public List<User> getFreeUsersList() throws DaoException {
         String sql = "SELECT `id`, `login`, `password`, `e-mail`, `role` FROM `users` " +

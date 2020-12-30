@@ -3,6 +3,7 @@ package by.training.dao;
 import by.training.domain.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Andrey Kliuchnikov

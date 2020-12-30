@@ -32,8 +32,7 @@ public class LoginAction extends Action {
             } else {
                 return null;
             }
-        } catch (ServiceCreationException |
-                ServiceException e) {
+        } catch (ServiceCreationException | ServiceException e) {
             throw new ServletException(e);
         }
     }

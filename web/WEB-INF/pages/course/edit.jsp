@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag"%>
 <c:url var="courseSaveUrl" value="/course/save.html"/>
 <c:choose>
     <c:when test="${not empty course}">
@@ -16,13 +17,7 @@
         <c:set var="title" value="Создание нового курса"/>
     </c:otherwise>
 </c:choose>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>${title}</title>
-</head>
-<body>
-<h1>${title}</h1>
+<tag:head title="${title}">
 <form action="${courseSaveUrl}" method="post">
     <c:if test="${not empty course}">
         <input type="hidden" name="id" value="${course.id}">
@@ -53,5 +48,4 @@
 </form>
 <c:url var="back" value="/course/list.html"/>
 <a href="${back}">Назад</a>
-</body>
-</html>
+</tag:head>
