@@ -1,5 +1,7 @@
 package by.training.controller;
 
+import by.training.controller.account.AccountEnterAction;
+import by.training.controller.account.AccountUpdateAction;
 import by.training.controller.assignment.AssignmentDeleteAction;
 import by.training.controller.assignment.AssignmentEditAction;
 import by.training.controller.assignment.AssignmentListAction;
@@ -12,6 +14,9 @@ import by.training.controller.instructor.InstructorDeleteAction;
 import by.training.controller.instructor.InstructorEditAction;
 import by.training.controller.instructor.InstructorListAction;
 import by.training.controller.instructor.InstructorSaveAction;
+import by.training.controller.main.LoginAction;
+import by.training.controller.main.LogoutAction;
+import by.training.controller.main.MainPageAction;
 import by.training.controller.result.ResultDeleteAction;
 import by.training.controller.result.ResultEditAction;
 import by.training.controller.result.ResultListAction;
@@ -36,9 +41,10 @@ public class ActionFactory {
     static {
         actions.put("/", MainPageAction.class);
         actions.put("/index", MainPageAction.class);
-        actions.put("/login", LoginAction.class);
-        actions.put("/user/account", UserAccountAction.class);
-        actions.put("/user/update", UserUpdateAction.class);
+        actions.put("/main/login", LoginAction.class);
+        actions.put("/main/logout", LogoutAction.class);
+        actions.put("/account/edit", AccountEnterAction.class);
+        actions.put("/account/update", AccountUpdateAction.class);
         actions.put("/user/list", UserListAction.class);
         actions.put("/user/edit", UserEditAction.class);
         actions.put("/user/save", UserSaveAction.class);
@@ -63,8 +69,6 @@ public class ActionFactory {
         actions.put("/result/edit", ResultEditAction.class);
         actions.put("/result/save", ResultSaveAction.class);
         actions.put("/result/delete", ResultDeleteAction.class);
-
-
     }
 
     public static Action getAction(String url) throws ServletException {

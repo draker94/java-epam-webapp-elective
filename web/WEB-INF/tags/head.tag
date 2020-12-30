@@ -13,8 +13,8 @@
 <div align="center">
     <h1>Система "Факультет"</h1>
     <c:if test="${not empty sessionUser}">
-        <c:url var="urlLogout" value="/logout.html"/>
-        <c:url var="urlAccount" value="/user/account.html"/>
+        <c:url var="urlLogout" value="/main/logout.html"/>
+        <c:url var="urlAccount" value="/account/edit.html"/>
         Добро пожаловать - ${sessionUser.login}
         <hr>
         Ваш доступ - ${sessionUser.role.name}

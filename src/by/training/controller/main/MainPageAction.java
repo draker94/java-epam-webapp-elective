@@ -1,5 +1,7 @@
-package by.training.controller;
+package by.training.controller.main;
 
+import by.training.controller.Action;
+import by.training.controller.Forward;
 import by.training.domain.User;
 
 import javax.servlet.ServletException;
@@ -23,13 +25,13 @@ public class MainPageAction extends Action {
                     case INSTRUCTOR:
                         return new Forward("/instructor/list.html");
                     default:
-                        return new Forward("/login.html");
+                        return new Forward("/main/login.html");
                 }
             } else {
-                return new Forward("/login.html");
+                return new Forward("/main/login.html");
             }
         } else {
-            return new Forward("/login.html");
+            return new Forward("/main/login.html");
         }
     }
 }

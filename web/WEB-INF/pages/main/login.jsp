@@ -17,7 +17,7 @@
 </c:if>
 <body>
 <h1>Страница авторизации</h1>
-<c:url var="loginUrl" value="/login.html"/>
+<c:url var="loginUrl" value="/main/login.html"/>
 <form action="${loginUrl}" method="post">
     <p>Имя пользователя:
         <input type="text" name="login">

@@ -9,7 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
 <tag:head title="Личный кабинет">
-    <c:url var="changeUserUrl" value="/user/update.html"/>
+    <c:url var="changeUserUrl" value="/account/update.html"/>
     <c:if test="${not empty param.message}">
         <p>${param.message}</p>
     </c:if>

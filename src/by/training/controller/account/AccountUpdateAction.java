@@ -1,4 +1,4 @@
-package by.training.controller.user;
+package by.training.controller.account;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-public class UserUpdateAction extends Action {
-    private static final Logger LOGGER = LogManager.getLogger(UserUpdateAction.class);
+public class AccountUpdateAction extends Action {
+    private static final Logger LOGGER = LogManager.getLogger(AccountUpdateAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -64,6 +64,6 @@ public class UserUpdateAction extends Action {
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e.getLocalizedMessage());
         }
-        return new Forward("/user/account.html?message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
+        return new Forward("/account/edit.html?message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
     }
 }

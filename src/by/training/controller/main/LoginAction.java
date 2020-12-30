@@ -1,5 +1,7 @@
-package by.training.controller;
+package by.training.controller.main;
 
+import by.training.controller.Action;
+import by.training.controller.Forward;
 import by.training.di.ServiceCreationException;
 import by.training.domain.User;
 import by.training.service.ServiceException;
@@ -27,7 +29,7 @@ public class LoginAction extends Action {
                     session.setAttribute("sessionUser", user);
                     return new Forward("/index.html");
                 } else {
-                    return new Forward("/login.html?message=" + URLEncoder.encode("Неверный логин или пароль!", StandardCharsets.UTF_8));
+                    return new Forward("/main/login.html?message=" + URLEncoder.encode("Неверный логин или пароль!", StandardCharsets.UTF_8));
                 }
             } else {
                 return null;

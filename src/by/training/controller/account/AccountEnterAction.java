@@ -1,4 +1,4 @@
-package by.training.controller.user;
+package by.training.controller.account;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class UserAccountAction extends Action {
-    private static final Logger LOGGER = LogManager.getLogger(UserAccountAction.class);
+public class AccountEnterAction extends Action {
+    private static final Logger LOGGER = LogManager.getLogger(AccountEnterAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,6 +24,6 @@ public class UserAccountAction extends Action {
                 return null;
             }
         }
-        return new Forward("/login.html");
+        return new Forward("/main/login.html");
     }
 }
