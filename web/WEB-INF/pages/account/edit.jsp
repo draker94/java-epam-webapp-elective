@@ -17,11 +17,11 @@
     Сменить пароля
     <form action="${changeUserUrl}" method="post">
         <p>Старый пароль:
-            <input type="text" name="oldPassword"></p>
+            <input type="password" name="oldPassword"></p>
         <p>Новый пароль:
-            <input type="text" name="newPassword"></p>
+            <input type="password" name="newPassword"></p>
         <p>Новый пароль (повторить):
-            <input type="text" name="newPasswordConfirm"></p>
+            <input type="password" name="newPasswordConfirm"></p>
         <button type="submit">Применить</button>
         <hr>
     </form>

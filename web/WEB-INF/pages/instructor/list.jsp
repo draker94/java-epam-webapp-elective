@@ -20,7 +20,7 @@
             <th>Имя</th>
             <th>Учёное звание</th>
         </tr>
-        <c:forEach var="instructor" items="${instructors}">
+        <c:forEach var="instructor" items="${instructors}">                <!-- название списка заменить на instructorsList (везде по аналогии) -->
             <c:url var="instructorEditUrl" value="/instructor/edit.html">
                 <c:param name="id" value="${instructor.id}"/>
             </c:url>
@@ -42,4 +42,14 @@
 </form>
 <c:url var="instructorEditUrl" value="/instructor/edit.html"/>
 <a href="${instructorEditUrl}">Добавить преподавателя</a>
+    <c:url var="instructorSearchUrl" value="/instructor/search.html"/>
+    <form action="${instructorSearchUrl}">
+        <p>Найти преподавателя (преподавателей) по фамилии:
+            <input type="text" name="surnameForSearch"></p>
+        <button type="submit">Найти</button>
+    </form>
+    <c:url var="instructorListUrl" value="/instructor/list.html"/>
+    <form action="${instructorListUrl}">
+        <button type="submit">Сбросить результат поиска</button>
+    </form>
 </tag:head>

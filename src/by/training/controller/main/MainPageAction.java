@@ -19,11 +19,11 @@ public class MainPageAction extends Action {
             if (user != null) {
                 switch (user.getRole()) {
                     case ADMINISTRATOR:
-                        return new Forward("/user/list.html");
+                        return new Forward("/account/admin.html");
                     case STUDENT:
-                        return new Forward("/student/list.html");
+                        return new Forward("/account/student.html");
                     case INSTRUCTOR:
-                        return new Forward("/instructor/list.html");
+                        return new Forward("/account/instructor.html");
                     default:
                         return new Forward("/main/login.html");
                 }

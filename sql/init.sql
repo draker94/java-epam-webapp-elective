@@ -53,8 +53,8 @@ CREATE TABLE `assignments`
     `id`         INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `student_id` INTEGER             NOT NULL,
     `course_id`  INTEGER             NOT NULL,
-    `begin`      DATE                NOT NULL,
-    `end`        DATE                NOT NULL,
+    `begin`      DATE,
+    `end`        DATE,
     UNIQUE KEY (`student_id`, `course_id`),
     FOREIGN KEY (`student_id`) REFERENCES `students` (`id`)
         ON DELETE CASCADE ON UPDATE RESTRICT,

@@ -30,7 +30,7 @@
     <p>Фамилия студента:
         <input type="text" name="surname" value="${student.surname}"></p>
     <p>Курс:
-        <select name="studyYear">
+        <select name="studyYear">          <!--ОПТИМИЗИРОВАТЬ-->
             <c:forEach var="i" begin="1" end="7" step="1">
                 <c:choose>
                     <c:when test="${i == student.studyYear}">

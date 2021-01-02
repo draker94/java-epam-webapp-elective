@@ -81,30 +81,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(Long id, String newPassword) throws ServiceException {
-        LOGGER.debug("Method entering.");
-        try {
-            User user = userDao.read(id);
-            user.setPassword(newPassword);
-            userDao.update(user);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void changeMail(Long id, String mail) throws ServiceException {
-        LOGGER.debug("Method entering.");
-        try {
-            User user = userDao.read(id);
-            user.setMail(mail);
-            userDao.update(user);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public List<User> findAllFreeUsers() throws ServiceException {
         LOGGER.debug("Method entering.");
         try {

@@ -20,7 +20,6 @@ import java.util.List;
 public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
     private static final Logger LOGGER = LogManager.getLogger(StudentDaoImpl.class);
 
-
     @Override
     public List<Student> getStudentsList() throws DaoException {
         String sql = "SELECT `id`, `surname`, `name`, `study_year` FROM `students`";

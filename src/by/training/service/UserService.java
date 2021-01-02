@@ -19,9 +19,5 @@ public interface UserService {
 
     User findByLoginAndPass(String login, String password) throws ServiceException;
 
-    void changePassword(Long id, String newPassword) throws ServiceException;
-
-    void changeMail(Long id, String mail) throws ServiceException;
-
     List<User> findAllFreeUsers() throws ServiceException;
 }

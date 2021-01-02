@@ -15,13 +15,11 @@
     <c:if test="${not empty sessionUser}">
         <c:url var="urlLogout" value="/main/logout.html"/>
         <c:url var="urlAccount" value="/account/edit.html"/>
-        Добро пожаловать - ${sessionUser.login}
-        <hr>
-        Ваш доступ - ${sessionUser.role.name}
-        <hr>
+        Добро пожаловать - ${sessionUser.login}<br/> <!-- Везде переносы вместо p поставить -->
+        Ваш доступ - ${sessionUser.role.name}<br/>
         <a href="${urlAccount}">Личный кабинет</a>
+        <p><a href="${urlLogout}">Выход</a></p>
         <hr>
-        <a href="${urlLogout}">Выход</a>
     </c:if>
 </div">
 <jsp:doBody/>
