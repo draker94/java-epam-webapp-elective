@@ -8,18 +8,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
-<tag:head title="Список студентов">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="by/training/resources/translate" />
+
+<fmt:message key="student.list.title" var="title"/>
+<tag:head title="${title}">
     <c:url var="studentDeleteUrl" value="/student/delete.html"/>
     <form action="${studentDeleteUrl}" method="post">
         <table border="1">
-            <caption>Список студентов</caption>
+            <caption>${title}</caption>
             <tr>
-                <th>Удалить</th>
-                <th>Редактивать</th>
-                <th>ID пользователя</th>
-                <th>Фамилия</th>
-                <th>Имя</th>
-                <th>Курс</th>
+                <th><fmt:message key="label.delete"/></th>
+                <th><fmt:message key="label.edit"/></th>
+                <th><fmt:message key="label.id"/></th>
+                <th><fmt:message key="student.list.table.surname"/></th>
+                <th><fmt:message key="student.list.table.name"/></th>
+                <th><fmt:message key="student.list.table.year"/></th>
             </tr>
             <c:forEach var="student" items="${students}">
                 <c:url var="studentEditUrl" value="/student/edit.html">
@@ -40,18 +46,18 @@
                 </tr>
             </c:forEach>
         </table>
-        <button type="submit">Удалить</button>
+        <button type="submit"><fmt:message key="label.delete"/></button>
     </form>
     <c:url var="studentEditUrl" value="/student/edit.html"/>
-    <a href="${studentEditUrl}">Добавить студента</a>
+    <a href="${studentEditUrl}"<fmt:message key="student.list.label.add"/></a>
     <c:url var="studentSearchUrl" value="/student/search.html"/>
     <form action="${studentSearchUrl}">
-        <p>Найти студента (студентов) по фамилии:
+        <p><fmt:message key="student.list.label.search"/>
             <input type="text" name="surnameForSearch"></p>
-        <button type="submit">Найти</button>
+        <button type="submit"><fmt:message key="label.search"/></button>
     </form>
     <c:url var="studentListUrl" value="/student/list.html"/>
     <form action="${studentListUrl}">
-        <button type="submit">Сбросить результат поиска</button>
+        <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
 </tag:head>

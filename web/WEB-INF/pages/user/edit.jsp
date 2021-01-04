@@ -8,12 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="by/training/resources/translate" />
+
 <c:choose>
     <c:when test="${not empty user}">
-        <c:set var="title" value="Редактирование пользователя ${user.login}"/>
+        <fmt:message key="user.edit.label.edit" var="title"/>
     </c:when>
     <c:otherwise>
-        <c:set var="title" value="Создание пользователя"/>
+        <fmt:message key="user.edit.label.create" var="title"/>
     </c:otherwise>
 </c:choose>
 <tag:head title="${title}">
@@ -22,13 +27,13 @@
         <c:if test="${not empty user}">
             <input type="hidden" name="id" value="${user.id}">
         </c:if>
-        <p>Имя пользователя:
+        <p><fmt:message key="user.edit.label.name"/>
             <input type="text" name="login" value="${user.login}"></p>
-        <p>Пароль:
+        <p><fmt:message key="user.edit.label.pass"/>
             <input type="text" name="password" value="${user.password}"></p>
-        <p>E-mail:
+        <p><fmt:message key="user.edit.label.mail"/>
             <input type="text" name="mail" value="${user.mail}"></p>
-        <p>Роль:
+        <p><fmt:message key="user.edit.label.role"/>
             <select name="role">
                 <c:forEach var="role" items="${roles}">
                     <c:choose>
@@ -43,8 +48,8 @@
                 </c:forEach>
             </select>
         </p>
-        <button type="submit">Сохранить</button>
+        <button type="submit"><fmt:message key="label.save"/></button>
     </form>
     <c:url var="back" value="/assignment/list.html"/>
-    <a href="${back}">Назад</a>
+    <a href="${back}"><fmt:message key="label.back"/></a>
 </tag:head>

@@ -8,19 +8,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
-<tag:head title="Результаты прохождения курсов">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="by/training/resources/translate" />
+
+<fmt:message key="result.list.title" var="title"/>
+<tag:head title="${title}">
     <c:url var="resultDeleteUrl" value="/result/delete.html"/>
     <form action="${resultDeleteUrl}" method="post">
         <table border="1">
-            <caption>Результаты прохождения курсов</caption>
+            <caption>${title}</caption>
             <tr>
-                <th>Удалить</th>
-                <th>Редактивать</th>
-                <th>Курс</th>
-                <th>Студент</th>
-                <th>Оценка</th>
-                <th>Дата выставления</th>
-                <th>Отзыв</th>
+                <th><fmt:message key="label.delete"/></th>
+                <th><fmt:message key="label.edit"/></th>
+                <th><fmt:message key="result.list.table.name"/></th>
+                <th><fmt:message key="result.list.table.student"/></th>
+                <th><fmt:message key="result.list.table.mark"/></th>
+                <th><fmt:message key="result.list.table.date"/></th>
+                <th><fmt:message key="result.list.table.review"/></th>
             </tr>
             <c:forEach var="result" items="${resultList}">
                 <c:url var="resultEditUrl" value="/result/edit.html">
@@ -28,7 +34,7 @@
                 </c:url>
                 <tr>
                     <td><input type="checkbox" name="id" value="${result.id}"></td>
-                    <td><a href="${resultEditUrl}">ред.</a></td>
+                    <td><a href="${resultEditUrl}"><fmt:message key="label.ed"/></a></td>
                     <td>${result.assignment.course.name}</td>
                     <td>${result.assignment.student.name}</td>
                     <td>${result.mark}</td>
@@ -37,28 +43,28 @@
                 </tr>
             </c:forEach>
         </table>
-        <button type="submit">Удалить</button>
+        <button type="submit"><fmt:message key="label.delete"/></button>
     </form>
     <c:url var="resultEditUrl" value="/result/edit.html"/>
-    <a href="${resultEditUrl}">Выставить новую отметку</a>
+    <a href="${resultEditUrl}"><fmt:message key="result.list.table.newmark"/></a>
     <c:url var="resultSearchUrl" value="/result/search.html"/>
     <form action="${resultSearchUrl}">
-        <p>Найти результаты с оценками от:
+        <p><fmt:message key="result.list.table.findfrom"/>
             <select name="from">
                 <c:forEach var="i" begin="0" end="10">
                     <option value="${i}">${i}</option>
                 </c:forEach>
             </select>
-            по (включительно):
+            <fmt:message key="result.list.table.findto"/>
             <select name="to">
                 <c:forEach var="i" begin="0" end="10">
                     <option value="${i}">${i}</option>
                 </c:forEach>
             </select>
-            <button type="submit">Найти</button>
+            <button type="submit"><fmt:message key="label.search"/></button>
     </form>
     <c:url var="resultListUrl" value="/result/list.html"/>
     <form action="${resultListUrl}">
-        <button type="submit">Сбросить результат поиска</button>
+        <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
 </tag:head>

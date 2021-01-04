@@ -8,16 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="by/training/resources/translate" />
+
 <c:url var="resultSaveUrl" value="/result/save.html"/>
 <c:set var="create" value="${empty result}"/>
 <c:choose>
     <c:when test="${not create}">
-        <c:set var="title"
-               value="Редактирование итога по ${result.assignment.course.name} для
-                ${result.assignment.student.surname} ${result.assignment.student.name}"/>
+        <fmt:message key="result.edit.label.edit" var="title"/>
     </c:when>
     <c:otherwise>
-        <c:set var="title" value="Выставление новой оценке"/>
+        <fmt:message key="result.edit.label.create" var="title"/>
     </c:otherwise>
 </c:choose>
 <tag:head title="${title}">
@@ -27,7 +30,7 @@
         <input type="hidden" name="id" value="${result.id}">
         <input type="hidden" name="assignmentId" value="${result.assignment.id}">
     </c:if>
-    <p>Студент и курс:
+    <p><fmt:message key="result.edit.label.student"/>
         <select name="assignmentId" ${create ? ""  : "disabled=&quot;&quot;"}>
             <c:forEach var="assignment" items="${assignmentList}">
                 <c:choose>
@@ -39,10 +42,10 @@
                     </c:otherwise>
                 </c:choose>
                 <option value="${assignment.id}" ${selected}>${assignment.student.surname} ${assignment.student.name}
-                    записанный на ${assignment.course.name}</option>
+                    <fmt:message key="result.edit.label.descr"/> ${assignment.course.name}</option>
             </c:forEach>
         </select>
-    <p>Оценка:
+    <p><fmt:message key="result.edit.label.mark"/>
         <select name="mark">
             <c:forEach var="i" begin="1" end="10" step="1">
                 <c:choose>
@@ -57,14 +60,14 @@
             </c:forEach>
         </select>
     </p>
-    <p>Дата выставления оценки:
+    <p><fmt:message key="result.edit.label.date"/>
         <input type="date" name="markDate" value="${result.date}">
     </p>
-    <p>Отзыв:
+    <p><fmt:message key="result.edit.label.review"/>
         <input type="text" size="100" maxlength="512" name="review" value="${result.review}">
     </p>
-    <button type="submit">Сохранить</button>
+    <button type="submit"><fmt:message key="label.save"/></button>
 </form>
 <c:url var="back" value="/result/list.html"/>
-<a href="${back}">Назад</a>
+<a href="${back}"><fmt:message key="label.back"/></a>
 </tag:head>
