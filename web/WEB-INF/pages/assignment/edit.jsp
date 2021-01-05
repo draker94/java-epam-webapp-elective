@@ -69,6 +69,6 @@
         </p>
         <button type="submit"><fmt:message key="label.save"/></button>
     </form>
-    <c:url var="back" value="/assignment/list.html"/>
+    <c:url var="backUrl" value="/assignment/list.html"/> <!-- привести к одному стандарту названия-->
     <a href="${back}"><fmt:message key="label.back"/></a>
 </tag:head>

@@ -37,8 +37,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
                 assignment.getStudent().setId(resultSet.getLong("student_id"));
                 assignment.setCourse(new Course());
                 assignment.getCourse().setId(resultSet.getLong("course_id"));
-                assignment.setBeginDate(resultSet.getDate("begin").toLocalDate());
-                assignment.setEndDate(resultSet.getDate("end").toLocalDate());
+                Date begin = resultSet.getDate("begin");
+                Date end = resultSet.getDate("end");
+                if (begin != null && end != null) {
+                    assignment.setBeginDate(begin.toLocalDate());
+                    assignment.setEndDate(end.toLocalDate());
+                }
                 assignments.add(assignment);
             }
             return assignments;
@@ -76,8 +80,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
                 assignment.getStudent().setId(resultSet.getLong("student_id"));
                 assignment.setCourse(new Course());
                 assignment.getCourse().setId(resultSet.getLong("course_id"));
-                assignment.setBeginDate(resultSet.getDate("begin").toLocalDate());
-                assignment.setEndDate(resultSet.getDate("end").toLocalDate());
+                Date begin = resultSet.getDate("begin");
+                Date end = resultSet.getDate("end");
+                if (begin != null && end != null) {
+                    assignment.setBeginDate(begin.toLocalDate());
+                    assignment.setEndDate(end.toLocalDate());
+                }
                 assignments.add(assignment);
             }
             return assignments;
@@ -115,8 +123,54 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
                 assignment.getStudent().setId(resultSet.getLong("student_id"));
                 assignment.setCourse(new Course());
                 assignment.getCourse().setId(resultSet.getLong("course_id"));
-                assignment.setBeginDate(resultSet.getDate("begin").toLocalDate());
-                assignment.setEndDate(resultSet.getDate("end").toLocalDate());
+                Date begin = resultSet.getDate("begin");
+                Date end = resultSet.getDate("end");
+                if (begin != null && end != null) {
+                    assignment.setBeginDate(begin.toLocalDate());
+                    assignment.setEndDate(end.toLocalDate());
+                }
+                assignments.add(assignment);
+            }
+            return assignments;
+        } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception e) {
+            }
+            try {
+                resultSet.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    @Override
+    public List<Assignment> getAssignmentsByStudent(Long studentId) throws DaoException {
+        String sql = "SELECT `id`, `course_id`, `begin`, `end` FROM `assignments` WHERE `student_id` = ?";
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
+        try {
+            statement = getConnection().prepareStatement(sql);
+            statement.setLong(1, studentId);
+            resultSet = statement.executeQuery();
+            List<Assignment> assignments = new ArrayList<>();
+            while (resultSet.next()) {
+                Assignment assignment = new Assignment();
+                assignment.setId(resultSet.getLong("id"));
+                assignment.setStudent(new Student());
+                assignment.getStudent().setId(studentId);
+                assignment.setCourse(new Course());
+                assignment.getCourse().setId(resultSet.getLong("course_id"));
+                Date begin = resultSet.getDate("begin");
+                Date end = resultSet.getDate("end");
+                if (begin != null && end != null) {
+                    assignment.setBeginDate(begin.toLocalDate());
+                    assignment.setEndDate(end.toLocalDate());
+                }
                 assignments.add(assignment);
             }
             return assignments;
@@ -145,8 +199,16 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             statement = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setLong(1, assignment.getStudent().getId());
             statement.setLong(2, assignment.getCourse().getId());
-            statement.setDate(3, Date.valueOf(assignment.getBeginDate()));
-            statement.setDate(4, Date.valueOf(assignment.getEndDate()));
+            LocalDate begin = assignment.getBeginDate();
+            LocalDate end = assignment.getEndDate();
+            if(begin != null && end != null) {
+                statement.setDate(3, Date.valueOf(begin));
+                statement.setDate(4, Date.valueOf(end));
+            }
+            else {
+                statement.setNull(3, Types.NULL);
+                statement.setNull(4, Types.NULL);
+            }
             statement.executeUpdate();
             Long id = null;
             resultSet = statement.getGeneratedKeys();
@@ -187,8 +249,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
                 assignment.getStudent().setId(resultSet.getLong("student_id"));
                 assignment.setCourse(new Course());
                 assignment.getCourse().setId(resultSet.getLong("course_id"));
-                assignment.setBeginDate(resultSet.getDate("begin").toLocalDate());
-                assignment.setEndDate(resultSet.getDate("end").toLocalDate());
+                Date begin = resultSet.getDate("begin");
+                Date end = resultSet.getDate("end");
+                if (begin != null && end != null) {
+                    assignment.setBeginDate(begin.toLocalDate());
+                    assignment.setEndDate(end.toLocalDate());
+                }
             }
             return assignment;
         } catch (SQLException e) {
@@ -215,8 +281,16 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, assignment.getStudent().getId());
             statement.setLong(2, assignment.getCourse().getId());
-            statement.setDate(3, Date.valueOf(assignment.getBeginDate()));
-            statement.setDate(4, Date.valueOf(assignment.getEndDate()));
+            LocalDate begin = assignment.getBeginDate();
+            LocalDate end = assignment.getEndDate();
+            if(begin != null && end != null) {
+                statement.setDate(3, Date.valueOf(begin));
+                statement.setDate(4, Date.valueOf(end));
+            }
+            else {
+                statement.setNull(3, Types.NULL);
+                statement.setNull(4, Types.NULL);
+            }
             statement.setLong(5, assignment.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -248,8 +322,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
                 assignment.getStudent().setId(resultSet.getLong("student_id"));
                 assignment.setCourse(new Course());
                 assignment.getCourse().setId(resultSet.getLong("course_id"));
-                assignment.setBeginDate(resultSet.getDate("begin").toLocalDate());
-                assignment.setEndDate(resultSet.getDate("end").toLocalDate());
+                Date begin = resultSet.getDate("begin");
+                Date end = resultSet.getDate("end");
+                if (begin != null && end != null) {
+                    assignment.setBeginDate(begin.toLocalDate());
+                    assignment.setEndDate(end.toLocalDate());
+                }
                 assignments.add(assignment);
             }
             return assignments;

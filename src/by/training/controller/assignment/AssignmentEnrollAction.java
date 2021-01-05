@@ -3,8 +3,10 @@ package by.training.controller.assignment;
 import by.training.controller.Action;
 import by.training.controller.Forward;
 import by.training.di.ServiceCreationException;
+import by.training.domain.Assignment;
 import by.training.domain.Course;
 import by.training.domain.Student;
+import by.training.service.AssignmentService;
 import by.training.service.CourseService;
 import by.training.service.ServiceException;
 import by.training.service.StudentService;
@@ -26,10 +28,13 @@ public class AssignmentEnrollAction extends Action {
         try {
             CourseService courseService = getServiceCreator().getCourseService();
             StudentService studentService = getServiceCreator().getStudentService();
+            AssignmentService assignmentService = getServiceCreator().getAssignmentService();
             List<Course> courseList = courseService.findAll();
             Student student = studentService.findById(studentId);
+            List<Assignment> studentAssignment = assignmentService.findByStudent(studentId);
             request.setAttribute("courseList", courseList);
             request.setAttribute("student", student);
+            request.setAttribute("studentAssignment", studentAssignment);
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);

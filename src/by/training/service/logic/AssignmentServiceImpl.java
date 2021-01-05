@@ -92,6 +92,21 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     @Override
+    public List<Assignment> findByStudent(Long studentId) throws ServiceException {
+        LOGGER.debug("Method entering.");
+        try {
+            List<Assignment> assignmentList = assignmentDao.getAssignmentsByStudent(studentId);
+            for(Assignment assignment : assignmentList) {
+                assignment.setStudent(studentDao.read(assignment.getStudent().getId()));
+                assignment.setCourse(courseDao.read(assignment.getCourse().getId()));
+            }
+            return assignmentList;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public Long save(Assignment assignment) throws ServiceException {
         Long id = assignment.getId();
         LOGGER.debug("Method entering.");

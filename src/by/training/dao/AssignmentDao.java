@@ -16,5 +16,7 @@ public interface AssignmentDao extends Dao<Assignment, Long> {
 
     List<Assignment> getAssignmentsByEndDate(LocalDate from, LocalDate to) throws DaoException;
 
+    List<Assignment> getAssignmentsByStudent(Long studentId) throws DaoException;
+
     List<Assignment> getFreeAssignmentsList() throws DaoException;
 }

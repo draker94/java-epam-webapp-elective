@@ -62,10 +62,4 @@
     <form action="${courseListUrl}">
         <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
-    <c:if test="${sessionUser.role == Roles.STUDENT}">
-        <c:url var="assignmentSaveUrl" value="/assignment/enroll.html">
-            <c:param name="studentId" value="${sessionUser.id}"/>
-        </c:url>
-        <a href="${assignmentSaveUrl}"><fmt:message key="course.list.label.enroll"/></a>
-    </c:if>
 </tag:head>

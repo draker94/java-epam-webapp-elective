@@ -56,6 +56,7 @@ public class ActionFactory {
         actions.put("/assignment/delete", AssignmentDeleteAction.class);
         actions.put("/assignment/search", AssignmentSearchAction.class);
         actions.put("/assignment/enroll", AssignmentEnrollAction.class);
+        actions.put("/assignment/student-list", AssignmentStudentListAction.class);
         actions.put("/result/list", ResultListAction.class);
         actions.put("/result/edit", ResultEditAction.class);
         actions.put("/result/save", ResultSaveAction.class);

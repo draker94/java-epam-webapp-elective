@@ -24,18 +24,25 @@
         <p><fmt:message key="assignment.enroll.label.course"/>
             <select name="courseId">
                 <c:forEach var="course" items="${courseList}">
-                        <option value="${course.id}">${course.name}</option>
+                    <c:set var="canEnroll" value="${true}"/>
+                    <c:forEach var="assignment" items="${studentAssignment}">
+                        <c:if test="${assignment.course.id == course.id}">
+                            <c:set var="canEnroll" value="${false}"/>
+                        </c:if>
+                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${canEnroll}">
+                            <option value="${course.id}">${course.name}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option disabled=""><fmt:message key="assignment.enroll.label.alreadyenroll"/> ${course.name}</option>
+                        </c:otherwise>
+                    </c:choose>
                 </c:forEach>
             </select>
         </p>
-        <p><fmt:message key="assignment.enroll.label.start"/>
-            <input type="date" name="beginDate" value="${assignment.beginDate}">
-        </p>
-        <p><fmt:message key="assignment.enroll.label.end"/>
-            <input type="date" name="endDate" value="${assignment.endDate}">
-        </p>
         <button type="submit"><fmt:message key="label.save"/></button>
     </form>
-    <c:url var="back" value="/course/list.html"/>
+    <c:url var="back" value="/assignment/student-list.html"/>
     <a href="${back}"><fmt:message key="label.back"/></a>
 </tag:head>

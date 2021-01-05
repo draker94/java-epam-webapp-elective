@@ -63,7 +63,7 @@ public class SecurityFilter implements Filter {
         studentPermissions.add("/account/update");
         studentPermissions.add("/account/student");
         studentPermissions.add("/course/list");
-        studentPermissions.add("/assignment/list");
+        studentPermissions.add("/assignment/student-list");
         studentPermissions.add("/assignment/enroll");
         studentPermissions.add("/assignment/save"); // подумОть о безопасности
         studentPermissions.add("/result/list");

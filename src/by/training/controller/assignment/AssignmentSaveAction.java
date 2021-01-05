@@ -26,15 +26,17 @@ public class AssignmentSaveAction extends Action {
         LOGGER.debug("Method entering.");
         Long studentId = Long.parseLong(request.getParameter("studentId"));
         Long courseId = Long.parseLong(request.getParameter("courseId"));
-        LocalDate beginDate = LocalDate.parse(request.getParameter("beginDate"));
-        LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
         try {
             AssignmentService assignmentService = getServiceCreator().getAssignmentService();
-            if (studentId != null && courseId != null && beginDate != null && endDate != null) {
+            if (studentId != null && courseId != null) {
                 LOGGER.debug("Method save starts!");
                 Long id = null;
+                LocalDate beginDate = null;
+                LocalDate endDate = null;
                 try {
                     id = Long.parseLong(request.getParameter("id"));
+                    beginDate = LocalDate.parse(request.getParameter("beginDate"));
+                    endDate = LocalDate.parse(request.getParameter("endDate"));
                 } catch (NumberFormatException e) {
                     LOGGER.error(e);
                 }

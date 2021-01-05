@@ -16,6 +16,6 @@
 <fmt:message key="account.title" var="title"/>
 <tag:head title="${title}">
     <p><a href="${pageContext.request.contextPath}/course/list.html"><fmt:message key="account.label.listcourse"/></a></p>
-    <p><a href="${pageContext.request.contextPath}/assignment/list.html"><fmt:message key="account.label.listassignment"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/assignment/student-list.html"><fmt:message key="account.label.liststudentassignment"/></a></p>
     <p><a href="${pageContext.request.contextPath}/result/list.html"><fmt:message key="account.label.listresult"/></a></p>
 </tag:head>
