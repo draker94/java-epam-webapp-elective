@@ -7,25 +7,26 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Страница авторизации</title>
-</head>
+<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="by/training/resources/translate" />
+
 <c:if test="${not empty param.message}">
     <p>${param.message}</p>
 </c:if>
-<body>
-<h1>Страница авторизации</h1>
+<fmt:message key="main.login.title" var="title"/>
+<tag:head title="${title}">
+<h1>${title}</h1>
 <c:url var="loginUrl" value="/main/login.html"/>
 <form action="${loginUrl}" method="post">
-    <p>Имя пользователя:
+    <p><fmt:message key="main.login.laber.username"/>
         <input type="text" name="login">
     </p>
-    <p>Пароль:
+    <p><fmt:message key="main.login.laber.pass"/>
         <input type="password" name="password">
     </p>
-    <button type="submit">Войти</button>
+    <button type="submit"><fmt:message key="main.login.laber.enter"/></button>
 </form>
-</body>
-</html>
+</tag:head>

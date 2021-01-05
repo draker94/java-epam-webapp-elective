@@ -9,18 +9,24 @@
 <%@ page import="by.training.enums.Roles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
-<tag:head title="Список курсов">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="by/training/resources/translate" />
+
+<fmt:message key="course.list.title" var="title"/>
+<tag:head title="${title}">
     <c:url var="courseDeleteUrl" value="/course/delete.html"/>
     <form action="${courseDeleteUrl}" method="post">
         <table border="1">
-            <caption>Список курсов</caption>
+            <caption>${title}</caption>
             <tr>
-                <th>Удалить</th>
-                <th>Редактивать</th>
-                <th>Название</th>
-                <th>Колличество часов</th>
-                <th>Преподаватель</th>
-                <th>Описание</th>
+                <th><fmt:message key="label.delete"/></th>
+                <th><fmt:message key="label.edit"/></th>
+                <th><fmt:message key="instructor.list.table.name"/></th>
+                <th><fmt:message key="instructor.list.table.hours"/></th>
+                <th><fmt:message key="instructor.list.table.instructor"/></th>
+                <th><fmt:message key="instructor.list.table.descr"/></th>
             </tr>
             <c:forEach var="course" items="${coursesList}">
                 <c:url var="courseEditUrl" value="/course/edit.html">
@@ -34,7 +40,7 @@
                     <td><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id"
                                value="${course.id}">
                     </td>
-                    <td><a href="${courseEditUrl}">ред.</a></td>
+                    <td><a href="${courseEditUrl}"><fmt:message key="label.ed"/></a></td>
                     <td>${course.name}</td>
                     <td>${course.hours}</td>
                     <td>${course.instructor.surname} ${course.instructor.name}</td>
@@ -42,24 +48,24 @@
                 </tr>
             </c:forEach>
         </table>
-        <button type="submit">Удалить</button>
+        <button type="submit"><fmt:message key="label.delete"/></button>
     </form>
     <c:url var="courseEditUrl" value="/course/edit.html"/>
-    <a href="${courseEditUrl}">Создать новый курс</a>
+    <a href="${courseEditUrl}"><fmt:message key="course.list.label.add"/></a>
     <c:url var="courseSearchUrl" value="/course/search.html"/>
     <form action="${courseSearchUrl}">
-        <p>Найти курс (курсы) по фамилии либо ID преподавателя:
+        <p><fmt:message key="course.list.label.search"/>
             <input type="text" name="condition"></p>
-        <button type="submit">Найти</button>
+        <button type="submit"><fmt:message key="label.search"/></button>
     </form>
     <c:url var="courseListUrl" value="/course/list.html"/>
     <form action="${courseListUrl}">
-        <button type="submit">Сбросить результат поиска</button>
+        <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
     <c:if test="${sessionUser.role == Roles.STUDENT}">
         <c:url var="assignmentSaveUrl" value="/assignment/enroll.html">
             <c:param name="studentId" value="${sessionUser.id}"/>
         </c:url>
-        <a href="${assignmentSaveUrl}">Записаться на один из курсов</a>
+        <a href="${assignmentSaveUrl}"><fmt:message key="course.list.label.enroll"/></a>
     </c:if>
 </tag:head>

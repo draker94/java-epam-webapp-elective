@@ -8,13 +8,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="by/training/resources/translate" />
+
 <c:url var="courseSaveUrl" value="/course/save.html"/>
 <c:choose>
     <c:when test="${not empty course}">
-        <c:set var="title" value="Редактирование курса ${course.name}"/>
+        <fmt:message key="course.edit.label.edit" var="title"/>
     </c:when>
     <c:otherwise>
-        <c:set var="title" value="Создание нового курса"/>
+        <fmt:message key="course.edit.label.create" var="title"/>
     </c:otherwise>
 </c:choose>
 <tag:head title="${title}">
@@ -22,9 +27,9 @@
     <c:if test="${not empty course}">
         <input type="hidden" name="id" value="${course.id}">
     </c:if>
-    <p>Название курса:
+    <p><fmt:message key="course.edit.label.name"/>
         <input type="text" name="name" value="${course.name}"></p>
-    <p>Преподаватель:
+    <p><fmt:message key="course.edit.label.instructor"/>
         <select name="instructorId">
             <c:forEach var="instructor" items="${instructorList}">
                 <c:choose>
@@ -39,13 +44,12 @@
             </c:forEach>
         </select>
     </p>
-    <p>Колличество часов:
+    <p><fmt:message key="course.edit.label.hours"/>
         <input type="number" max="256" name="hours" value="${course.hours}"></p>
-    </p>
-    <p>Описание:
+    <p><fmt:message key="course.edit.label.descr"/>
         <input type="text" size="100" maxlength="512" name="description" value="${course.description}"></p>
-    <button type="submit">Сохранить</button>
+    <button type="submit"><fmt:message key="label.save"/></button>
 </form>
 <c:url var="back" value="/course/list.html"/>
-<a href="${back}">Назад</a>
+<a href="${back}"><fmt:message key="label.back"/></a>
 </tag:head>

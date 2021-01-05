@@ -164,7 +164,7 @@ public class ServiceCreator implements AutoCloseable {
         try {
             connection.close();
             LOGGER.debug("Connection is close");
-        } catch (SQLException e) {
+        } catch (SQLException | NullPointerException e) {
             LOGGER.error(e);
         }
     }

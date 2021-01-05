@@ -7,61 +7,68 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag"%>
+<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="by/training/resources/translate"/>
+
 <c:set var="create" value="${empty assignment}"/>
 <c:choose>
     <c:when test="${not create}">
-        <c:set var="title" value="Редактирование записи на курс для ${assignment.student.surname} ${assignment.student.name}"/>
+        <fmt:message key="assignment.edit.label.edit" var="title"/>
     </c:when>
     <c:otherwise>
-        <c:set var="title" value="Создание новой записи на курс"/>
+        <fmt:message key="assignment.edit.label.add" var="title"/>
     </c:otherwise>
 </c:choose>
 <tag:head title="${title}">
-<c:url var="assignmentSaveUrl" value="/assignment/save.html"/>
-<form action="${assignmentSaveUrl}" method="post">
-    <c:if test="${not create}">
-        <input type="hidden" name="id" value="${assignment.id}">
-        <input type="hidden" name="studentId" value="${assignment.student.id}">
-    </c:if>
-    <p> Студент:
-        <select name="studentId" ${create ? ""  : "disabled=&quot;&quot;"}>
-            <c:forEach var="student" items="${studentList}">
-                <c:choose>
-                    <c:when test="${assignment.student.id == student.id}">
-                        <c:set var="selected" value="selected"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:remove var="selected"/>
-                    </c:otherwise>
-                </c:choose>
-                <option value="${student.id}" ${selected}>${student.name} ${student.surname}</option>
-            </c:forEach>
-        </select>
-    </p>
-    <p>Курс:
-        <select name="courseId">
-            <c:forEach var="course" items="${courseList}">
-                <c:choose>
-                    <c:when test="${assignment.course.id == course.id}">
-                        <c:set var="selected" value="selected"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:remove var="selected"/>
-                    </c:otherwise>
-                </c:choose>
-                <option value="${course.id}" ${selected}>${course.name}</option>
-            </c:forEach>
-        </select>
-    </p>
-    <p>Дата начала:
-        <input type="date" name="beginDate" value="${assignment.beginDate}">
-    </p>
-    <p>Дата окончания:
-        <input type="date" name="endDate" value="${assignment.endDate}">
-    </p>
-    <button type="submit">Сохранить</button>
-</form>
-<c:url var="back" value="/assignment/list.html"/>
-<a href="${back}">Назад</a>
+    <c:url var="assignmentSaveUrl" value="/assignment/save.html"/>
+    <form action="${assignmentSaveUrl}" method="post">
+        <c:if test="${not create}">
+            <input type="hidden" name="id" value="${assignment.id}">
+            <input type="hidden" name="studentId" value="${assignment.student.id}">
+        </c:if>
+        <p><fmt:message key="assignment.edit.label.student"/>
+            <select name="studentId" ${create ? ""  : "disabled=&quot;&quot;"}>
+                <c:forEach var="student" items="${studentList}">
+                    <c:choose>
+                        <c:when test="${assignment.student.id == student.id}">
+                            <c:set var="selected" value="selected"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:remove var="selected"/>
+                        </c:otherwise>
+                    </c:choose>
+                    <option value="${student.id}" ${selected}>${student.name} ${student.surname}</option>
+                </c:forEach>
+            </select>
+        </p>
+        <p><fmt:message key="assignment.edit.label.course"/>
+            <select name="courseId">
+                <c:forEach var="course" items="${courseList}">
+                    <c:choose>
+                        <c:when test="${assignment.course.id == course.id}">
+                            <c:set var="selected" value="selected"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:remove var="selected"/>
+                        </c:otherwise>
+                    </c:choose>
+                    <option value="${course.id}" ${selected}>${course.name}</option>
+                </c:forEach>
+            </select>
+        </p>
+        <p><fmt:message key="assignment.edit.label.start"/>
+            <input type="date" name="beginDate" value="${assignment.beginDate}">
+        </p>
+        <p><fmt:message key="assignment.edit.label.end"/>
+            <input type="date" name="endDate" value="${assignment.endDate}">
+        </p>
+        <button type="submit"><fmt:message key="label.save"/></button>
+    </form>
+    <c:url var="back" value="/assignment/list.html"/>
+    <a href="${back}"><fmt:message key="label.back"/></a>
 </tag:head>

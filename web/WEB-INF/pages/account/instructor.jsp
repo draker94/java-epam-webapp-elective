@@ -8,9 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
-<tag:head title="Главная страница">
-    <p><a href="${pageContext.request.contextPath}/course/list.html">Список курсов</a></p>
-    <p><a href="${pageContext.request.contextPath}/student/list.html">Список студентов</a></p>
-    <p><a href="${pageContext.request.contextPath}/assignment/list.html">Список записей на курсы</a></p>
-    <p><a href="${pageContext.request.contextPath}/result/list.html">Список итогов</a></p>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="by/training/resources/translate" />
+
+<fmt:message key="account.title" var="title"/>
+<tag:head title="${title}">
+    <p><a href="${pageContext.request.contextPath}/course/list.html"<fmt:message key="account.label.listcourse"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/student/list.html"><fmt:message key="account.label.liststudent"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/assignment/list.html"><fmt:message key="account.label.listassignment"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/result/list.html"><fmt:message key="account.label.listresult"/></a></p>
 </tag:head>

@@ -13,62 +13,64 @@ import java.util.*;
 
 @WebFilter("*.html")
 public class SecurityFilter implements Filter {
-    private static final Map<String, Set<Roles>> permissions = new HashMap<>();
+    private static final Map<Roles, Set<String>> permissions = new HashMap<>();
 
     static {
-        Set<Roles> all = new HashSet<>();
-        Collections.addAll(all, Roles.values());
-        Set<Roles> administrators = new HashSet<>();
-        administrators.add(Roles.ADMINISTRATOR);
-        Set<Roles> instructors = new HashSet<>();
-        instructors.add(Roles.INSTRUCTOR);
-        Set<Roles> students = new HashSet<>();
-        students.add(Roles.STUDENT);
+        Set<String> adminPermissions = new HashSet<>();
+        adminPermissions.add("/main/logout");
+        adminPermissions.add("/account/edit");
+        adminPermissions.add("/account/update");
+        adminPermissions.add("/account/administrator");
+        adminPermissions.add("/user/list");
+        adminPermissions.add("/user/edit");
+        adminPermissions.add("/user/save");
+        adminPermissions.add("/user/delete");
+        adminPermissions.add("/instructor/list");
+        adminPermissions.add("/instructor/edit");
+        adminPermissions.add("/instructor/save");
+        adminPermissions.add("/instructor/delete");
+        adminPermissions.add("/instructor/search");
 
-        permissions.put("/index", all);
-        permissions.put("/main/logout", all);
-        permissions.put("/account/edit", all);
-        permissions.put("/account/update", all);
+        Set<String> instructorPermissions = new HashSet<>();
+        instructorPermissions.add("/main/logout");
+        instructorPermissions.add("/account/edit");
+        instructorPermissions.add("/account/update");
+        instructorPermissions.add("/account/instructor");
+        instructorPermissions.add("/course/list");
+        instructorPermissions.add("/course/edit");
+        instructorPermissions.add("/course/save");
+        instructorPermissions.add("/course/delete");
+        instructorPermissions.add("/course/search");
+        instructorPermissions.add("/student/list");
+        instructorPermissions.add("/student/edit");
+        instructorPermissions.add("/student/save");
+        instructorPermissions.add("/student/delete");
+        instructorPermissions.add("/student/search");
+        instructorPermissions.add("/assignment/list");
+        instructorPermissions.add("/assignment/edit");
+        instructorPermissions.add("/assignment/save");
+        instructorPermissions.add("/assignment/delete");
+        instructorPermissions.add("/assignment/search");
+        instructorPermissions.add("/result/list");
+        instructorPermissions.add("/result/edit");
+        instructorPermissions.add("/result/save");
+        instructorPermissions.add("/result/delete");
+        instructorPermissions.add("/result/search");
 
-        permissions.put("/account/administrator", administrators);
-        permissions.put("/user/list", administrators);
-        permissions.put("/user/edit", administrators);
-        permissions.put("/user/save", administrators);
-        permissions.put("/user/delete", administrators);
-        permissions.put("/instructor/list", administrators);
-        permissions.put("/instructor/edit", administrators);
-        permissions.put("/instructor/save", administrators);
-        permissions.put("/instructor/delete", administrators);
-        permissions.put("/instructor/search", administrators);
+        Set<String> studentPermissions = new HashSet<>();
+        studentPermissions.add("/main/logout");
+        studentPermissions.add("/account/edit");
+        studentPermissions.add("/account/update");
+        studentPermissions.add("/account/student");
+        studentPermissions.add("/course/list");
+        studentPermissions.add("/assignment/list");
+        studentPermissions.add("/assignment/enroll");
+        studentPermissions.add("/assignment/save"); // подумОть о безопасности
+        studentPermissions.add("/result/list");
 
-        permissions.put("/account/instructor", instructors);
-        permissions.put("/course/list", instructors);
-        permissions.put("/course/edit", instructors);
-        permissions.put("/course/save", instructors);
-        permissions.put("/course/delete", instructors);
-        permissions.put("/course/search", instructors);
-        permissions.put("/student/list", instructors);
-        permissions.put("/student/edit", instructors);
-        permissions.put("/student/save", instructors);
-        permissions.put("/student/delete", instructors);
-        permissions.put("/student/search", instructors);
-        permissions.put("/assignment/list", instructors);
-        permissions.put("/assignment/edit", instructors);
-        permissions.put("/assignment/save", instructors);
-        permissions.put("/assignment/delete", instructors);
-        permissions.put("/assignment/search", instructors);
-        permissions.put("/result/list", instructors);
-        permissions.put("/result/edit", instructors);
-        permissions.put("/result/save", instructors);
-        permissions.put("/result/delete", instructors);
-        permissions.put("/result/search", instructors);
-
-        permissions.put("/account/student", students);
-        permissions.put("/course/list", students);
-        permissions.put("/assignment/list", students);
-        permissions.put("/assignment/enroll", students);
-        permissions.put("/assignment/save", students); // подумОть о безопасности
-        permissions.put("/result/list", students);
+        permissions.put(Roles.ADMINISTRATOR, adminPermissions);
+        permissions.put(Roles.INSTRUCTOR, instructorPermissions);
+        permissions.put(Roles.STUDENT, studentPermissions);
     }
 
     @Override
@@ -83,12 +85,19 @@ public class SecurityFilter implements Filter {
         } else {
             requestUrl = requestUrl.substring(contextPath.length());
         }
-        Set<Roles> roles = permissions.get(requestUrl);
-        if (roles != null) {
-            HttpSession session = httpReq.getSession(false);
+        HttpSession session = httpReq.getSession(false);
+        boolean securePage = false;
+        for (Set<String> set : permissions.values()) {
+            if (set.contains(requestUrl)) {
+                securePage = true;
+                break;
+            }
+        }
+        if (securePage) {
             if (session != null) {
                 User user = (User) session.getAttribute("sessionUser");
-                if (user != null && roles.contains(user.getRole())) {
+                //Whitelist authorization
+                if (user != null && permissions.get(user.getRole()).contains(requestUrl)) {
                     filterChain.doFilter(servletRequest, servletResponse);
                     return;
                 }
