@@ -63,6 +63,7 @@ public class AccountUpdateAction extends Action {
             }
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e.getLocalizedMessage());
+            throw new ServletException(e);
         }
         return new Forward("/account/edit.html?message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
     }

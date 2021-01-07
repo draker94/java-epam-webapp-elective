@@ -51,9 +51,10 @@ public class DispatcherServlet extends HttpServlet {
                 LOGGER.debug("Action execute is done.");
             } catch (Exception e) {
                 LOGGER.error(e);
-                request.setAttribute("error", e.getLocalizedMessage());
-                request.setAttribute("url", contextPath + "/");
-                requestUrl = "main/error";
+                request.setAttribute("error", e);
+                request.setAttribute("uri", contextPath + requestUrl);
+                request.setAttribute("stackTrace", e.getStackTrace());
+                requestUrl = "/main/error";
             }
         }
         if (forward != null && forward.isRedirect()) {

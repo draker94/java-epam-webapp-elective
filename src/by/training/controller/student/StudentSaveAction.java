@@ -40,7 +40,7 @@ public class StudentSaveAction extends Action {
                 }
             }
         } catch (ServiceException | ServiceCreationException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            LOGGER.error(e);
             throw new ServletException(e);
         }
         return new Forward("/student/list.html");

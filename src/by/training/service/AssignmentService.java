@@ -20,6 +20,8 @@ public interface AssignmentService {
 
     List<Assignment> findByStudent(Long studentId) throws ServiceException;
 
+    List<Assignment> findInstructorAssignment(Long instructorId) throws ServiceException;
+
     Long save(Assignment assignment) throws ServiceException;
 
     void delete(List<Long> ids) throws ServiceException;

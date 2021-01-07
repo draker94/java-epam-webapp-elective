@@ -2,9 +2,12 @@
 <%@attribute name="title" required="true" rtexprvalue="true" type="java.lang.String" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${language}" />
-<fmt:setBundle basename="by/training/resources/translate" />
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="by/training/resources/translate"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +34,7 @@
         <p><a href="${urlLogout}"><fmt:message key="application.exit"/></a></p>
         <hr>
     </c:if>
-<jsp:doBody/>
+    <jsp:doBody/>
 </div>
 </body>
 </html>

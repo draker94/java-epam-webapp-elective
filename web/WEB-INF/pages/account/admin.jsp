@@ -15,6 +15,6 @@
 
 <fmt:message key="account.title" var="title"/>
 <tag:head title="${title}">
-    <p><a href="${pageContext.request.contextPath}/user/list.html"><fmt:message key="account.label.listuser"/></a></p>
-    <p><a href="${pageContext.request.contextPath}/instructor/list.html"><fmt:message key="account.label.listinstructor"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/user/list.html"><fmt:message key="account.label.list_user"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/instructor/list.html"><fmt:message key="account.label.list_instructor"/></a></p>
 </tag:head>

@@ -51,6 +51,7 @@ public class SecurityFilter implements Filter {
         instructorPermissions.add("/assignment/save");
         instructorPermissions.add("/assignment/delete");
         instructorPermissions.add("/assignment/search");
+        instructorPermissions.add("/assignment/instructor-list");
         instructorPermissions.add("/result/list");
         instructorPermissions.add("/result/edit");
         instructorPermissions.add("/result/save");
@@ -63,6 +64,7 @@ public class SecurityFilter implements Filter {
         studentPermissions.add("/account/update");
         studentPermissions.add("/account/student");
         studentPermissions.add("/course/list");
+        studentPermissions.add("/course/search");
         studentPermissions.add("/assignment/student-list");
         studentPermissions.add("/assignment/enroll");
         studentPermissions.add("/assignment/save"); // подумОть о безопасности

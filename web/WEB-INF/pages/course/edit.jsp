@@ -28,7 +28,7 @@
         <input type="hidden" name="id" value="${course.id}">
     </c:if>
     <p><fmt:message key="course.edit.label.name"/>
-        <input type="text" name="name" value="${course.name}"></p>
+        <input type="text" name="name" value="${course.name}" required></p>
     <p><fmt:message key="course.edit.label.instructor"/>
         <select name="instructorId">
             <c:forEach var="instructor" items="${instructorList}">
@@ -45,11 +45,10 @@
         </select>
     </p>
     <p><fmt:message key="course.edit.label.hours"/>
-        <input type="number" max="256" name="hours" value="${course.hours}"></p>
+        <input type="number" max="256" name="hours" value="${course.hours}" required></p>
     <p><fmt:message key="course.edit.label.descr"/>
-        <input type="text" size="100" maxlength="512" name="description" value="${course.description}"></p>
+        <input type="text" size="100" maxlength="512" name="description" value="${course.description}" required></p>
     <button type="submit"><fmt:message key="label.save"/></button>
 </form>
-<c:url var="back" value="/course/list.html"/>
-<a href="${back}"><fmt:message key="label.back"/></a>
+    <tag:buttons/>
 </tag:head>

@@ -15,7 +15,7 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="by/training/resources/translate"/>
 
-<fmt:message key="assignment.studentlist.title" var="title"/>
+<fmt:message key="assignment.student_list.title" var="title"/>
 <tag:head title="${title}">
     <c:url var="assignmentDeleteUrl" value="/assignment/delete.html"/>
     <table border="1">
@@ -38,7 +38,6 @@
     <c:url var="assignmentEnrollUrl" value="/assignment/enroll.html">
         <c:param name="studentId" value="${sessionUser.id}"/>
     </c:url>
-    <a href="${assignmentEnrollUrl}"><fmt:message key="assignment.studentlist.label.enroll"/></a>
-    <c:url var="backUrl" value="/account/student.html"/> <!-- привести к одному стандарту названия-->
-    <p><a href="${backUrl}"><fmt:message key="label.back"/></a></p>
+    <a href="${assignmentEnrollUrl}"><fmt:message key="assignment.student_list.label.enroll"/></a>
+    <tag:buttons/>
 </tag:head>

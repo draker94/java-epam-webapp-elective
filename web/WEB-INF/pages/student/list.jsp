@@ -49,15 +49,16 @@
         <button type="submit"><fmt:message key="label.delete"/></button>
     </form>
     <c:url var="studentEditUrl" value="/student/edit.html"/>
-    <a href="${studentEditUrl}"<fmt:message key="student.list.label.add"/></a>
+    <a href="${studentEditUrl}"><fmt:message key="student.list.label.add"/></a>
     <c:url var="studentSearchUrl" value="/student/search.html"/>
     <form action="${studentSearchUrl}">
         <p><fmt:message key="student.list.label.search"/>
-            <input type="text" name="surnameForSearch"></p>
+            <input type="text" name="surnameForSearch" required></p>
         <button type="submit"><fmt:message key="label.search"/></button>
     </form>
     <c:url var="studentListUrl" value="/student/list.html"/>
     <form action="${studentListUrl}">
         <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
+    <tag:buttons/>
 </tag:head>

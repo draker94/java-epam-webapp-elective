@@ -190,6 +190,48 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
     }
 
     @Override
+    public List<Assignment> getAssignmentsByCourse(Long courseId) throws DaoException {
+        String sql = "SELECT `id`, `student_id`, `begin`, `end` FROM `assignments` WHERE `course_id` = ?";
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
+        try {
+            statement = getConnection().prepareStatement(sql);
+            statement.setLong(1, courseId);
+            resultSet = statement.executeQuery();
+            List<Assignment> assignments = new ArrayList<>();
+            while (resultSet.next()) {
+                Assignment assignment = new Assignment();
+                assignment.setId(resultSet.getLong("id"));
+                assignment.setStudent(new Student());
+                assignment.getStudent().setId(resultSet.getLong("student_id"));
+                assignment.setCourse(new Course());
+                assignment.getCourse().setId(courseId);
+                Date begin = resultSet.getDate("begin");
+                Date end = resultSet.getDate("end");
+                if (begin != null && end != null) {
+                    assignment.setBeginDate(begin.toLocalDate());
+                    assignment.setEndDate(end.toLocalDate());
+                }
+                assignments.add(assignment);
+            }
+            return assignments;
+        } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception e) {
+            }
+            try {
+                resultSet.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    @Override
     public Long create(Assignment assignment) throws DaoException {
         String sql = "INSERT INTO `assignments` (`student_id`, `course_id`, `begin`, `end`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;

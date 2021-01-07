@@ -21,12 +21,12 @@
 <h1>${title}</h1>
 <c:url var="loginUrl" value="/main/login.html"/>
 <form action="${loginUrl}" method="post">
-    <p><fmt:message key="main.login.laber.username"/>
-        <input type="text" name="login">
+    <p><fmt:message key="main.login.label.username"/>
+        <input type="text" name="login" required>
     </p>
-    <p><fmt:message key="main.login.laber.pass"/>
-        <input type="password" name="password">
+    <p><fmt:message key="main.login.label.pass"/>
+        <input type="password" name="password" required>
     </p>
-    <button type="submit"><fmt:message key="main.login.laber.enter"/></button>
+    <button type="submit"><fmt:message key="main.login.label.enter"/></button>
 </form>
 </tag:head>

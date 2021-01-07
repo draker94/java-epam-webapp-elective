@@ -33,9 +33,9 @@
             <input type="hidden" name="id" value="${instructor.id}">
         </c:if>
         <p><fmt:message key="instructor.edit.label.name"/>
-            <input type="text" name="name" value="${instructor.name}"></p>
+            <input type="text" name="name" value="${instructor.name}" required></p>
         <p><fmt:message key="instructor.edit.label.surname"/>
-            <input type="text" name="surname" value="${instructor.surname}"></p>
+            <input type="text" name="surname" value="${instructor.surname}" required></p>
         <p><fmt:message key="instructor.edit.label.rank"/>
             <select name="rank">
                 <c:forEach var="rank" items="${ranks}">
@@ -54,7 +54,7 @@
         <c:if test="${empty instructor}">
             <c:choose>
                 <c:when test="${empty freeUsersList}">
-                    <p><fmt:message key="label.nofreeusers"/></p>
+                    <p><fmt:message key="label.not_free_users"/></p>
                     <c:set var="canSave" value="${false}"/>
                 </c:when>
                 <c:otherwise>
@@ -68,6 +68,5 @@
         </c:if>
         <button ${canSave ? ""  : "disabled=&quot;&quot;"} type="submit"><fmt:message key="label.save"/></button>
     </form>
-    <c:url var="back" value="/instructor/list.html"/>
-    <a href="${back}"><fmt:message key="label.back"/></a>
+    <tag:buttons/>
 </tag:head>

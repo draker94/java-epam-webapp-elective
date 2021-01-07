@@ -15,8 +15,16 @@
 
 <fmt:message key="account.title" var="title"/>
 <tag:head title="${title}">
-    <p><a href="${pageContext.request.contextPath}/course/list.html"<fmt:message key="account.label.listcourse"/></a></p>
-    <p><a href="${pageContext.request.contextPath}/student/list.html"><fmt:message key="account.label.liststudent"/></a></p>
-    <p><a href="${pageContext.request.contextPath}/assignment/list.html"><fmt:message key="account.label.listassignment"/></a></p>
-    <p><a href="${pageContext.request.contextPath}/result/list.html"><fmt:message key="account.label.listresult"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/course/list.html"><fmt:message key="account.label.list_course"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/student/list.html"><fmt:message key="account.label.list_student"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/assignment/list.html"><fmt:message key="account.label.list_assignment"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/result/list.html"><fmt:message key="account.label.list_result"/></a></p>
+    <c:url var="instructorMyCoursesUrl" value="/course/search.html">
+        <c:param name="condition" value="${sessionUser.id}"/>
+    </c:url>
+    <p><a href="${instructorMyCoursesUrl}"><fmt:message key="account.label.instructor.my_course"/></a></p>
+    <c:url var="instructorMyAssignmentsUrl" value="/assignment/instructor-list.html">
+        <c:param name="instructorId" value="${sessionUser.id}"/>
+    </c:url>
+    <p><a href="${instructorMyAssignmentsUrl}"><fmt:message key="account.label.instructor.my_assignment"/></a></p>
 </tag:head>

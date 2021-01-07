@@ -55,11 +55,12 @@
     <c:url var="courseSearchUrl" value="/course/search.html"/>
     <form action="${courseSearchUrl}">
         <p><fmt:message key="course.list.label.search"/>
-            <input type="text" name="condition"></p>
+            <input type="text" name="condition" required></p>
         <button type="submit"><fmt:message key="label.search"/></button>
     </form>
     <c:url var="courseListUrl" value="/course/list.html"/>
     <form action="${courseListUrl}">
         <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
+    <tag:buttons/>
 </tag:head>

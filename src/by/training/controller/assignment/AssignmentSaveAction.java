@@ -2,7 +2,6 @@ package by.training.controller.assignment;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
-import by.training.controller.course.CourseSaveAction;
 import by.training.di.ServiceCreationException;
 import by.training.domain.Assignment;
 import by.training.domain.Course;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class AssignmentSaveAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(AssignmentSaveAction.class);
@@ -26,6 +26,7 @@ public class AssignmentSaveAction extends Action {
         LOGGER.debug("Method entering.");
         Long studentId = Long.parseLong(request.getParameter("studentId"));
         Long courseId = Long.parseLong(request.getParameter("courseId"));
+        boolean isRedirectStudentList = Boolean.parseBoolean(request.getParameter("isRedirectStudentList"));
         try {
             AssignmentService assignmentService = getServiceCreator().getAssignmentService();
             if (studentId != null && courseId != null) {
@@ -35,9 +36,13 @@ public class AssignmentSaveAction extends Action {
                 LocalDate endDate = null;
                 try {
                     id = Long.parseLong(request.getParameter("id"));
+                } catch (NumberFormatException e) {
+                    LOGGER.error(e);
+                }
+                try {
                     beginDate = LocalDate.parse(request.getParameter("beginDate"));
                     endDate = LocalDate.parse(request.getParameter("endDate"));
-                } catch (NumberFormatException e) {
+                } catch (NullPointerException e) {
                     LOGGER.error(e);
                 }
                 Assignment assignment = new Assignment();
@@ -55,6 +60,9 @@ public class AssignmentSaveAction extends Action {
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);
+        }
+        if (isRedirectStudentList) {
+            return new Forward("/assignment/student-list.html");
         }
         return new Forward("/assignment/list.html");
     }

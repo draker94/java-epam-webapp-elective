@@ -51,11 +51,12 @@
     <c:url var="instructorSearchUrl" value="/instructor/search.html"/>
     <form action="${instructorSearchUrl}">
         <p><fmt:message key="instructor.list.label.search"/>
-            <input type="text" name="surnameForSearch"></p>
+            <input type="text" name="surnameForSearch" required></p>
         <button type="submit"><fmt:message key="label.search"/></button>
     </form>
     <c:url var="instructorListUrl" value="/instructor/list.html"/>
     <form action="${instructorListUrl}">
         <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
+    <tag:buttons/>
 </tag:head>

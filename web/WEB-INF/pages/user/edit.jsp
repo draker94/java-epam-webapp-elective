@@ -9,9 +9,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${language}" />
-<fmt:setBundle basename="by/training/resources/translate" />
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="by/training/resources/translate"/>
 
 <c:choose>
     <c:when test="${not empty user}">
@@ -28,9 +30,9 @@
             <input type="hidden" name="id" value="${user.id}">
         </c:if>
         <p><fmt:message key="user.edit.label.name"/>
-            <input type="text" name="login" value="${user.login}"></p>
+            <input type="text" name="login" value="${user.login}" required></p>
         <p><fmt:message key="user.edit.label.pass"/>
-            <input type="text" name="password" value="${user.password}"></p>
+            <input type="text" name="password" value="${user.password}" required></p>
         <p><fmt:message key="user.edit.label.mail"/>
             <input type="text" name="mail" value="${user.mail}"></p>
         <p><fmt:message key="user.edit.label.role"/>
@@ -50,6 +52,5 @@
         </p>
         <button type="submit"><fmt:message key="label.save"/></button>
     </form>
-    <c:url var="back" value="/assignment/list.html"/>
-    <a href="${back}"><fmt:message key="label.back"/></a>
+    <tag:buttons/>
 </tag:head>

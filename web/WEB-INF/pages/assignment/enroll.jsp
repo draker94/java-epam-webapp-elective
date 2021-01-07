@@ -19,6 +19,7 @@
 <tag:head title="${title} ${student.surname} ${student.name}">
     <c:url var="assignmentSaveUrl" value="/assignment/save.html"/>
     <form action="${assignmentSaveUrl}" method="post">
+        <input type="hidden" name="isRedirectStudentList" value="${true}">
         <input type="hidden" name="studentId" value="${student.id}">
         <p><fmt:message key="assignment.enroll.label.student"/> ${student.surname} ${student.name}</p>
         <p><fmt:message key="assignment.enroll.label.course"/>
@@ -35,7 +36,7 @@
                             <option value="${course.id}">${course.name}</option>
                         </c:when>
                         <c:otherwise>
-                            <option disabled=""><fmt:message key="assignment.enroll.label.alreadyenroll"/> ${course.name}</option>
+                            <option disabled=""><fmt:message key="assignment.enroll.label.already_enroll"/> ${course.name}</option>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
@@ -43,6 +44,5 @@
         </p>
         <button type="submit"><fmt:message key="label.save"/></button>
     </form>
-    <c:url var="back" value="/assignment/student-list.html"/>
-    <a href="${back}"><fmt:message key="label.back"/></a>
+    <tag:buttons/>
 </tag:head>

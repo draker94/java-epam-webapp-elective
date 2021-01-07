@@ -29,7 +29,7 @@ public class AssignmentSearchAction extends Action {
             try {
                 fromDate = LocalDate.parse(request.getParameter("fromDate"));
                 toDate = LocalDate.parse(request.getParameter("toDate"));
-            } catch (DateTimeParseException e) {
+            } catch (NullPointerException e) {
                 LOGGER.error(e);
                 return null;
             }
@@ -43,8 +43,8 @@ public class AssignmentSearchAction extends Action {
             request.setAttribute("assignmentList", searchResult);
             return new Forward("/assignment/list", false);
         } catch (ServiceCreationException | ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
+            throw new ServletException(e);
         }
-        return null;
     }
 }

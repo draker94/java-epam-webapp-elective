@@ -46,16 +46,16 @@
         <button type="submit"><fmt:message key="label.delete"/></button>
     </form>
     <c:url var="resultEditUrl" value="/result/edit.html"/>
-    <a href="${resultEditUrl}"><fmt:message key="result.list.table.newmark"/></a>
+    <a href="${resultEditUrl}"><fmt:message key="result.list.table.new_mark"/></a>
     <c:url var="resultSearchUrl" value="/result/search.html"/>
     <form action="${resultSearchUrl}">
-        <p><fmt:message key="result.list.table.findfrom"/>
+        <p><fmt:message key="result.list.table.find_from"/>
             <select name="from">
                 <c:forEach var="i" begin="0" end="10">
                     <option value="${i}">${i}</option>
                 </c:forEach>
             </select>
-            <fmt:message key="result.list.table.findto"/>
+            <fmt:message key="result.list.table.find_to"/>
             <select name="to">
                 <c:forEach var="i" begin="0" end="10">
                     <option value="${i}">${i}</option>
@@ -67,4 +67,5 @@
     <form action="${resultListUrl}">
         <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
+    <tag:buttons/>
 </tag:head>

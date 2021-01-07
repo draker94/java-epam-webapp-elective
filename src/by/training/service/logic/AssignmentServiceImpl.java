@@ -13,6 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AssignmentServiceImpl implements AssignmentService {
@@ -101,6 +103,25 @@ public class AssignmentServiceImpl implements AssignmentService {
                 assignment.setCourse(courseDao.read(assignment.getCourse().getId()));
             }
             return assignmentList;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Assignment> findInstructorAssignment(Long instructorId) throws ServiceException {
+        LOGGER.debug("Method entering.");
+        try {
+            List<Course> instructorCourses = courseDao.getInstructorCoursesList(instructorId);
+            List<Assignment> results = new ArrayList<>();
+            for(Course course : instructorCourses) {
+                results.addAll(assignmentDao.getAssignmentsByCourse(course.getId()));
+            }
+            for(Assignment assignment : results) {
+                assignment.setStudent(studentDao.read(assignment.getStudent().getId()));
+                assignment.setCourse(courseDao.read(assignment.getCourse().getId()));
+            }
+            return results;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

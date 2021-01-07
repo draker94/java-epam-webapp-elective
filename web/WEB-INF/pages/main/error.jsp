@@ -9,13 +9,31 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Oooops...</title>
 </head>
 <body>
-<h1>Упс! Возникла ошибка!</h1>
-
-<c:out value="${error}" />
-<a href="${url}">На главную</a>
-
+<h1>Error!</h1>
+<table width="100%" border="1">
+    <tr valign="top">
+        <td width="40%"><b>Error:</b></td>
+        <td>${error}</td>
+    </tr>
+    <tr valign="top">
+        <td><b>URI:</b></td>
+        <td>${uri}</td>
+    </tr>
+    <tr valign="top">
+        <td><b>Status code:</b></td>
+        <td>${pageContext.errorData.statusCode}</td>
+    </tr>
+    <tr valign="top">
+        <td><b>Stack trace:</b></td>
+        <td>
+            <c:forEach var="trace" items="${stackTrace}">
+                <p>${trace}</p>
+            </c:forEach>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

@@ -28,6 +28,7 @@
                 <th><fmt:message key="assignment.list.table.student"/></th>
                 <th><fmt:message key="assignment.list.table.start"/></th>
                 <th><fmt:message key="assignment.list.table.end"/></th>
+                <th><fmt:message key="assignment.list.table.result"/></th>
             </tr>
             <c:forEach var="assignment" items="${assignmentList}">
                 <c:url var="assignmentEditUrl" value="/assignment/edit.html">
@@ -45,6 +46,10 @@
                     <td>${assignment.student.surname} ${assignment.student.name}</td>
                     <td>${assignment.beginDate}</td>
                     <td>${assignment.endDate}</td>
+                    <c:url var="newResultUrl" value="/result/edit.html">
+                        <c:param name="assignmentIdForCreate" value="${assignment.id}"/>
+                    </c:url>
+                    <td><a href=${newResultUrl}><fmt:message key="assignment.list.table.set_mark"/></a></td>
                 </tr>
             </c:forEach>
         </table>
@@ -56,17 +61,18 @@
     <form action="${assignmentSearchUrl}">
         <fmt:message key="assignment.list.label.search"/>
         <p><input type="radio" name="startDate" value="${true}" checked="checked"><fmt:message
-                key="assignment.list.label.searchbystart"/><br>
-            <input type="radio" name="startDate" value="${false}"><fmt:message key="assignment.list.label.searchbyend"/><br>
+                key="assignment.list.label.search_by_start"/><br>
+            <input type="radio" name="startDate" value="${false}"><fmt:message key="assignment.list.label.search_by_end"/><br>
         </p>
         <fmt:message key="assignment.list.label.from"/>
-        <input type="date" name="fromDate">
+        <input type="date" name="fromDate" required>
         <fmt:message key="assignment.list.label.to"/>
-        <input type="date" name="toDate">
+        <input type="date" name="toDate" required>           <!-- в контроллере сделать проверки на даты -->
         <button type="submit"><fmt:message key="label.search"/></button>
     </form>
     <c:url var="assignmentListUrl" value="/assignment/list.html"/>
     <form action="${assignmentListUrl}">
         <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
+    <tag:buttons/>
 </tag:head>

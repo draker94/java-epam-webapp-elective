@@ -10,6 +10,10 @@
         <name>head</name>
         <path>/WEB-INF/tags/head.tag</path>
     </tag-file>
+    <tag-file>
+        <name>buttons</name>
+        <path>/WEB-INF/tags/buttons.tag</path>
+    </tag-file>
     <function>
         <name>contains</name>
         <function-class>by.training.util.JstlArrayContainsCheck</function-class>

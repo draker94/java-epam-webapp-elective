@@ -7,14 +7,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag"%>
+<%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${language}" />
-<fmt:setBundle basename="by/training/resources/translate" />
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="by/training/resources/translate"/>
 
 <c:url var="resultSaveUrl" value="/result/save.html"/>
 <c:set var="create" value="${empty result}"/>
+<c:set var="createBasedOn" value="${not empty param.assignmentIdForCreate}"/>
 <c:choose>
     <c:when test="${not create}">
         <fmt:message key="result.edit.label.edit" var="title"/>
@@ -24,17 +27,22 @@
     </c:otherwise>
 </c:choose>
 <tag:head title="${title}">
-<h1>${title}</h1>
-<form action="${resultSaveUrl}" method="post">
-    <c:if test="${not create}">
-        <input type="hidden" name="id" value="${result.id}">
-        <input type="hidden" name="assignmentId" value="${result.assignment.id}">
-    </c:if>
-    <p><fmt:message key="result.edit.label.student"/>
-        <select name="assignmentId" ${create ? ""  : "disabled=&quot;&quot;"}>
+    <h1>${title}</h1>
+    <form action="${resultSaveUrl}" method="post">
+        <c:choose>
+            <c:when test="${not create}">
+                <input type="hidden" name="id" value="${result.id}">
+                <input type="hidden" name="assignmentId" value="${result.assignment.id}">
+            </c:when>
+            <c:when test="${createBasedOn}">
+                <input type="hidden" name="assignmentId" value=${param.assignmentIdForCreate}>
+            </c:when>
+        </c:choose>
+        <fmt:message key="result.edit.label.student"/>
+        <select name="assignmentId" ${create && not createBasedOn ? ""  : "disabled=&quot;&quot;"}>
             <c:forEach var="assignment" items="${assignmentList}">
                 <c:choose>
-                    <c:when test="${result.assignment.id == assignment.id}">
+                    <c:when test="${result.assignment.id == assignment.id || param.assignmentIdForCreate == assignment.id}">
                         <c:set var="selected" value="selected"/>
                     </c:when>
                     <c:otherwise>
@@ -45,29 +53,28 @@
                     <fmt:message key="result.edit.label.descr"/> ${assignment.course.name}</option>
             </c:forEach>
         </select>
-    <p><fmt:message key="result.edit.label.mark"/>
-        <select name="mark">
-            <c:forEach var="i" begin="1" end="10" step="1">
-                <c:choose>
-                    <c:when test="${i == result.mark}">
-                        <c:set var="selected" value="selected"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:remove var="selected"/>
-                    </c:otherwise>
-                </c:choose>
-                <option value="${i}" ${selected}>${i}</option>
-            </c:forEach>
-        </select>
-    </p>
-    <p><fmt:message key="result.edit.label.date"/>
-        <input type="date" name="markDate" value="${result.date}">
-    </p>
-    <p><fmt:message key="result.edit.label.review"/>
-        <input type="text" size="100" maxlength="512" name="review" value="${result.review}">
-    </p>
-    <button type="submit"><fmt:message key="label.save"/></button>
-</form>
-<c:url var="back" value="/result/list.html"/>
-<a href="${back}"><fmt:message key="label.back"/></a>
+        <p><fmt:message key="result.edit.label.mark"/>
+            <select name="mark">
+                <c:forEach var="i" begin="1" end="10" step="1">
+                    <c:choose>
+                        <c:when test="${i == result.mark}">
+                            <c:set var="selected" value="selected"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:remove var="selected"/>
+                        </c:otherwise>
+                    </c:choose>
+                    <option value="${i}" ${selected}>${i}</option>
+                </c:forEach>
+            </select>
+        </p>
+        <p><fmt:message key="result.edit.label.date"/>
+            <input type="date" name="markDate" value="${result.date}" required>
+        </p>
+        <p><fmt:message key="result.edit.label.review"/>
+            <input type="text" size="100" maxlength="512" name="review" value="${result.review}" required>
+        </p>
+        <button type="submit"><fmt:message key="label.save"/></button>
+    </form>
+    <tag:buttons/>
 </tag:head>

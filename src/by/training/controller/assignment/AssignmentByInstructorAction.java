@@ -4,7 +4,6 @@ import by.training.controller.Action;
 import by.training.controller.Forward;
 import by.training.di.ServiceCreationException;
 import by.training.domain.Assignment;
-import by.training.domain.User;
 import by.training.service.AssignmentService;
 import by.training.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -13,22 +12,20 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-public class AssignmentStudentListAction extends Action {
-    private static final Logger LOGGER = LogManager.getLogger(AssignmentListAction.class);
+public class AssignmentByInstructorAction extends Action {
+    private static final Logger LOGGER = LogManager.getLogger(AssignmentByInstructorAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            Long instructorId = Long.parseLong(request.getParameter("instructorId"));
             AssignmentService assignmentService = getServiceCreator().getAssignmentService();
-            HttpSession session = request.getSession();
-            User student = (User) session.getAttribute("sessionUser");
-            List<Assignment> assignmentList = assignmentService.findByStudent(student.getId());
+            List<Assignment> assignmentList = assignmentService.findInstructorAssignment(instructorId);
             request.setAttribute("assignmentList", assignmentList);
-            return new Forward("/assignment/studentList", false);
+            return new Forward("/assignment/list", false);
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e);
             throw new ServletException(e);
