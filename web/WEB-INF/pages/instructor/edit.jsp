@@ -33,23 +33,29 @@
             <input type="hidden" name="id" value="${instructor.id}">
         </c:if>
         <p><fmt:message key="instructor.edit.label.name"/>
-            <input type="text" name="name" value="${instructor.name}" required></p>
+            <label>
+                <input type="text" name="name" value="${instructor.name}" required>
+            </label></p>
         <p><fmt:message key="instructor.edit.label.surname"/>
-            <input type="text" name="surname" value="${instructor.surname}" required></p>
+            <label>
+                <input type="text" name="surname" value="${instructor.surname}" required>
+            </label></p>
         <p><fmt:message key="instructor.edit.label.rank"/>
-            <select name="rank">
-                <c:forEach var="rank" items="${ranks}">
-                    <c:choose>
-                        <c:when test="${rank == instructor.rank}">
-                            <c:set var="selected" value="selected"/>
-                        </c:when>
-                        <c:otherwise>
-                            <c:remove var="selected"/>
-                        </c:otherwise>
-                    </c:choose>
-                    <option value="${rank}" ${selected}>${rank.name}</option>
-                </c:forEach>
-            </select>
+            <label>
+                <select name="rank">
+                    <c:forEach var="rank" items="${ranks}">
+                        <c:choose>
+                            <c:when test="${rank == instructor.rank}">
+                                <c:set var="selected" value="selected"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:remove var="selected"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <option value="${rank}" ${selected}>${rank.name}</option>
+                    </c:forEach>
+                </select>
+            </label>
         </p>
         <c:if test="${empty instructor}">
             <c:choose>
@@ -58,11 +64,13 @@
                     <c:set var="canSave" value="${false}"/>
                 </c:when>
                 <c:otherwise>
-                    <select name="id">
-                        <c:forEach var="user" items="${freeUsersList}">
-                            <option value="${user.id}">${user.login} [${user.role.name}]</option>
-                        </c:forEach>
-                    </select>
+                    <label>
+                        <select name="id">
+                            <c:forEach var="user" items="${freeUsersList}">
+                                <option value="${user.id}">${user.login} [${user.role.name}]</option>
+                            </c:forEach>
+                        </select>
+                    </label>
                 </c:otherwise>
             </c:choose>
         </c:if>

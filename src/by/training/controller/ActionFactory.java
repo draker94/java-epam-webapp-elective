@@ -62,6 +62,7 @@ public class ActionFactory {
         actions.put("/result/save", ResultSaveAction.class);
         actions.put("/result/delete", ResultDeleteAction.class);
         actions.put("/result/search", ResultSearchAction.class);
+        actions.put("/result/student-list", ResultByStudentAction.class);
     }
 
     public static Action getAction(String url) throws ServletException {

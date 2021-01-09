@@ -13,15 +13,17 @@
 <head>
     <meta charset="UTF-8">
     <title>${title}</title>
-    <%-- <c:url var="urlCss" value="/main.css"/> --%>
-    <%--<link href="${urlCss}" rel="stylesheet"> --%>
+    <c:url var="urlCss" value="/styles/common.css"/>
+    <link href="${urlCss}" rel="stylesheet">
 </head>
 <body>
 <form>
-    <select name="language" onchange="submit()">
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Русский</option>
-        <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
-    </select>
+    <label>
+        <select name="language" onchange="submit()">
+            <option value="ru" ${language == 'ru' ? 'selected' : ''}>Русский</option>
+            <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
+        </select>
+    </label>
 </form>
 <div align="center">
     <h1><fmt:message key="application.title"/></h1>

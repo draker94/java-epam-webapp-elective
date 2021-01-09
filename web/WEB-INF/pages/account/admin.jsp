@@ -13,8 +13,8 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="by/training/resources/translate" />
 
-<fmt:message key="account.title" var="title"/>
+<div class="title"><fmt:message key="account.title" var="title"/>
 <tag:head title="${title}">
     <p><a href="${pageContext.request.contextPath}/user/list.html"><fmt:message key="account.label.list_user"/></a></p>
     <p><a href="${pageContext.request.contextPath}/instructor/list.html"><fmt:message key="account.label.list_instructor"/></a></p>
-</tag:head>
+</tag:head></div>

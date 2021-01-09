@@ -23,24 +23,26 @@
         <input type="hidden" name="studentId" value="${student.id}">
         <p><fmt:message key="assignment.enroll.label.student"/> ${student.surname} ${student.name}</p>
         <p><fmt:message key="assignment.enroll.label.course"/>
-            <select name="courseId">
-                <c:forEach var="course" items="${courseList}">
-                    <c:set var="canEnroll" value="${true}"/>
-                    <c:forEach var="assignment" items="${studentAssignment}">
-                        <c:if test="${assignment.course.id == course.id}">
-                            <c:set var="canEnroll" value="${false}"/>
-                        </c:if>
+            <label>
+                <select name="courseId">
+                    <c:forEach var="course" items="${courseList}">
+                        <c:set var="canEnroll" value="${true}"/>
+                        <c:forEach var="assignment" items="${studentAssignment}">
+                            <c:if test="${assignment.course.id == course.id}">
+                                <c:set var="canEnroll" value="${false}"/>
+                            </c:if>
+                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${canEnroll}">
+                                <option value="${course.id}">${course.name}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option disabled=""><fmt:message key="assignment.enroll.label.already_enroll"/> ${course.name}</option>
+                            </c:otherwise>
+                        </c:choose>
                     </c:forEach>
-                    <c:choose>
-                        <c:when test="${canEnroll}">
-                            <option value="${course.id}">${course.name}</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option disabled=""><fmt:message key="assignment.enroll.label.already_enroll"/> ${course.name}</option>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </select>
+                </select>
+            </label>
         </p>
         <button type="submit"><fmt:message key="label.save"/></button>
     </form>

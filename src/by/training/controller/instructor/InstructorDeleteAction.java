@@ -21,13 +21,15 @@ public class InstructorDeleteAction extends Action {
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idStr[] = request.getParameterValues("id");
-        List<Long> idStrArr = new ArrayList<>(idStr.length);
         try {
-            InstructorService instructorService = getServiceCreator().getInstructorService();
-            for (String id : idStr) {
-                idStrArr.add(Long.valueOf(id));
+            if (idStr != null) {
+                List<Long> idStrArr = new ArrayList<>(idStr.length);
+                InstructorService instructorService = getServiceCreator().getInstructorService();
+                for (String id : idStr) {
+                    idStrArr.add(Long.valueOf(id));
+                }
+                instructorService.delete(idStrArr);
             }
-            instructorService.delete(idStrArr);
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e.getLocalizedMessage());
             throw new ServletException(e);

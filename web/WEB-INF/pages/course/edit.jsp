@@ -28,26 +28,34 @@
         <input type="hidden" name="id" value="${course.id}">
     </c:if>
     <p><fmt:message key="course.edit.label.name"/>
-        <input type="text" name="name" value="${course.name}" required></p>
+        <label>
+            <input type="text" name="name" value="${course.name}" required>
+        </label></p>
     <p><fmt:message key="course.edit.label.instructor"/>
-        <select name="instructorId">
-            <c:forEach var="instructor" items="${instructorList}">
-                <c:choose>
-                    <c:when test="${course.instructor.id == instructor.id}">
-                        <c:set var="selected" value="selected"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:remove var="selected"/>
-                    </c:otherwise>
-                </c:choose>
-                <option value="${instructor.id}" ${selected}>${instructor.name} ${instructor.surname}</option>
-            </c:forEach>
-        </select>
+        <label>
+            <select name="instructorId">
+                <c:forEach var="instructor" items="${instructorList}">
+                    <c:choose>
+                        <c:when test="${course.instructor.id == instructor.id}">
+                            <c:set var="selected" value="selected"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:remove var="selected"/>
+                        </c:otherwise>
+                    </c:choose>
+                    <option value="${instructor.id}" ${selected}>${instructor.name} ${instructor.surname}</option>
+                </c:forEach>
+            </select>
+        </label>
     </p>
     <p><fmt:message key="course.edit.label.hours"/>
-        <input type="number" max="256" name="hours" value="${course.hours}" required></p>
+        <label>
+            <input type="number" max="256" name="hours" value="${course.hours}" required>
+        </label></p>
     <p><fmt:message key="course.edit.label.descr"/>
-        <input type="text" size="100" maxlength="512" name="description" value="${course.description}" required></p>
+        <label>
+            <input type="text" size="100" maxlength="512" name="description" value="${course.description}" required>
+        </label></p>
     <button type="submit"><fmt:message key="label.save"/></button>
 </form>
     <tag:buttons/>

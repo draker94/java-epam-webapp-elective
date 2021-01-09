@@ -2,9 +2,7 @@ package by.training.controller.student;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
-import by.training.controller.instructor.InstructorDeleteAction;
 import by.training.di.ServiceCreationException;
-import by.training.service.InstructorService;
 import by.training.service.ServiceException;
 import by.training.service.StudentService;
 import org.apache.logging.log4j.LogManager;
@@ -23,13 +21,15 @@ public class StudentDeleteAction extends Action {
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idStr[] = request.getParameterValues("id");
-        List<Long> idStrArr = new ArrayList<>(idStr.length);
         try {
-            StudentService studentService = getServiceCreator().getStudentService();
-            for (String id : idStr) {
-                idStrArr.add(Long.valueOf(id));
+            if (idStr != null) {
+                List<Long> idStrArr = new ArrayList<>(idStr.length);
+                StudentService studentService = getServiceCreator().getStudentService();
+                for (String id : idStr) {
+                    idStrArr.add(Long.valueOf(id));
+                }
+                studentService.delete(idStrArr);
             }
-            studentService.delete(idStrArr);
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e.getLocalizedMessage());
             throw new ServletException(e);

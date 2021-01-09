@@ -36,8 +36,10 @@
                     <c:set var="contains" value="${true}"/>
                 </c:if>
                 <tr>
-                    <td><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id"
-                               value="${student.id}"></td>
+                    <td><label>
+                        <input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id"
+                                   value="${student.id}">
+                    </label></td>
                     <td><a href="${studentEditUrl}">ред.</a></td>
                     <td>${student.id}</td>
                     <td>${student.surname}</td>
@@ -53,7 +55,9 @@
     <c:url var="studentSearchUrl" value="/student/search.html"/>
     <form action="${studentSearchUrl}">
         <p><fmt:message key="student.list.label.search"/>
-            <input type="text" name="surnameForSearch" required></p>
+            <label>
+                <input type="text" name="surnameForSearch" required>
+            </label></p>
         <button type="submit"><fmt:message key="label.search"/></button>
     </form>
     <c:url var="studentListUrl" value="/student/list.html"/>

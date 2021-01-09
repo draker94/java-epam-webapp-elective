@@ -26,45 +26,45 @@ public class AccountUpdateAction extends Action {
         String newPassword = request.getParameter("newPassword");
         String newPasswordConfirm = request.getParameter("newPasswordConfirm");
         String newMail = request.getParameter("newMail");
-        String message = null;
+        String message;
         try {
             HttpSession session = request.getSession();
             UserService userService = getServiceCreator().getUserService();
             User user = (User) session.getAttribute("sessionUser");
             if (newMail != null) {
                 if (newMail.equals(user.getMail())) {
-                    message = "Введён текущий e-mail.";
+                    message = "account.edit.error.current-mail";
                 } else if (newMail.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\\b")) {
                     user.setMail(newMail);
                     userService.save(user);
                     session.setAttribute("sessionUser", user);
-                    message = "E-mail успешно изменён.";
+                    message = "account.edit.mail-success";
                 } else {
-                    message = "Вы ввели некоректный адрес электронной почты.";
+                    message = "account.edit.error.incorrect-mail";
                 }
             } else {
                 if (oldPassword != null && !oldPassword.isBlank() && newPassword != null &&
                         !newPassword.isBlank() && newPasswordConfirm != null && !newPasswordConfirm.isBlank()) {
                     if (!user.getPassword().equals(oldPassword)) {
-                        message = "Введённый текущий пароль неверен.";
+                        message = "account.edit.error.current-password";
                     } else if (!newPassword.equals(newPasswordConfirm)) {
-                        message = "Пароли не совпадают.";
+                        message = "account.edit.error.password-not-matches";
                     } else if (user.getPassword().equals(newPassword)) {
-                        message = "Новый и старый пароли одинаковы.";
+                        message = "account.edit.error.password-equals";
                     } else {
                         user.setPassword(newPassword);
                         userService.save(user);
                         session.setAttribute("sessionUser", user);
-                        message = "Пароль успешно изменён.";
+                        message = "account.edit.password-success";
                     }
                 } else {
-                    message = "Не все поля заполнены.";
+                    message = "account.edit.error.password-unfilled";
                 }
             }
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e.getLocalizedMessage());
             throw new ServletException(e);
         }
-        return new Forward("/account/edit.html?message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
+        return new Forward("/account/edit.html?message=" + message);
     }
 }

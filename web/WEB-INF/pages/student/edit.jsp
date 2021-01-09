@@ -33,23 +33,29 @@
             <input type="hidden" name="id" value="${student.id}">
         </c:if>
         <p><fmt:message key="student.edit.label.name"/>
-            <input type="text" name="name" value="${student.name}" required></p>
+            <label>
+                <input type="text" name="name" value="${student.name}" required>
+            </label></p>
         <p><fmt:message key="student.edit.label.surname"/>
-            <input type="text" name="surname" value="${student.surname}" required></p>
+            <label>
+                <input type="text" name="surname" value="${student.surname}" required>
+            </label></p>
         <p><fmt:message key="student.edit.label.course"/>
-            <select name="studyYear">          <!--ОПТИМИЗИРОВАТЬ-->
-                <c:forEach var="i" begin="1" end="7" step="1">
-                    <c:choose>
-                        <c:when test="${i == student.studyYear}">
-                            <c:set var="selected" value="selected"/>
-                        </c:when>
-                        <c:otherwise>
-                            <c:remove var="selected"/>
-                        </c:otherwise>
-                    </c:choose>
-                    <option value="${i}" ${selected}>${i}</option>
-                </c:forEach>
-            </select>
+            <label>
+                <select name="studyYear">          <!--ОПТИМИЗИРОВАТЬ-->
+                    <c:forEach var="i" begin="1" end="7" step="1">
+                        <c:choose>
+                            <c:when test="${i == student.studyYear}">
+                                <c:set var="selected" value="selected"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:remove var="selected"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <option value="${i}" ${selected}>${i}</option>
+                    </c:forEach>
+                </select>
+            </label>
         </p>
         <c:if test="${empty student}">
             <c:choose>
@@ -58,11 +64,13 @@
                     <c:set var="canSave" value="${false}"/>
                 </c:when>
                 <c:otherwise>
-                    <select name="id">
-                        <c:forEach var="user" items="${freeUsersList}">
-                            <option value="${user.id}">${user.id} ${user.login} [${user.role}]</option>
-                        </c:forEach>
-                    </select>
+                    <label>
+                        <select name="id">
+                            <c:forEach var="user" items="${freeUsersList}">
+                                <option value="${user.id}">${user.id} ${user.login} [${user.role}]</option>
+                            </c:forEach>
+                        </select>
+                    </label>
                 </c:otherwise>
             </c:choose>
         </c:if>

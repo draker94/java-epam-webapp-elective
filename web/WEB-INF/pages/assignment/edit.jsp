@@ -32,40 +32,48 @@
             <input type="hidden" name="studentId" value="${assignment.student.id}">
         </c:if>
         <p><fmt:message key="assignment.edit.label.student"/>
-            <select name="studentId" ${create ? ""  : "disabled=&quot;&quot;"}>
-                <c:forEach var="student" items="${studentList}">
-                    <c:choose>
-                        <c:when test="${assignment.student.id == student.id}">
-                            <c:set var="selected" value="selected"/>
-                        </c:when>
-                        <c:otherwise>
-                            <c:remove var="selected"/>
-                        </c:otherwise>
-                    </c:choose>
-                    <option value="${student.id}" ${selected}>${student.name} ${student.surname}</option>
-                </c:forEach>
-            </select>
+            <label>
+                <select name="studentId" ${create ? ""  : "disabled=&quot;&quot;"}>
+                    <c:forEach var="student" items="${studentList}">
+                        <c:choose>
+                            <c:when test="${assignment.student.id == student.id}">
+                                <c:set var="selected" value="selected"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:remove var="selected"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <option value="${student.id}" ${selected}>${student.name} ${student.surname}</option>
+                    </c:forEach>
+                </select>
+            </label>
         </p>
         <p><fmt:message key="assignment.edit.label.course"/>
-            <select name="courseId">
-                <c:forEach var="course" items="${courseList}">
-                    <c:choose>
-                        <c:when test="${assignment.course.id == course.id}">
-                            <c:set var="selected" value="selected"/>
-                        </c:when>
-                        <c:otherwise>
-                            <c:remove var="selected"/>
-                        </c:otherwise>
-                    </c:choose>
-                    <option value="${course.id}" ${selected}>${course.name}</option>
-                </c:forEach>
-            </select>
+            <label>
+                <select name="courseId">
+                    <c:forEach var="course" items="${courseList}">
+                        <c:choose>
+                            <c:when test="${assignment.course.id == course.id}">
+                                <c:set var="selected" value="selected"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:remove var="selected"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <option value="${course.id}" ${selected}>${course.name}</option>
+                    </c:forEach>
+                </select>
+            </label>
         </p>
         <p><fmt:message key="assignment.edit.label.start"/>
-            <input type="date" name="beginDate" value="${assignment.beginDate}">
+            <label>
+                <input type="date" name="beginDate" value="${assignment.beginDate}">
+            </label>
         </p>
         <p><fmt:message key="assignment.edit.label.end"/>
-            <input type="date" name="endDate" value="${assignment.endDate}">
+            <label>
+                <input type="date" name="endDate" value="${assignment.endDate}">
+            </label>
         </p>
         <button type="submit"><fmt:message key="label.save"/></button>
     </form>

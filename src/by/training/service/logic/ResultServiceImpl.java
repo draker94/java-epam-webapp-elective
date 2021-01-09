@@ -8,6 +8,7 @@ import by.training.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultServiceImpl implements ResultService {
@@ -38,7 +39,7 @@ public class ResultServiceImpl implements ResultService {
         LOGGER.debug("Method entering.");
         try {
             List<Result> resultList = resultDao.getResultsList();
-            for(Result result : resultList) {
+            for (Result result : resultList) {
                 result.setAssignment(assignmentDao.read(result.getAssignment().getId()));
                 result.getAssignment().setCourse(courseDao.read(result.getAssignment().getCourse().getId()));
                 result.getAssignment().setStudent(studentDao.read(result.getAssignment().getStudent().getId()));
@@ -54,12 +55,36 @@ public class ResultServiceImpl implements ResultService {
         LOGGER.debug("Method entering.");
         try {
             List<Result> resultListByMark = resultDao.getListByMark(from, to);
-            for(Result result : resultListByMark) {
+            for (Result result : resultListByMark) {
                 result.setAssignment(assignmentDao.read(result.getAssignment().getId()));
                 result.getAssignment().setCourse(courseDao.read(result.getAssignment().getCourse().getId()));
                 result.getAssignment().setStudent(studentDao.read(result.getAssignment().getStudent().getId()));
             }
             return resultListByMark;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Result> findByStudent(Long id) throws ServiceException {
+        LOGGER.debug("Method entering.");
+        try {
+            List<Assignment> studentAssignment = assignmentDao.getAssignmentsByStudent(id);
+            List<Result> resultList = new ArrayList<>();
+            for (Assignment assignment : studentAssignment) {
+                resultList.addAll(resultDao.getListByAssignment(assignment.getId()));
+            }
+            for (Result result : resultList) {
+                for (Assignment assignment : studentAssignment) {
+                    if (Math.toIntExact(result.getAssignment().getId()) == assignment.getId()) {
+                        result.setAssignment(assignment);
+                    }
+                }
+                result.getAssignment().setCourse(courseDao.read(result.getAssignment().getCourse().getId()));
+                result.getAssignment().setStudent(studentDao.read(result.getAssignment().getStudent().getId()));
+            }
+            return resultList;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -99,7 +124,7 @@ public class ResultServiceImpl implements ResultService {
     public void delete(List<Long> ids) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
-            for(Long id : ids) {
+            for (Long id : ids) {
                 resultDao.delete(id, "results");
             }
         } catch (DaoException e) {

@@ -39,8 +39,10 @@
                     <c:set var="contains" value="${true}"/>
                 </c:if>
                 <tr>
-                    <td><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id"
-                               value="${assignment.id}"></td>
+                    <td><label>
+                        <input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id"
+                                   value="${assignment.id}">
+                    </label></td>
                     <td><a href="${assignmentEditUrl}"><fmt:message key="label.ed"/></a></td>
                     <td>${assignment.course.name}</td>
                     <td>${assignment.student.surname} ${assignment.student.name}</td>
@@ -60,14 +62,22 @@
     <c:url var="assignmentSearchUrl" value="/assignment/search.html"/>
     <form action="${assignmentSearchUrl}">
         <fmt:message key="assignment.list.label.search"/>
-        <p><input type="radio" name="startDate" value="${true}" checked="checked"><fmt:message
+        <p><label>
+            <input type="radio" name="startDate" value="${true}" checked="checked">
+        </label><fmt:message
                 key="assignment.list.label.search_by_start"/><br>
-            <input type="radio" name="startDate" value="${false}"><fmt:message key="assignment.list.label.search_by_end"/><br>
+            <label>
+                <input type="radio" name="startDate" value="${false}">
+            </label><fmt:message key="assignment.list.label.search_by_end"/><br>
         </p>
         <fmt:message key="assignment.list.label.from"/>
-        <input type="date" name="fromDate" required>
+        <label>
+            <input type="date" name="fromDate" required>
+        </label>
         <fmt:message key="assignment.list.label.to"/>
-        <input type="date" name="toDate" required>           <!-- в контроллере сделать проверки на даты -->
+        <label>
+            <input type="date" name="toDate" required>
+        </label>           <!-- в контроллере сделать проверки на даты -->
         <button type="submit"><fmt:message key="label.search"/></button>
     </form>
     <c:url var="assignmentListUrl" value="/assignment/list.html"/>

@@ -7,10 +7,8 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="by/training/resources/translate"/>
 
-<form>
-    <input type="button" value=<fmt:message key="label.back"/> onclick="history.back()">
-</form>
-<form>
-    <input type="button" value=<fmt:message key="label.main"/> onclick="location.href='<c:url value="/index.html"/>'">  <!-- везде сделать так -->
-</form>
+
+<p><button onclick="history.back()"><fmt:message key="label.back"/></button></p>
+<p><button onclick="location.href='<c:url value="/index.html"/>'"><fmt:message key="label.main"/></button></p> <!-- везде сделать так -->
+
 

@@ -30,25 +30,33 @@
             <input type="hidden" name="id" value="${user.id}">
         </c:if>
         <p><fmt:message key="user.edit.label.name"/>
-            <input type="text" name="login" value="${user.login}" required></p>
+            <label>
+                <input type="text" name="login" value="${user.login}" required>
+            </label></p>
         <p><fmt:message key="user.edit.label.pass"/>
-            <input type="text" name="password" value="${user.password}" required></p>
+            <label>
+                <input type="text" name="password" value="${user.password}" required>
+            </label></p>
         <p><fmt:message key="user.edit.label.mail"/>
-            <input type="text" name="mail" value="${user.mail}"></p>
+            <label>
+                <input type="text" name="mail" value="${user.mail}">
+            </label></p>
         <p><fmt:message key="user.edit.label.role"/>
-            <select name="role">
-                <c:forEach var="role" items="${roles}">
-                    <c:choose>
-                        <c:when test="${role == user.role}">
-                            <c:set var="selected" value="selected"/>
-                        </c:when>
-                        <c:otherwise>
-                            <c:remove var="selected"/>
-                        </c:otherwise>
-                    </c:choose>
-                    <option value="${role}"${selected}>${role.name}</option>
-                </c:forEach>
-            </select>
+            <label>
+                <select name="role">
+                    <c:forEach var="role" items="${roles}">
+                        <c:choose>
+                            <c:when test="${role == user.role}">
+                                <c:set var="selected" value="selected"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:remove var="selected"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <option value="${role}"${selected}>${role.name}</option>
+                    </c:forEach>
+                </select>
+            </label>
         </p>
         <button type="submit"><fmt:message key="label.save"/></button>
     </form>

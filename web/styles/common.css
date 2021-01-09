@@ -1,0 +1,92 @@
+.hide {
+    display: none;
+}
+
+.error {
+    color: #ff001d;
+}
+
+body {
+    background: url("media/background.jpg");
+    background-size: cover;
+    font: 20px "Courier New";
+    font-weight: bolder;
+}
+
+.title {
+    margin-top: 290px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th, td:first-child {
+    background: #AFCDE7;
+    color: white;
+    padding: 10px 20px;
+}
+
+th, td {
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    border-color: white;
+}
+
+td {
+    background: #D8E6F3;
+}
+
+th:first-child, td:first-child {
+    text-align: left;
+}
+
+a {
+    color: #0300b3;
+    line-height: 1.2;
+    position: relative;
+    padding: 8px 16px;
+    text-transform: uppercase;
+}
+
+a:visited {
+    color: #0300b3;
+}
+
+button {
+    appearance: none;
+    border: 0;
+    border-radius: 5px;
+    background: #1c8eb3;
+    color: #fff;
+    padding: 8px 16px;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #0300b3;
+}
+
+button:disabled {
+    background: #5f5e5d;
+}
+
+hr {
+    height: 3px;
+    background-color: #9a9bf7;
+    box-shadow: #1c8eb3;
+}
+
+input {
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #424fff;
+    border-radius: 4px;
+}
+
+select {
+    border: 3px solid #424fff;
+    box-sizing: border-box;
+    padding: 12px 20px;
+}

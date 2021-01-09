@@ -21,13 +21,15 @@ public class UserDeleteAction extends Action {
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idStr[] = request.getParameterValues("id");
-        List<Long> idStrArr = new ArrayList<>(idStr.length);
         try {
-            UserService userService = getServiceCreator().getUserService();
-            for(String id : idStr) {
-                idStrArr.add(Long.valueOf(id));
+            if(idStr != null) {
+                List<Long> idStrArr = new ArrayList<>(idStr.length);
+                UserService userService = getServiceCreator().getUserService();
+                for(String id : idStr) {
+                    idStrArr.add(Long.valueOf(id));
+                }
+                userService.delete(idStrArr);
             }
-            userService.delete(idStrArr);
         }
         catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e.getLocalizedMessage());

@@ -39,40 +39,48 @@
             </c:when>
         </c:choose>
         <fmt:message key="result.edit.label.student"/>
-        <select name="assignmentId" ${create && not createBasedOn ? ""  : "disabled=&quot;&quot;"}>
-            <c:forEach var="assignment" items="${assignmentList}">
-                <c:choose>
-                    <c:when test="${result.assignment.id == assignment.id || param.assignmentIdForCreate == assignment.id}">
-                        <c:set var="selected" value="selected"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:remove var="selected"/>
-                    </c:otherwise>
-                </c:choose>
-                <option value="${assignment.id}" ${selected}>${assignment.student.surname} ${assignment.student.name}
-                    <fmt:message key="result.edit.label.descr"/> ${assignment.course.name}</option>
-            </c:forEach>
-        </select>
-        <p><fmt:message key="result.edit.label.mark"/>
-            <select name="mark">
-                <c:forEach var="i" begin="1" end="10" step="1">
+        <label>
+            <select name="assignmentId" ${create && not createBasedOn ? ""  : "disabled=&quot;&quot;"}>
+                <c:forEach var="assignment" items="${assignmentList}">
                     <c:choose>
-                        <c:when test="${i == result.mark}">
+                        <c:when test="${result.assignment.id == assignment.id || param.assignmentIdForCreate == assignment.id}">
                             <c:set var="selected" value="selected"/>
                         </c:when>
                         <c:otherwise>
                             <c:remove var="selected"/>
                         </c:otherwise>
                     </c:choose>
-                    <option value="${i}" ${selected}>${i}</option>
+                    <option value="${assignment.id}" ${selected}>${assignment.student.surname} ${assignment.student.name}
+                        <fmt:message key="result.edit.label.descr"/> ${assignment.course.name}</option>
                 </c:forEach>
             </select>
+        </label>
+        <p><fmt:message key="result.edit.label.mark"/>
+            <label>
+                <select name="mark">
+                    <c:forEach var="i" begin="1" end="10" step="1">
+                        <c:choose>
+                            <c:when test="${i == result.mark}">
+                                <c:set var="selected" value="selected"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:remove var="selected"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <option value="${i}" ${selected}>${i}</option>
+                    </c:forEach>
+                </select>
+            </label>
         </p>
         <p><fmt:message key="result.edit.label.date"/>
-            <input type="date" name="markDate" value="${result.date}" required>
+            <label>
+                <input type="date" name="markDate" value="${result.date}" required>
+            </label>
         </p>
         <p><fmt:message key="result.edit.label.review"/>
-            <input type="text" size="100" maxlength="512" name="review" value="${result.review}" required>
+            <label>
+                <input type="text" size="100" maxlength="512" name="review" value="${result.review}" required>
+            </label>
         </p>
         <button type="submit"><fmt:message key="label.save"/></button>
     </form>

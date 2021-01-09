@@ -39,7 +39,9 @@
                 <c:set var="contains" value="${true}"/>
             </c:if>
             <tr>
-                <td><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id" value="${user.id}"></td>
+                <td><label>
+                    <input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id" value="${user.id}">
+                </label></td>
                 <td><a href="${userEditUrl}"><fmt:message key="label.ed"/></a></td>
                 <td>${user.id}</td>
                 <td>${user.login}</td>

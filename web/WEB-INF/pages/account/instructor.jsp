@@ -13,12 +13,9 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="by/training/resources/translate" />
 
-<fmt:message key="account.title" var="title"/>
+
+<div class="title"><fmt:message key="account.title" var="title"/>
 <tag:head title="${title}">
-    <p><a href="${pageContext.request.contextPath}/course/list.html"><fmt:message key="account.label.list_course"/></a></p>
-    <p><a href="${pageContext.request.contextPath}/student/list.html"><fmt:message key="account.label.list_student"/></a></p>
-    <p><a href="${pageContext.request.contextPath}/assignment/list.html"><fmt:message key="account.label.list_assignment"/></a></p>
-    <p><a href="${pageContext.request.contextPath}/result/list.html"><fmt:message key="account.label.list_result"/></a></p>
     <c:url var="instructorMyCoursesUrl" value="/course/search.html">
         <c:param name="condition" value="${sessionUser.id}"/>
     </c:url>
@@ -27,4 +24,9 @@
         <c:param name="instructorId" value="${sessionUser.id}"/>
     </c:url>
     <p><a href="${instructorMyAssignmentsUrl}"><fmt:message key="account.label.instructor.my_assignment"/></a></p>
-</tag:head>
+    <hr>
+    <p><a href="${pageContext.request.contextPath}/course/list.html"><fmt:message key="account.label.list_course"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/student/list.html"><fmt:message key="account.label.list_student"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/assignment/list.html"><fmt:message key="account.label.list_assignment"/></a></p>
+    <p><a href="${pageContext.request.contextPath}/result/list.html"><fmt:message key="account.label.list_result"/></a></p>
+</tag:head></div>

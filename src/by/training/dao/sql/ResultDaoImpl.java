@@ -94,6 +94,43 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
     }
 
     @Override
+    public List<Result> getListByAssignment(Long id) throws DaoException {
+        String sql = "SELECT `id`, `mark`, `review`, `date` FROM `results` WHERE `assignment_id` = ?";
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        LOGGER.debug("Method entering.");
+        try {
+            statement = getConnection().prepareStatement(sql);
+            statement.setLong(1, id);
+            resultSet = statement.executeQuery();
+            List<Result> results = new ArrayList<>();
+            while (resultSet.next()) {
+                Result result = new Result();
+                result.setId(resultSet.getLong("id"));
+                result.setAssignment(new Assignment());
+                result.getAssignment().setId(id);
+                result.setMark(resultSet.getInt("mark"));
+                result.setReview(resultSet.getString("review"));
+                result.setDate(resultSet.getDate("date").toLocalDate());
+                results.add(result);
+            }
+            return results;
+        } catch (SQLException e) {
+            LOGGER.info(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception e) {
+            }
+            try {
+                resultSet.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    @Override
     public Long create(Result result) throws DaoException {
         String sql = "INSERT INTO `results` (`assignment_id`, `mark`, `review`, `date`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;

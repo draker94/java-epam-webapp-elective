@@ -34,7 +34,7 @@ public class LoginAction extends Action {
                     session.setAttribute("sessionUser", user);
                     return new Forward("/index.html");
                 } else {
-                    return new Forward("/main/login.html?message=" + URLEncoder.encode("Неверный логин или пароль!", StandardCharsets.UTF_8));
+                    return new Forward("/main/login.html?message=main.login.error.incorrect");
                 }
             } else {
                 return null;
