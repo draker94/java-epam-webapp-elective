@@ -4,13 +4,11 @@ import by.training.controller.Action;
 import by.training.controller.Forward;
 import by.training.di.ServiceCreationException;
 import by.training.domain.Instructor;
-import by.training.domain.Student;
 import by.training.domain.User;
 import by.training.enums.Ranks;
 import by.training.enums.Roles;
 import by.training.service.InstructorService;
 import by.training.service.ServiceException;
-import by.training.service.StudentService;
 import by.training.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,7 +32,7 @@ public class InstructorEditAction extends Action {
                 if (instructor != null) {
                     request.setAttribute("instructor", instructor);
                 } else {
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("Instructor ID is wrong!");
                 }
             }
             else {
@@ -48,10 +46,9 @@ public class InstructorEditAction extends Action {
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);
-        } catch (IllegalArgumentException e) {
-            LOGGER.error(e);
-            response.sendError(404);
-            return null;
+        }
+        catch (IllegalArgumentException e) {
+            response.sendError(404, e.getMessage());
         }
         request.setAttribute("ranks", Ranks.values());
         return null;

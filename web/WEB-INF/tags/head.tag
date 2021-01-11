@@ -28,12 +28,10 @@
 <div align="center">
     <h1><fmt:message key="application.title"/></h1>
     <c:if test="${not empty sessionUser}">
-        <c:url var="urlLogout" value="/main/logout.html"/>
-        <c:url var="urlAccount" value="/account/edit.html"/>
-        <fmt:message key="application.welcome"/> ${sessionUser.login}<br/> <!-- Везде переносы вместо p поставить -->
+        <fmt:message key="application.welcome"/> ${sessionUser.login}<br/>
         <fmt:message key="application.access"/> ${sessionUser.role.name}<br/>
-        <a href="${urlAccount}"><fmt:message key="application.logged"/></a>
-        <p><a href="${urlLogout}"><fmt:message key="application.exit"/></a></p>
+        <a href="<c:url value='/account/edit.html'/>"><fmt:message key="application.logged"/></a>
+        <p><a href="<c:url value='/main/logout.html'/>"><fmt:message key="application.exit"/></a></p>
         <hr>
     </c:if>
     <jsp:doBody/>

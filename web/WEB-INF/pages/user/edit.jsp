@@ -24,8 +24,7 @@
     </c:otherwise>
 </c:choose>
 <tag:head title="${title}">
-    <c:url var="userSaveUrl" value="/user/save.html"/>
-    <form action="${userSaveUrl}" method="post">
+    <form action="<c:url value='/user/save.html'/>" method="post">
         <c:if test="${not empty user}">
             <input type="hidden" name="id" value="${user.id}">
         </c:if>

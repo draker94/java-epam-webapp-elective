@@ -25,15 +25,14 @@
     </c:otherwise>
 </c:choose>
 <tag:head title="${title}">
-    <c:url var="assignmentSaveUrl" value="/assignment/save.html"/>
-    <form action="${assignmentSaveUrl}" method="post">
+    <form action="<c:url value='/assignment/save.html'/>" method="post">
         <c:if test="${not create}">
             <input type="hidden" name="id" value="${assignment.id}">
             <input type="hidden" name="studentId" value="${assignment.student.id}">
         </c:if>
         <p><fmt:message key="assignment.edit.label.student"/>
             <label>
-                <select name="studentId" ${create ? ""  : "disabled=&quot;&quot;"}>
+                <select name="studentId" ${create ? ""  : "disabled=''"}>
                     <c:forEach var="student" items="${studentList}">
                         <c:choose>
                             <c:when test="${assignment.student.id == student.id}">

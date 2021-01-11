@@ -2,7 +2,6 @@ package by.training.controller.main;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
-import by.training.controller.instructor.InstructorSearchAction;
 import by.training.di.ServiceCreationException;
 import by.training.domain.User;
 import by.training.service.ServiceException;
@@ -15,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 public class LoginAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(LoginAction.class);
@@ -32,9 +29,11 @@ public class LoginAction extends Action {
                 if (user != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("sessionUser", user);
+                    LOGGER.info(String.format("%s successfully authenticated.", user.getLogin()));
                     return new Forward("/index.html");
                 } else {
-                    return new Forward("/main/login.html?message=main.login.error.incorrect");
+                    request.setAttribute("error", "main.login.error.incorrect");
+                    return null;
                 }
             } else {
                 return null;

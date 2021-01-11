@@ -14,5 +14,7 @@ public interface UserDao extends Dao<User, Long> {
 
     User getByLoginAndPass(String login, String password) throws DaoException;
 
+    User getByLogin(String login) throws DaoException;
+
     List<User> getFreeUsersList() throws DaoException;
 }

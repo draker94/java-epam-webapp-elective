@@ -17,12 +17,11 @@
 
 <div class="title"><fmt:message key="main.login.title" var="title"/>
 <tag:head title="${title}">
-    <c:if test="${not empty param.message}">
-        <p class="error"><fmt:message key="${param.message}"/></p>
+    <c:if test="${not empty error}">
+        <p class="error"><fmt:message key="${error}"/></p>
     </c:if>
     <h1>${title}</h1>
-    <c:url var="loginUrl" value="/main/login.html"/>
-    <form action="${loginUrl}" method="post">
+    <form action="<c:url value='/main/login.html'/>" method="post">
             <p><fmt:message key="main.login.label.username"/>
                 <label>
                     <input type="text" name="login" required>

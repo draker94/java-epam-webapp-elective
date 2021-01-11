@@ -17,7 +17,6 @@
 
 <fmt:message key="assignment.student_list.title" var="title"/>
 <tag:head title="${title}">
-    <c:url var="assignmentDeleteUrl" value="/assignment/delete.html"/>
     <table border="1">
         <caption>${title}</caption>
         <tr>

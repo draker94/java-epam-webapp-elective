@@ -17,8 +17,7 @@
 <c:set var="visibility" value="${sessionUser.role == Roles.INSTRUCTOR ? '' : 'hide'}"/>
 <fmt:message key="result.list.title" var="title"/>
 <tag:head title="${title}">
-    <c:url var="resultDeleteUrl" value="/result/delete.html"/>
-    <form action="${resultDeleteUrl}" method="post">
+    <form action="<c:url value='/result/delete.html'/>" method="post">
         <table border="1">
             <caption>${title}</caption>
             <tr>
@@ -35,7 +34,9 @@
                     <c:param name="id" value="${result.id}"/>
                 </c:url>
                 <tr>
-                    <td class="${visibility}"><input type="checkbox" name="id" value="${result.id}"></td>
+                    <td class="${visibility}"><label>
+                        <input type="checkbox" name="id" value="${result.id}">
+                    </label></td>
                     <td class="${visibility}"><a href="${resultEditUrl}"><fmt:message key="label.ed"/></a></td>
                     <td>${result.assignment.course.name}</td>
                     <td>${result.assignment.student.surname} ${result.assignment.student.name}</td>
@@ -47,10 +48,8 @@
         </table>
         <button class="${visibility}" type="submit"><fmt:message key="label.delete"/></button>
     </form>
-    <c:url var="resultEditUrl" value="/result/edit.html"/>
-    <a class="${visibility}" href="${resultEditUrl}"><fmt:message key="result.list.table.new_mark"/></a>
-    <c:url var="resultSearchUrl" value="/result/search.html"/>
-    <form class="${visibility}" action="${resultSearchUrl}">
+    <a class="${visibility}" href="<c:url value='/result/edit.html'/>"><fmt:message key="result.list.table.new_mark"/></a>
+    <form class="${visibility}" action="<c:url value='/result/search.html'/>">
         <p><fmt:message key="result.list.table.find_from"/>
             <label>
                 <select name="from">
@@ -69,8 +68,7 @@
             </label>
             <button type="submit"><fmt:message key="label.search"/></button>
     </form>
-    <c:url var="resultListUrl" value="/result/list.html"/>
-    <form class="${visibility}" action="${resultListUrl}">
+    <form class="${visibility}" action="<c:url value='/result/list.html'/>">
         <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
     <tag:buttons/>

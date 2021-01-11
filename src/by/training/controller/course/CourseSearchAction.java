@@ -4,10 +4,8 @@ import by.training.controller.Action;
 import by.training.controller.Forward;
 import by.training.di.ServiceCreationException;
 import by.training.domain.Course;
-import by.training.domain.Student;
 import by.training.service.CourseService;
 import by.training.service.ServiceException;
-import by.training.service.StudentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +17,6 @@ import java.util.List;
 
 public class CourseSearchAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(CourseSearchAction.class);
-
 
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String condition = request.getParameter("condition");

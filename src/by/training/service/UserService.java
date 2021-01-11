@@ -19,5 +19,7 @@ public interface UserService {
 
     User findByLoginAndPass(String login, String password) throws ServiceException;
 
+    User findByLogin(String login) throws ServiceException;
+
     List<User> findAllFreeUsers() throws ServiceException;
 }

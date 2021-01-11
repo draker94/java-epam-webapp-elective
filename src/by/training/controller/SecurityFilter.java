@@ -67,7 +67,7 @@ public class SecurityFilter implements Filter {
         studentPermissions.add("/course/search");
         studentPermissions.add("/assignment/student-list");
         studentPermissions.add("/assignment/enroll");
-        studentPermissions.add("/assignment/save"); // подумОть о безопасности
+        studentPermissions.add("/assignment/save"); // подумОть о перенаправлении с 403
         studentPermissions.add("/assignment/search");
         studentPermissions.add("/result/student-list");
 
@@ -89,14 +89,14 @@ public class SecurityFilter implements Filter {
             requestUrl = requestUrl.substring(contextPath.length());
         }
         HttpSession session = httpReq.getSession(false);
-        boolean securePage = false;
+        boolean isSecurePage = false;
         for (Set<String> set : permissions.values()) {
             if (set.contains(requestUrl)) {
-                securePage = true;
+                isSecurePage = true;
                 break;
             }
         }
-        if (securePage) {
+        if (isSecurePage) {
             if (session != null) {
                 User user = (User) session.getAttribute("sessionUser");
                 //Whitelist authorization
@@ -109,6 +109,6 @@ public class SecurityFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-        httpResp.sendRedirect(contextPath + "/index.html");
+        httpResp.sendError(403);
     }
 }

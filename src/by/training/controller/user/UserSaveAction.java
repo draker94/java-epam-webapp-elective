@@ -24,13 +24,8 @@ public class UserSaveAction extends Action {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String mail = request.getParameter("mail");
-        Roles role = null;
         try {
-            role = Roles.valueOf(request.getParameter("role"));
-        } catch (NullPointerException | IllegalArgumentException e) {
-            LOGGER.error(e);
-        }
-        try {
+            Roles role = Roles.valueOf(request.getParameter("role"));
             UserService userService = getServiceCreator().getUserService();
             if (login != null && !login.isBlank() && password != null && !password.isBlank()) {
                 Long id = null;
@@ -38,6 +33,11 @@ public class UserSaveAction extends Action {
                     id = Long.parseLong(request.getParameter("id"));
                 } catch (NumberFormatException e) {
                     LOGGER.error(e);
+                    //Does a user with this login already exist?
+                    User user = userService.findByLogin(login);
+                    if(user != null) {
+                        return new Forward("/user/list.html?message=user.save.error.exist");
+                    }
                 }
                 User user = new User();
                 user.setId(id);
@@ -50,6 +50,11 @@ public class UserSaveAction extends Action {
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);
+        }
+        catch (NullPointerException | IllegalArgumentException e) {
+            LOGGER.error(e);
+            response.sendError(400, "Role isn't valid'!");
+            return null;
         }
         return new Forward("/user/list.html");
     }

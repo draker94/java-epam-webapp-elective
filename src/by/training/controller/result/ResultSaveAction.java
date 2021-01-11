@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.List;
 
 public class ResultSaveAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(ResultSaveAction.class);
@@ -22,19 +24,25 @@ public class ResultSaveAction extends Action {
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOGGER.debug("Method entering.");
-        Long assignmentId = Long.parseLong(request.getParameter("assignmentId"));
-        int mark = Integer.parseInt(request.getParameter("mark"));
-        LocalDate date = LocalDate.parse(request.getParameter("markDate"));
         String review = request.getParameter("review");
         try {
+            Long assignmentId = Long.parseLong(request.getParameter("assignmentId"));
+            int mark = Integer.parseInt(request.getParameter("mark"));
+            LocalDate date = LocalDate.parse(request.getParameter("markDate"));
             ResultService resultService = getServiceCreator().getResultService();
-            if (assignmentId != null && mark != 0 && date != null && review != null && !review.isBlank()) {
-                LOGGER.debug("Method save starts!");
+            if (mark > 0 && mark < 11 && review != null && !review.isBlank()) {
                 Long id = null;
                 try {
                     id = Long.parseLong(request.getParameter("id"));
                 } catch (NumberFormatException e) {
                     LOGGER.error(e);
+                    //Is there already a rating for this entry on this date?
+                    List<Result> resultList = resultService.findAll();
+                    for (Result result : resultList) {
+                        if (result.getDate().equals(date) && result.getAssignment().getId().equals(assignmentId)) {
+                            return new Forward("/result/list.html");
+                        }
+                    }
                 }
                 Result result = new Result();
                 result.setId(id);
@@ -49,6 +57,15 @@ public class ResultSaveAction extends Action {
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);
+        } catch (DateTimeParseException | NullPointerException e) {
+            LOGGER.error(e);
+            response.sendError(400, "Date isn't valid!");
+            return null;
+        }
+        catch (NumberFormatException e) {
+            LOGGER.error(e);
+            response.sendError(400, "Assignment or mark isn't valid");
+            return null;
         }
         return new Forward("/result/list.html");
     }

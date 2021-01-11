@@ -21,16 +21,11 @@ public class InstructorSaveAction extends Action {
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOGGER.debug("Method entering.");
+        Long id = Long.parseLong(request.getParameter("id"));
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
-        Long id = Long.parseLong(request.getParameter("id"));
-        Ranks rank = null;
         try {
-            rank = Ranks.valueOf(request.getParameter("rank"));
-        } catch (NullPointerException | IllegalArgumentException e) {
-            LOGGER.error(e.getLocalizedMessage());
-        }
-        try {
+            Ranks rank = Ranks.valueOf(request.getParameter("rank"));
             InstructorService instructorService = getServiceCreator().getInstructorService();
             if (name != null && !name.isBlank() && surname != null && !surname.isBlank()) {
                 Instructor instructor = new Instructor();
@@ -45,8 +40,13 @@ public class InstructorSaveAction extends Action {
                 }
             }
         } catch (ServiceException | ServiceCreationException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            LOGGER.error(e);
             throw new ServletException(e);
+        }
+        catch (NullPointerException | NumberFormatException e) {
+            LOGGER.error(e);
+            response.sendError(400, "Rank isn't valid!");
+            return null;
         }
         return new Forward("/instructor/list.html");
     }

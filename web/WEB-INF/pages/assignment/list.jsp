@@ -17,8 +17,7 @@
 
 <fmt:message key="assignment.list.title" var="title"/>
 <tag:head title="${title}">
-    <c:url var="assignmentDeleteUrl" value="/assignment/delete.html"/>
-    <form action="${assignmentDeleteUrl}" method="post">
+    <form action="<c:url value='/assignment/delete.html'/>" method="post">
         <table border="1">
             <caption>${title}</caption>
             <tr>
@@ -40,8 +39,8 @@
                 </c:if>
                 <tr>
                     <td><label>
-                        <input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id"
-                                   value="${assignment.id}">
+                        <input type="checkbox" ${contains ? "" : "disabled=''"} name="id"
+                               value="${assignment.id}">
                     </label></td>
                     <td><a href="${assignmentEditUrl}"><fmt:message key="label.ed"/></a></td>
                     <td>${assignment.course.name}</td>
@@ -57,10 +56,8 @@
         </table>
         <button type="submit"><fmt:message key="label.delete"/></button>
     </form>
-    <c:url var="assignmentEditUrl" value="/assignment/edit.html"/>
-    <a href="${assignmentEditUrl}"><fmt:message key="assignment.list.label.add"/></a>
-    <c:url var="assignmentSearchUrl" value="/assignment/search.html"/>
-    <form action="${assignmentSearchUrl}">
+    <a href="<c:url value='/assignment/edit.html'/>"><fmt:message key="assignment.list.label.add"/></a>
+    <form action="<c:url value='/assignment/search.html'/>">
         <fmt:message key="assignment.list.label.search"/>
         <p><label>
             <input type="radio" name="startDate" value="${true}" checked="checked">
@@ -77,11 +74,10 @@
         <fmt:message key="assignment.list.label.to"/>
         <label>
             <input type="date" name="toDate" required>
-        </label>           <!-- в контроллере сделать проверки на даты -->
+        </label>
         <button type="submit"><fmt:message key="label.search"/></button>
     </form>
-    <c:url var="assignmentListUrl" value="/assignment/list.html"/>
-    <form action="${assignmentListUrl}">
+    <form action="<c:url value='/assignment/list.html'/>">
         <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
     <tag:buttons/>

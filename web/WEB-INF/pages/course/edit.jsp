@@ -13,7 +13,6 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="by/training/resources/translate" />
 
-<c:url var="courseSaveUrl" value="/course/save.html"/>
 <c:choose>
     <c:when test="${not empty course}">
         <fmt:message key="course.edit.label.edit" var="title"/>
@@ -23,7 +22,7 @@
     </c:otherwise>
 </c:choose>
 <tag:head title="${title}">
-<form action="${courseSaveUrl}" method="post">
+<form action="<c:url value='/course/save.html'/>" method="post">
     <c:if test="${not empty course}">
         <input type="hidden" name="id" value="${course.id}">
     </c:if>
@@ -36,7 +35,7 @@
             <select name="instructorId">
                 <c:forEach var="instructor" items="${instructorList}">
                     <c:choose>
-                        <c:when test="${course.instructor.id == instructor.id}">
+                        <c:when test="${sessionUser.id == instructor.id}">
                             <c:set var="selected" value="selected"/>
                         </c:when>
                         <c:otherwise>

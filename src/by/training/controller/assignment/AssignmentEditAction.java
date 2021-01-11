@@ -2,11 +2,9 @@ package by.training.controller.assignment;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
-import by.training.controller.user.UserSaveAction;
 import by.training.di.ServiceCreationException;
 import by.training.domain.Assignment;
 import by.training.domain.Course;
-import by.training.domain.Instructor;
 import by.training.domain.Student;
 import by.training.service.*;
 import org.apache.logging.log4j.LogManager;
@@ -38,16 +36,15 @@ public class AssignmentEditAction extends Action {
                 if (assignment != null) {
                     request.setAttribute("assignment", assignment);
                 } else {
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("Assignment is wrong!");
                 }
             }
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);
-        } catch (IllegalArgumentException e) {
-            LOGGER.error(e);
-            response.sendError(404);
-            return null;
+        }
+        catch (IllegalArgumentException e) {
+            response.sendError(404, e.getMessage());
         }
         return null;
     }

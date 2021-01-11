@@ -2,10 +2,8 @@ package by.training.controller.result;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
-import by.training.controller.instructor.InstructorSearchAction;
 import by.training.di.ServiceCreationException;
 import by.training.domain.Result;
-import by.training.domain.Student;
 import by.training.service.ResultService;
 import by.training.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -22,9 +20,9 @@ public class ResultSearchAction extends Action {
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int from = Integer.parseInt(request.getParameter("from"));
-        int to = Integer.parseInt(request.getParameter("to"));
         try {
+            int from = Integer.parseInt(request.getParameter("from"));
+            int to = Integer.parseInt(request.getParameter("to"));
             ResultService resultService = getServiceCreator().getResultService();
             List<Result> searchResult = resultService.findByMark(from, to);
             request.setAttribute("resultList", searchResult);
@@ -32,6 +30,11 @@ public class ResultSearchAction extends Action {
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e);
             throw new ServletException(e);
+        }
+        catch (NumberFormatException e) {
+            LOGGER.error(e);
+            response.sendError(400, "Search parameters isn't valid");
+            return null;
         }
     }
 }

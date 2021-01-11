@@ -2,11 +2,8 @@ package by.training.controller.result;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
-import by.training.controller.course.CourseEditAction;
 import by.training.di.ServiceCreationException;
 import by.training.domain.Assignment;
-import by.training.domain.Course;
-import by.training.domain.Instructor;
 import by.training.domain.Result;
 import by.training.service.*;
 import org.apache.logging.log4j.LogManager;
@@ -34,16 +31,15 @@ public class ResultEditAction extends Action {
                 if (result != null) {
                     request.setAttribute("result", result);
                 } else {
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("Result ID is wrong!");
                 }
             }
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);
-        } catch (IllegalArgumentException e) {
-            LOGGER.error(e);
-            response.sendError(404);
-            return null;
+        }
+        catch (IllegalArgumentException e) {
+            response.sendError(404, e.getMessage());
         }
         return null;
     }

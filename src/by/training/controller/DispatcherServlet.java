@@ -57,8 +57,10 @@ public class DispatcherServlet extends HttpServlet {
                 requestUrl = "/main/error";
             }
         }
+        if(response.isCommitted()) {
+            return;
+        }
         if (forward != null && forward.isRedirect()) {
-            LOGGER.debug(contextPath + forward.getUrl());
             response.sendRedirect(contextPath + forward.getUrl());
         } else {
             if(forward != null && forward.getUrl() != null) {

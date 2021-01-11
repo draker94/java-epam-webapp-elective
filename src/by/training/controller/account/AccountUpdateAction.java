@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 public class AccountUpdateAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(AccountUpdateAction.class);
@@ -54,6 +52,7 @@ public class AccountUpdateAction extends Action {
                     } else {
                         user.setPassword(newPassword);
                         userService.save(user);
+                        LOGGER.debug(String.format("Password %s has been updated.", user.getLogin()));
                         session.setAttribute("sessionUser", user);
                         message = "account.edit.password-success";
                     }
@@ -62,9 +61,10 @@ public class AccountUpdateAction extends Action {
                 }
             }
         } catch (ServiceCreationException | ServiceException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            LOGGER.error(e);
             throw new ServletException(e);
         }
-        return new Forward("/account/edit.html?message=" + message);
+        request.setAttribute("message", message);
+        return new Forward("/account/edit", false);
     }
 }

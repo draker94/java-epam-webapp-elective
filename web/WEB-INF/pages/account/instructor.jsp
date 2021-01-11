@@ -25,8 +25,8 @@
     </c:url>
     <p><a href="${instructorMyAssignmentsUrl}"><fmt:message key="account.label.instructor.my_assignment"/></a></p>
     <hr>
-    <p><a href="${pageContext.request.contextPath}/course/list.html"><fmt:message key="account.label.list_course"/></a></p>
-    <p><a href="${pageContext.request.contextPath}/student/list.html"><fmt:message key="account.label.list_student"/></a></p>
-    <p><a href="${pageContext.request.contextPath}/assignment/list.html"><fmt:message key="account.label.list_assignment"/></a></p>
-    <p><a href="${pageContext.request.contextPath}/result/list.html"><fmt:message key="account.label.list_result"/></a></p>
+    <p><a href="<c:url value='/course/list.html'/>"><fmt:message key="account.label.list_course"/></a></p>
+    <p><a href="<c:url value='/student/list.html'/>"><fmt:message key="account.label.list_student"/></a></p>
+    <p><a href="<c:url value='/assignment/list.html'/>"><fmt:message key="account.label.list_assignment"/></a></p>
+    <p><a href="<c:url value='/result/list.html'/>"><fmt:message key="account.label.list_result"/></a></p>
 </tag:head></div>

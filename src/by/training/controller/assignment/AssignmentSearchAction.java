@@ -24,17 +24,10 @@ public class AssignmentSearchAction extends Action {
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean startDate = Boolean.parseBoolean(request.getParameter("startDate"));
         try {
-            LocalDate fromDate = null;
-            LocalDate toDate = null;
-            try {
-                fromDate = LocalDate.parse(request.getParameter("fromDate"));
-                toDate = LocalDate.parse(request.getParameter("toDate"));
-            } catch (NullPointerException e) {
-                LOGGER.error(e);
-                return null;
-            }
+            LocalDate fromDate = LocalDate.parse(request.getParameter("fromDate"));
+            LocalDate toDate = LocalDate.parse(request.getParameter("toDate"));
             AssignmentService assignmentService = getServiceCreator().getAssignmentService();
-            List<Assignment> searchResult = null;
+            List<Assignment> searchResult;
             if (startDate) {
                 searchResult = assignmentService.findByStartDate(fromDate, toDate);
             } else {
@@ -45,6 +38,10 @@ public class AssignmentSearchAction extends Action {
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e);
             throw new ServletException(e);
+        } catch (DateTimeParseException | NullPointerException e) {
+            LOGGER.error(e);
+            response.sendError(400, "Date isn't valid!");
+            return null;
         }
     }
 }

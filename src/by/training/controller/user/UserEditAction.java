@@ -29,16 +29,15 @@ public class UserEditAction extends Action {
                 if (user != null) {
                     request.setAttribute("user", user);
                 } else {
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("User ID is wrong!");
                 }
             }
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);
-        } catch (IllegalArgumentException e) {
-            LOGGER.error(e);
-            response.sendError(404);
-            return null;
+        }
+        catch (IllegalArgumentException e) {
+            response.sendError(404, e.getMessage());
         }
         request.setAttribute("roles", Roles.values());
         return null;

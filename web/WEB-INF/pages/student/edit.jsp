@@ -42,7 +42,7 @@
             </label></p>
         <p><fmt:message key="student.edit.label.course"/>
             <label>
-                <select name="studyYear">          <!--ОПТИМИЗИРОВАТЬ-->
+                <select name="studyYear">
                     <c:forEach var="i" begin="1" end="7" step="1">
                         <c:choose>
                             <c:when test="${i == student.studyYear}">
@@ -74,7 +74,7 @@
                 </c:otherwise>
             </c:choose>
         </c:if>
-        <button ${canSave ? ""  : "disabled=&quot;&quot;"} type="submit"><fmt:message key="label.save"/></button>
+        <button ${canSave ? ""  : "disabled=''"} type="submit"><fmt:message key="label.save"/></button>
     </form>
     <tag:buttons/>
 </tag:head>

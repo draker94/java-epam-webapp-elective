@@ -4,10 +4,8 @@ import by.training.controller.Action;
 import by.training.controller.Forward;
 import by.training.di.ServiceCreationException;
 import by.training.domain.Instructor;
-import by.training.domain.User;
 import by.training.service.InstructorService;
 import by.training.service.ServiceException;
-import by.training.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

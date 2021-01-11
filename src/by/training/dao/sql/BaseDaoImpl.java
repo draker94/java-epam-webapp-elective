@@ -27,13 +27,12 @@ public class BaseDaoImpl {
     public void delete(Long id, String tableName) throws DaoException {
         String sql = String.format("DELETE FROM `%s` WHERE `id` = ?", tableName);
         PreparedStatement statement = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {

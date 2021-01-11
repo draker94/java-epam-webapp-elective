@@ -20,7 +20,7 @@ public class InstructorDeleteAction extends Action {
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idStr[] = request.getParameterValues("id");
+        String[] idStr = request.getParameterValues("id");
         try {
             if (idStr != null) {
                 List<Long> idStrArr = new ArrayList<>(idStr.length);
@@ -31,7 +31,7 @@ public class InstructorDeleteAction extends Action {
                 instructorService.delete(idStrArr);
             }
         } catch (ServiceCreationException | ServiceException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            LOGGER.error(e);
             throw new ServletException(e);
         }
         return new Forward("/instructor/list.html");

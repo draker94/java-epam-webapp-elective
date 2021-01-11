@@ -13,7 +13,7 @@
 </head>
 <body>
 <h1>Error!</h1>
-<table width="100%" border="1">
+<table border="1">
     <tr valign="top">
         <td width="40%"><b>Error:</b></td>
         <td>${error}</td>

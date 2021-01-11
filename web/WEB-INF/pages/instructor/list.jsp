@@ -15,8 +15,7 @@
 
 <fmt:message key="instructor.list.title" var="title"/>
 <tag:head title="${title}">
-<c:url var="instructorDeleteUrl" value="/instructor/delete.html"/>
-<form action="${instructorDeleteUrl}" method="post">
+<form action="<c:url value='/instructor/delete.html'/>" method="post">
     <table border="1">
         <caption>${title}</caption>
         <tr>
@@ -26,7 +25,7 @@
             <th><fmt:message key="instructor.list.table.name"/></th>
             <th><fmt:message key="instructor.list.table.rank"/></th>
         </tr>
-        <c:forEach var="instructor" items="${instructors}">                <!-- название списка заменить на instructorsList (везде по аналогии) -->
+        <c:forEach var="instructor" items="${instructors}">
             <c:url var="instructorEditUrl" value="/instructor/edit.html">
                 <c:param name="id" value="${instructor.id}"/>
             </c:url>
@@ -35,8 +34,9 @@
                 <c:set var="contains" value="${true}"/>
             </c:if>
             <tr>
-                <td><input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id"
-                           value="${instructor.id}"></td>
+                <td><label>
+                    <input type="checkbox" ${contains ? "" : "disabled=''"} name="id" value="${instructor.id}">
+                </label></td>
                 <td><a href="${instructorEditUrl}"><fmt:message key="label.ed"/></a></td>
                 <td>${instructor.surname}</td>
                 <td>${instructor.name}</td>
@@ -46,18 +46,15 @@
     </table>
     <button type="submit"><fmt:message key="label.delete"/></button>
 </form>
-<c:url var="instructorEditUrl" value="/instructor/edit.html"/>
-<a href="${instructorEditUrl}"><fmt:message key="instructor.list.label.add"/></a>
-    <c:url var="instructorSearchUrl" value="/instructor/search.html"/>
-    <form action="${instructorSearchUrl}">
+<a href="<c:url value='/instructor/edit.html'/>"><fmt:message key="instructor.list.label.add"/></a>
+    <form action="<c:url value='/instructor/search.html'/>">
         <p><fmt:message key="instructor.list.label.search"/>
             <label>
                 <input type="text" name="surnameForSearch" required>
             </label></p>
         <button type="submit"><fmt:message key="label.search"/></button>
     </form>
-    <c:url var="instructorListUrl" value="/instructor/list.html"/>
-    <form action="${instructorListUrl}">
+    <form action="<c:url value='/instructor/list.html'/>">
         <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
     <tag:buttons/>

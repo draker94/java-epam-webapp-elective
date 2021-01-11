@@ -31,7 +31,7 @@ public class ResultDeleteAction extends Action {
                 resultService.delete(idStrArr);
             }
         } catch (ServiceCreationException | ServiceException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            LOGGER.error(e);
             throw new ServletException(e);
         }
         return new Forward("/result/list.html");

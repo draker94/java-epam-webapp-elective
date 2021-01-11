@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 public class CourseSaveAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(CourseSaveAction.class);
@@ -23,16 +24,23 @@ public class CourseSaveAction extends Action {
         LOGGER.debug("Method entering.");
         String name = request.getParameter("name");
         String description = request.getParameter("description");
-        Long instructorId = Long.parseLong(request.getParameter("instructorId"));
-        int hours = Integer.parseInt(request.getParameter("hours"));
         try {
+            Long instructorId = Long.parseLong(request.getParameter("instructorId"));
+            int hours = Integer.parseInt(request.getParameter("hours"));
             CourseService courseService = getServiceCreator().getCourseService();
             if (name != null && !name.isBlank() && description != null && !description.isBlank()) {
                 Long id = null;
                 try {
                     id = Long.parseLong(request.getParameter("id"));
                 } catch (NumberFormatException e) {
-                    LOGGER.error(e.getLocalizedMessage());
+                    LOGGER.error(e);
+                    //The course with the same name already?
+                    List<Course> courseList = courseService.findAll();
+                    for (Course course : courseList) {
+                        if (course.getName().equals(name)) {
+                            return new Forward("/course/list.html");
+                        }
+                    }
                 }
                 Course course = new Course();
                 course.setId(id);
@@ -47,6 +55,11 @@ public class CourseSaveAction extends Action {
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);
+        }
+        catch (NumberFormatException e) {
+            LOGGER.error(e);
+            response.sendError(400, "Instructor ID or hour format isn't valid!");
+            return null;
         }
         return new Forward("/course/list.html");
     }

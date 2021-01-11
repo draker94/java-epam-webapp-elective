@@ -25,7 +25,6 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
         String sql = "SELECT `id`, `surname`, `name`, `study_year` FROM `students`";
         Statement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
@@ -40,7 +39,7 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
             }
             return students;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -59,7 +58,6 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
         String sql = "SELECT `id`, `surname`, `name`, `study_year` FROM `students` WHERE `surname` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, surname);
@@ -75,7 +73,7 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
             }
             return studentList;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -94,7 +92,6 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
         String sql = "INSERT INTO `students` (`id`, `surname`, `name`, `study_year`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
             statement.setLong(1, student.getId());
@@ -104,7 +101,7 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
             statement.executeUpdate();
             return student.getId();
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -123,7 +120,6 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
         String sql = "SELECT `id`, `surname`, `name`, `study_year` FROM `students` WHERE `id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
@@ -138,7 +134,7 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
             }
             return student;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -156,7 +152,6 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
     public void update(Student student) throws DaoException {
         String sql = "UPDATE `students` SET `surname` = ?, `name` = ?, `study_year` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, student.getSurname());
@@ -165,7 +160,7 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
             statement.setLong(4, student.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -181,7 +176,6 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
                 "WHERE `id` NOT IN (SELECT `student_id` FROM `assignments`)";
         Statement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
@@ -196,7 +190,7 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao {
             }
             return students;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {

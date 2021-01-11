@@ -24,7 +24,6 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
         String sql = "SELECT `id`, `assignment_id`, `mark`, `review`, `date` FROM `results`";
         Statement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
@@ -41,7 +40,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             }
             return results;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -60,7 +59,6 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
         String sql = "SELECT `id`, `assignment_id`, `mark`, `review`, `date` FROM `results` WHERE `mark` >= ? AND `mark` <= ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setInt(1, fromMark);
@@ -79,7 +77,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             }
             return results;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -98,7 +96,6 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
         String sql = "SELECT `id`, `mark`, `review`, `date` FROM `results` WHERE `assignment_id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
@@ -116,7 +113,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             }
             return results;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -135,7 +132,6 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
         String sql = "INSERT INTO `results` (`assignment_id`, `mark`, `review`, `date`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setLong(1, result.getAssignment().getId());
@@ -150,7 +146,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             }
             return id;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -169,7 +165,6 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
         String sql = "SELECT `assignment_id`, `mark`, `review`, `date` FROM `results` WHERE `id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
@@ -186,7 +181,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             }
             return result;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -204,7 +199,6 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
     public void update(Result result) throws DaoException {
         String sql = "UPDATE `results` SET `assignment_id` = ?, `mark` = ?, `review` = ?, `date` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, result.getAssignment().getId());
@@ -214,7 +208,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             statement.setLong(5, result.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {

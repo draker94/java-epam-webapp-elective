@@ -15,8 +15,7 @@
 
 <fmt:message key="student.list.title" var="title"/>
 <tag:head title="${title}">
-    <c:url var="studentDeleteUrl" value="/student/delete.html"/>
-    <form action="${studentDeleteUrl}" method="post">
+    <form action="<c:url value='/student/delete.html'/>" method="post">
         <table border="1">
             <caption>${title}</caption>
             <tr>
@@ -37,7 +36,7 @@
                 </c:if>
                 <tr>
                     <td><label>
-                        <input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id"
+                        <input type="checkbox" ${contains ? "" : "disabled=''"} name="id"
                                    value="${student.id}">
                     </label></td>
                     <td><a href="${studentEditUrl}">ред.</a></td>
@@ -50,18 +49,15 @@
         </table>
         <button type="submit"><fmt:message key="label.delete"/></button>
     </form>
-    <c:url var="studentEditUrl" value="/student/edit.html"/>
-    <a href="${studentEditUrl}"><fmt:message key="student.list.label.add"/></a>
-    <c:url var="studentSearchUrl" value="/student/search.html"/>
-    <form action="${studentSearchUrl}">
+    <a href="<c:url value='/student/edit.html'/>"><fmt:message key="student.list.label.add"/></a>
+    <form action="<c:url value='/student/search.html'/>">
         <p><fmt:message key="student.list.label.search"/>
             <label>
                 <input type="text" name="surnameForSearch" required>
             </label></p>
         <button type="submit"><fmt:message key="label.search"/></button>
     </form>
-    <c:url var="studentListUrl" value="/student/list.html"/>
-    <form action="${studentListUrl}">
+    <form action="<c:url value='/student/list.html'/>">
         <button type="submit"><fmt:message key="label.reset"/></button>
     </form>
     <tag:buttons/>

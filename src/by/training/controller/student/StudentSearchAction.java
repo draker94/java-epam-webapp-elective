@@ -2,7 +2,6 @@ package by.training.controller.student;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
-import by.training.controller.result.ResultSearchAction;
 import by.training.di.ServiceCreationException;
 import by.training.domain.Student;
 import by.training.service.ServiceException;

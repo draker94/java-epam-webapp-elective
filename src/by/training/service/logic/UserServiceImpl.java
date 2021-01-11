@@ -81,6 +81,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByLogin(String login) throws ServiceException {
+        LOGGER.debug("Method entering.");
+        try {
+            return userDao.getByLogin(login);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<User> findAllFreeUsers() throws ServiceException {
         LOGGER.debug("Method entering.");
         try {

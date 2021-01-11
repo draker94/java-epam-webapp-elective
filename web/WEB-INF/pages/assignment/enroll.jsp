@@ -17,9 +17,8 @@
 
 <fmt:message key="assignment.enroll.label.title" var="title"/>
 <tag:head title="${title} ${student.surname} ${student.name}">
-    <c:url var="assignmentSaveUrl" value="/assignment/save.html"/>
-    <form action="${assignmentSaveUrl}" method="post">
-        <input type="hidden" name="isRedirectStudentList" value="${true}">
+    <form action="<c:url value='/assignment/save.html'/>" method="post">
+        <input type="hidden" name="isForwardFromStudentList" value="${true}">
         <input type="hidden" name="studentId" value="${student.id}">
         <p><fmt:message key="assignment.enroll.label.student"/> ${student.surname} ${student.name}</p>
         <p><fmt:message key="assignment.enroll.label.course"/>
@@ -37,14 +36,16 @@
                                 <option value="${course.id}">${course.name}</option>
                             </c:when>
                             <c:otherwise>
-                                <option disabled=""><fmt:message key="assignment.enroll.label.already_enroll"/> ${course.name}</option>
+                                <option disabled=""><fmt:message
+                                        key="assignment.enroll.label.already_enroll"/> ${course.name}</option>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                 </select>
             </label>
         </p>
-        <button type="submit"><fmt:message key="label.save"/></button>
+        <button ${courseList.size() != studentAssignment.size() ? ""  : "disabled=''"} type="submit">
+            <fmt:message key="label.save"/></button>
     </form>
     <tag:buttons/>
 </tag:head>

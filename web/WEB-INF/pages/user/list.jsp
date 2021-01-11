@@ -17,8 +17,10 @@
 
 <fmt:message key="user.list.title" var="title"/>
 <tag:head title="${title}">
-    <c:url var="userDeleteUrl" value="/user/delete.html"/>
-    <form action="${userDeleteUrl}" method="post">
+    <c:if test="${not empty param.message}">
+        <p class="error"><fmt:message key="${param.message}"/></p>
+    </c:if>
+    <form action="<c:url value='/user/delete.html'/>" method="post">
         <table border="1">
             <caption>${title}</caption>
             <tr>
@@ -40,7 +42,7 @@
             </c:if>
             <tr>
                 <td><label>
-                    <input type="checkbox" ${contains ? "" : "disabled=&quot;&quot;"} name="id" value="${user.id}">
+                    <input type="checkbox" ${contains ? "" : "disabled=''"} name="id" value="${user.id}">
                 </label></td>
                 <td><a href="${userEditUrl}"><fmt:message key="label.ed"/></a></td>
                 <td>${user.id}</td>
@@ -53,7 +55,6 @@
         </table>
         <button type="submit"><fmt:message key="label.delete"/></button>
     </form>
-    <c:url var="userEditUrl" value="/user/edit.html"/>
-    <a href="${userEditUrl}"><fmt:message key="user.list.label.add"/></a>
+    <a href="<c:url value='/user/edit.html'/>"><fmt:message key="user.list.label.add"/></a>
     <tag:buttons/>
 </tag:head>

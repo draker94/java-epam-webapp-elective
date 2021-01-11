@@ -26,7 +26,6 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
         String sql = "SELECT `id`, `name`, `hours`, `description`, `instructor_id` FROM `courses`";
         Statement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
@@ -43,7 +42,7 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             }
             return courses;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -62,7 +61,6 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
         String sql = "SELECT `id`, `name`, `hours`, `description` FROM `courses` WHERE `instructor_id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
@@ -80,7 +78,7 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             }
             return courses;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -99,7 +97,6 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
         String sql = "INSERT INTO `courses` (`name`, `hours`, `description`, `instructor_id`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, course.getName());
@@ -114,7 +111,7 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             }
             return id;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -133,7 +130,6 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
         String sql = "SELECT `name`, `hours`, `description`, `instructor_id` FROM `courses` WHERE `id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
@@ -150,7 +146,7 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             }
             return course;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -168,7 +164,6 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
     public void update(Course course) throws DaoException {
         String sql = "UPDATE `courses` SET `name` = ?, `hours` = ?, `description` = ?, `instructor_id` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, course.getName());
@@ -178,7 +173,7 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             statement.setLong(5, course.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -194,7 +189,6 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
                 "WHERE `id` NOT IN (SELECT `course_id` FROM `assignments`)";
         Statement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
@@ -211,7 +205,7 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             }
             return courses;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {

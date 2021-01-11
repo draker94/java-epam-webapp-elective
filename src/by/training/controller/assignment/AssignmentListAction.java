@@ -2,12 +2,9 @@ package by.training.controller.assignment;
 
 import by.training.controller.Action;
 import by.training.controller.Forward;
-import by.training.controller.user.UserSaveAction;
 import by.training.di.ServiceCreationException;
 import by.training.domain.Assignment;
-import by.training.domain.Course;
 import by.training.service.AssignmentService;
-import by.training.service.CourseService;
 import by.training.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

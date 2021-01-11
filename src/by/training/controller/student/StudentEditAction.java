@@ -31,7 +31,7 @@ public class StudentEditAction extends Action {
                 if (student != null) {
                     request.setAttribute("student", student);
                 } else {
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("Student ID is wrong!");
                 }
             } else {
                 UserService userService = getServiceCreator().getUserService();
@@ -44,10 +44,9 @@ public class StudentEditAction extends Action {
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);
-        } catch (IllegalArgumentException e) {
-            LOGGER.error(e);
-            response.sendError(404);
-            return null;
+        }
+        catch (IllegalArgumentException e) {
+            response.sendError(404, e.getMessage());
         }
         return null;
     }

@@ -24,7 +24,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         String sql = "SELECT `id`, `login`, `password`, `e-mail`, `role` FROM `users`";
         Statement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);
@@ -40,7 +39,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
             return users;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -59,7 +58,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         String sql = "SELECT `id`, `role`, `e-mail` FROM `users` WHERE `login` = ? AND `password` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, login);
@@ -76,7 +74,41 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
             return user;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
+            throw new DaoException(e);
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception e) {
+            }
+            try {
+                resultSet.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    @Override
+    public User getByLogin(String login) throws DaoException {
+        String sql = "SELECT `id`, `password`, `role`, `e-mail` FROM `users` WHERE `login` = ?";
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = getConnection().prepareStatement(sql);
+            statement.setString(1, login);
+            resultSet = statement.executeQuery();
+            User user = null;
+            if (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getLong("id"));
+                user.setLogin(login);
+                user.setPassword(resultSet.getString("password"));
+                user.setMail(resultSet.getString("e-mail"));
+                user.setRole(Roles.values()[resultSet.getInt("role")]);
+            }
+            return user;
+        } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -95,7 +127,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         String sql = "INSERT INTO `users` (`login`, `password`, `e-mail`, `role`) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getLogin());
@@ -110,7 +141,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
             return id;
         } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e);
             throw new DaoException(e);
         } finally {
             try {
@@ -129,7 +160,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         String sql = "SELECT `login`, `password`, `e-mail`, `role` FROM `users` WHERE `id` = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setLong(1, id);
@@ -163,7 +193,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     public void update(User user) throws DaoException {
         String sql = "UPDATE `users` SET `login` = ?, `password` = ?, `e-mail` = ?, `role` = ? WHERE `id` = ?";
         PreparedStatement statement = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().prepareStatement(sql);
             statement.setString(1, user.getLogin());
@@ -189,7 +218,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 "WHERE `id` NOT IN (SELECT `id` FROM `instructors`) AND `id` NOT IN (SELECT `id` FROM `students`)";
         Statement statement = null;
         ResultSet resultSet = null;
-        LOGGER.debug("Method entering.");
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sql);

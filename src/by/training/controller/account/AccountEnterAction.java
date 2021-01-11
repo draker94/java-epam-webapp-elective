@@ -13,9 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AccountEnterAction extends Action {
-    private static final Logger LOGGER = LogManager.getLogger(AccountEnterAction.class);
-
-    @Override
+     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null) {
