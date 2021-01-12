@@ -6,7 +6,6 @@ import by.training.dao.DaoException;
 import by.training.dao.StudentDao;
 import by.training.domain.Assignment;
 import by.training.domain.Course;
-import by.training.domain.Student;
 import by.training.service.AssignmentService;
 import by.training.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class AssignmentServiceImpl implements AssignmentService {

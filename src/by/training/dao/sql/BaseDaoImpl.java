@@ -38,6 +38,7 @@ public class BaseDaoImpl {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }

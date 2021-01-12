@@ -1,7 +1,6 @@
 package by.training.dao;
 
 import by.training.domain.Instructor;
-import by.training.domain.User;
 
 import java.util.List;
 

@@ -80,10 +80,12 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -108,10 +110,12 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -141,10 +145,12 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -167,6 +173,7 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -197,10 +204,12 @@ public class InstructorDaoImpl extends BaseDaoImpl implements InstructorDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }

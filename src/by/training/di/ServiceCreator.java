@@ -4,10 +4,8 @@ import by.training.connection.ConnectionPool;
 import by.training.connection.ConnectionPoolException;
 import by.training.dao.*;
 import by.training.dao.sql.*;
-import by.training.domain.Instructor;
 import by.training.service.*;
 import by.training.service.logic.*;
-import com.mysql.cj.log.Log;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

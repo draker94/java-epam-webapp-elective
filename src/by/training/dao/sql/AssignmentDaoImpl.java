@@ -52,10 +52,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -94,10 +96,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -136,10 +140,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -177,10 +183,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -218,10 +226,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -259,10 +269,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -299,10 +311,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -334,6 +348,7 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -371,10 +386,12 @@ public class AssignmentDaoImpl extends BaseDaoImpl implements AssignmentDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }

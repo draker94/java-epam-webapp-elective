@@ -1,7 +1,6 @@
 package by.training.dao;
 
 import by.training.domain.Student;
-import by.training.domain.User;
 
 import java.util.List;
 

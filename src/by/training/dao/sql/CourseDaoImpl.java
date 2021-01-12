@@ -48,10 +48,12 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -84,10 +86,12 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -117,10 +121,12 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -152,10 +158,12 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -179,6 +187,7 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -211,10 +220,12 @@ public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }

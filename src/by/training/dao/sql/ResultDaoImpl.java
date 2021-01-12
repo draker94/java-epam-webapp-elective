@@ -46,10 +46,12 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -83,10 +85,12 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -119,10 +123,12 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -152,10 +158,12 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -187,10 +195,12 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -214,6 +224,7 @@ public class ResultDaoImpl extends BaseDaoImpl implements ResultDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }

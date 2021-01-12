@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Andrey Kliuchnikov
@@ -45,10 +44,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -80,10 +81,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -114,10 +117,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -147,10 +152,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -181,10 +188,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -208,6 +217,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }
@@ -239,10 +249,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             try {
                 statement.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
             try {
                 resultSet.close();
             } catch (Exception e) {
+                LOGGER.warn(e);
             }
         }
     }

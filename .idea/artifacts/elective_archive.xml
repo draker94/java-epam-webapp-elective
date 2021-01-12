@@ -1,0 +1,25 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="elective-archive">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="archive" name="elective-archive.war">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="java-epam-webapp-elective" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jstl-1.2" />
+          <element id="library" level="project" name="log4j-api-2.14.0" />
+          <element id="library" level="project" name="log4j-core-2.14.0" />
+          <element id="library" level="project" name="mysql-connector-java-8.0.19" />
+          <element id="library" level="project" name="servlet-api" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="java-epam-webapp-elective/javaeeApplication/javaEEApplication" />
+      <element id="javaee-facet-resources" facet="java-epam-webapp-elective/web/Web" />
+      <element id="artifact" artifact-name="elective" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="elective">
+    <output-path>$PROJECT_DIR$/out/artifacts/elective</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jstl-1.2" />
+          <element id="library" level="project" name="log4j-api-2.14.0" />
+          <element id="library" level="project" name="log4j-core-2.14.0" />
+          <element id="library" level="project" name="mysql-connector-java-8.0.19" />
+          <element id="library" level="project" name="servlet-api" />
+        </element>
+        <element id="directory" name="classes">
+          <element id="module-output" name="java-epam-webapp-elective" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="java-epam-webapp-elective/javaeeApplication/javaEEApplication" />
+      <element id="javaee-facet-resources" facet="java-epam-webapp-elective/web/Web" />
+    </root>
+  </artifact>
+</component>
