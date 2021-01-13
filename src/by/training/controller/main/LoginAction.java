@@ -15,6 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class LoginAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(LoginAction.class);
 

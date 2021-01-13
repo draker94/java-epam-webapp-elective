@@ -1,5 +1,9 @@
 package by.training.di;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class ServiceCreationException extends Exception {
     public ServiceCreationException(String message, Throwable cause) {
         super(message, cause);

@@ -16,12 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ * If getted the ID of the course - do update, otherwise - create a new course.
+ */
+
 public class CourseSaveAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(CourseSaveAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.debug("Method entering.");
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         try {

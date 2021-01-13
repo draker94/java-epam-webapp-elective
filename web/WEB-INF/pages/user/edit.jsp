@@ -36,10 +36,6 @@
             <label>
                 <input type="text" name="password" value="${user.password}" required>
             </label></p>
-        <p><fmt:message key="user.edit.label.mail"/>
-            <label>
-                <input type="text" name="mail" value="${user.mail}">
-            </label></p>
         <p><fmt:message key="user.edit.label.role"/>
             <label>
                 <select name="role">

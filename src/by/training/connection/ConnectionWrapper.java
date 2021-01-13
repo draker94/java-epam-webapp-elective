@@ -7,6 +7,7 @@ import java.util.concurrent.Executor;
 
 /**
  * @author Andrey Kliuchnikov
+ * Wrapper class for Connection with custom close() method
  */
 
 class ConnectionWrapper implements Connection {

@@ -15,12 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class InstructorSaveAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(InstructorSaveAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.debug("Method entering.");
         Long id = Long.parseLong(request.getParameter("id"));
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");

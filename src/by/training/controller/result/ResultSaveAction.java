@@ -18,12 +18,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ * If getted the ID of the result - do update, otherwise - create a new result.
+ */
+
 public class ResultSaveAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(ResultSaveAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.debug("Method entering.");
         String review = request.getParameter("review");
         try {
             Long assignmentId = Long.parseLong(request.getParameter("assignmentId"));

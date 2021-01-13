@@ -13,6 +13,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class CourseServiceImpl implements CourseService {
     private final static Logger LOGGER = LogManager.getLogger(CourseServiceImpl.class);
     private CourseDao courseDao;

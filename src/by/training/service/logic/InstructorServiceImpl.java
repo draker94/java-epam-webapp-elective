@@ -10,6 +10,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class InstructorServiceImpl implements InstructorService {
     private final static Logger LOGGER = LogManager.getLogger(InstructorServiceImpl.class);
     private InstructorDao instructorDao;

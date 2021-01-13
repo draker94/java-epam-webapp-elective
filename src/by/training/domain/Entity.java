@@ -5,7 +5,7 @@ package by.training.domain;
  */
 
 public abstract class Entity {
-private Long id;
+    private Long id;
 
     public Long getId() {
         return id;

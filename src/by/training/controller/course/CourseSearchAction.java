@@ -15,6 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ * Search courses by instructor surname or ID.
+ */
+
 public class CourseSearchAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(CourseSearchAction.class);
 

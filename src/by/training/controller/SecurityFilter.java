@@ -11,6 +11,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 @WebFilter("*.html")
 public class SecurityFilter implements Filter {
     private static final Map<Roles, Set<String>> permissions = new HashMap<>();

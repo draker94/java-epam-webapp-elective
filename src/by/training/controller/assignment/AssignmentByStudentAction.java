@@ -17,6 +17,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ * Getting registrations for courses for a specific student.
+ */
+
 public class AssignmentByStudentAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(AssignmentByStudentAction.class);
 
@@ -28,7 +33,7 @@ public class AssignmentByStudentAction extends Action {
             User student = (User) session.getAttribute("sessionUser");
             List<Assignment> assignmentList = assignmentService.findByStudent(student.getId());
             request.setAttribute("assignmentList", assignmentList);
-            return new Forward("/assignment/studentList", false); // или с html на конце, или нет
+            return new Forward("/assignment/studentList.html", false);
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e);
             throw new ServletException(e);

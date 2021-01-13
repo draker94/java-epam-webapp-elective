@@ -15,13 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
 
 public class UserListAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(UserListAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.debug("Method entering.");
         try {
             UserService userService = getServiceCreator().getUserService();
             List<User> users = userService.findAll();

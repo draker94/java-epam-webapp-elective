@@ -15,6 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class InstructorListAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(InstructorListAction.class);
 

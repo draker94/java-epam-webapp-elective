@@ -15,15 +15,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author Andrey Kliuchnikov
+ * If getted the ID of the user - do update, otherwise - create a new user.
+ */
+
 public class UserSaveAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(UserSaveAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.debug("Method entering.");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        String mail = request.getParameter("mail");
         try {
             Roles role = Roles.valueOf(request.getParameter("role"));
             UserService userService = getServiceCreator().getUserService();
@@ -43,7 +46,6 @@ public class UserSaveAction extends Action {
                 user.setId(id);
                 user.setLogin(login);
                 user.setPassword(password);
-                user.setMail(mail);
                 user.setRole(role);
                 userService.save(user);
             }
@@ -53,7 +55,7 @@ public class UserSaveAction extends Action {
         }
         catch (NullPointerException | IllegalArgumentException e) {
             LOGGER.error(e);
-            response.sendError(400, "Role isn't valid'!");
+            response.sendError(400, "Role isn't valid!");
             return null;
         }
         return new Forward("/user/list.html");

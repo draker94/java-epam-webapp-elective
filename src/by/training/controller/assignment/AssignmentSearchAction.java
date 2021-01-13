@@ -17,6 +17,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ * Search by date (start OR end).
+ */
+
 public class AssignmentSearchAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(AssignmentSearchAction.class);
 

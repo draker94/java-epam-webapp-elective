@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class InstructorDeleteAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(InstructorDeleteAction.class);
 

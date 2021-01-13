@@ -15,6 +15,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class AssignmentServiceImpl implements AssignmentService {
     private final static Logger LOGGER = LogManager.getLogger(AssignmentServiceImpl.class);
     private AssignmentDao assignmentDao;

@@ -1,6 +1,5 @@
 package by.training.controller;
 
-import by.training.connection.ConnectionPool;
 import by.training.di.ServiceCreator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+/**
+ * @author Andrey Kliuchnikov
+ */
 
 @WebServlet("*.html")
 public class DispatcherServlet extends HttpServlet {
@@ -26,12 +29,9 @@ public class DispatcherServlet extends HttpServlet {
         dispatch(req, resp);
     }
 
-    @Override
-    public void init() throws ServletException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        connectionPool.initConnections("by/training/resources/database", 10, 50, 2);
-    }
-
+    /**
+     * Receiving and executing a command according to URI followed by redirection/forward.
+     */
     private void dispatch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String requestUrl = request.getRequestURI();
         String contextPath = request.getContextPath();

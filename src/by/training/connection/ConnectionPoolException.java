@@ -5,19 +5,19 @@ package by.training.connection;
  */
 
 public class ConnectionPoolException extends Exception {
-    public ConnectionPoolException() {
+    ConnectionPoolException() {
         super();
     }
 
-    public ConnectionPoolException(String message) {
+    ConnectionPoolException(String message) {
         super(message);
     }
 
-    public ConnectionPoolException(String message, Throwable cause) {
+    ConnectionPoolException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ConnectionPoolException(Throwable cause) {
+    ConnectionPoolException(Throwable cause) {
         super(cause);
     }
 }

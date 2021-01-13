@@ -19,6 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ * Obtaining information for a student for a new course enrollment
+ */
+
 public class AssignmentEnrollAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(AssignmentEnrollAction.class);
 

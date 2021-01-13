@@ -12,6 +12,10 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class ServiceCreator implements AutoCloseable {
     private static final Logger LOGGER = LogManager.getLogger(ServiceCreator.class);
 
@@ -158,7 +162,7 @@ public class ServiceCreator implements AutoCloseable {
     }
 
     @Override
-    public void close() throws ServiceCreationException {
+    public void close() {
         try {
             connection.close();
             LOGGER.debug("Connection is close");

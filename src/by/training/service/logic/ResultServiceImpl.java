@@ -11,6 +11,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class ResultServiceImpl implements ResultService {
     private final static Logger LOGGER = LogManager.getLogger(ResultServiceImpl.class);
     private ResultDao resultDao;

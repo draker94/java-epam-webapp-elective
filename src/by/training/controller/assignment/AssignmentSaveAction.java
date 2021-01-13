@@ -21,17 +21,23 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ * If getted the ID of the course enrollment - do update, otherwise - create a new entry.
+ */
+
 public class AssignmentSaveAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(AssignmentSaveAction.class);
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.debug("Method entering.");
         boolean isForwardFromStudentList = Boolean.parseBoolean(request.getParameter("isForwardFromStudentList"));
+        boolean isForwardFromInstructorList = Boolean.parseBoolean(request.getParameter("isForwardFromInstructorList"));
+        LOGGER.error(isForwardFromInstructorList);
         try {
             Long studentId = Long.parseLong(request.getParameter("studentId"));
             Long courseId = Long.parseLong(request.getParameter("courseId"));
-            //Don't give the student write down on courses no one except themselves
+            // Don't give the students write down on courses no one except themselves
             if (isForwardFromStudentList) {
                 HttpSession httpSession = request.getSession();
                 User student = (User) httpSession.getAttribute("sessionUser");
@@ -41,13 +47,12 @@ public class AssignmentSaveAction extends Action {
                 }
             }
             AssignmentService assignmentService = getServiceCreator().getAssignmentService();
-            LOGGER.debug("Method save starts!");
             Long id = null;
             try {
                 id = Long.parseLong(request.getParameter("id"));
             } catch (NumberFormatException e) {
                 LOGGER.error(e);
-                //Is the student already enrolled in this course?
+                // Is the student already enrolled in this course?
                 List<Assignment> assignmentListThisStudent = assignmentService.findByStudent(studentId);
                 for (Assignment assignment : assignmentListThisStudent) {
                     if (assignment.getCourse().getId().equals(courseId)) {
@@ -55,7 +60,7 @@ public class AssignmentSaveAction extends Action {
                     }
                 }
             }
-            //Optional fields
+            // Optional fields
             LocalDate beginDate = null;
             LocalDate endDate = null;
             try {

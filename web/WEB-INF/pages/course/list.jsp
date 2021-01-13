@@ -56,7 +56,9 @@
     <a class="${visibility}" href="<c:url value='/course/edit.html'/>"><fmt:message key="course.list.label.add"/></a>
     <form action="<c:url value="/course/search.html"/>">
         <p><fmt:message key="course.list.label.search"/>
-            <input type="text" name="condition" required></p>
+            <label>
+                <input type="text" name="condition" required>
+            </label></p>
         <button type="submit"><fmt:message key="label.search"/></button>
     </form>
     <form action="<c:url value='/course/list.html'/>">

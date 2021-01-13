@@ -15,9 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class StudentListAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(StudentListAction.class);
-
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

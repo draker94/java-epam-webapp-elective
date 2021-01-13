@@ -18,6 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author Andrey Kliuchnikov
+ */
+
 public class StudentEditAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger(StudentEditAction.class);
 

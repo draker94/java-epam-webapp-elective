@@ -72,6 +72,7 @@ public class ActionFactory {
             try {
                 return (Action) aClass.getConstructor().newInstance();
             } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+                LOGGER.error(e);
                 throw new ServletException(e);
             }
         }

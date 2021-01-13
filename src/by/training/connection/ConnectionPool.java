@@ -37,7 +37,7 @@ public final class ConnectionPool {
         return instance;
     }
 
-    public void initConnections(String propertyConfig, int minSize, int maxSize, int validConTimeout) {
+    public void initConnections(String propertyConfig, int minSize, int maxSize, int validConTimeout) throws ConnectionPoolException {
         destroy();
         try {
             Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver").getConstructor().newInstance();
@@ -55,7 +55,8 @@ public final class ConnectionPool {
             LOGGER.info("Connection pool has been successfully initialized.");
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                 NoSuchMethodException | ClassNotFoundException | SQLException e) {
-            LOGGER.error("Connection pool initialized error");
+            LOGGER.error("Connection pool initialized error " + e);
+            throw new ConnectionPoolException(e);
         }
     }
 
@@ -80,7 +81,7 @@ public final class ConnectionPool {
                     throw new ConnectionPoolException("The maximum number of connections has been reached.");
                 }
             } catch (SQLException e) {
-                LOGGER.error("Error getting connection.");
+                LOGGER.error("Error getting connection. " + e);
                 throw new ConnectionPoolException(e);
             }
         }
@@ -97,7 +98,7 @@ public final class ConnectionPool {
                     try {
                         connection.close();
                     } catch (SQLException e) {
-                        LOGGER.error("Connection closing error while clearing the connection pool");
+                        LOGGER.error("Connection closing error while clearing the connection pool. " + e);
                     }
                 }
                 usedConnection.clear();
@@ -116,7 +117,7 @@ public final class ConnectionPool {
             try {
                 connection.close();
             } catch (SQLException e1) {
-                LOGGER.error("Connection closing error while handling the return of the collection to the pool");
+                LOGGER.error("Connection closing error while handling the return of the collection to the pool." + e);
             }
         }
     }
