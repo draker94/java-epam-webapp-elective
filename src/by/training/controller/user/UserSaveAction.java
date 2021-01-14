@@ -36,11 +36,12 @@ public class UserSaveAction extends Action {
                     id = Long.parseLong(request.getParameter("id"));
                 } catch (NumberFormatException e) {
                     LOGGER.error(e);
-                    //Does a user with this login already exist?
-                    User user = userService.findByLogin(login);
-                    if(user != null) {
-                        return new Forward("/user/list.html?message=user.save.error.exist");
-                    }
+                }
+                //Does a user with this login already exist?
+                User userFromDb = userService.findByLogin(login);
+                if(userFromDb != null) {
+                    request.getSession().setAttribute("message", "user.save.error.exist");
+                    return new Forward("/user/list.html");
                 }
                 User user = new User();
                 user.setId(id);
@@ -58,6 +59,7 @@ public class UserSaveAction extends Action {
             response.sendError(400, "Role isn't valid!");
             return null;
         }
+        request.getSession().setAttribute("message", "application.message.success");
         return new Forward("/user/list.html");
     }
 }

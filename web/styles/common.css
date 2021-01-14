@@ -2,8 +2,8 @@
     display: none;
 }
 
-.error {
-    color: #ff001d;
+.notification {
+    color: #d30003;
 }
 
 body {
@@ -23,14 +23,14 @@ table {
 
 th, td:first-child {
     background: #AFCDE7;
-    color: white;
+    color: #fdfbff;
     padding: 10px 20px;
 }
 
 th, td {
     border-style: solid;
     border-width: 0 1px 1px 0;
-    border-color: white;
+    border-color: #fbfffb;
 }
 
 td {

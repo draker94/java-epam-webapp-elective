@@ -17,9 +17,7 @@
 
 <fmt:message key="user.list.title" var="title"/>
 <tag:head title="${title}">
-    <c:if test="${not empty param.message}">
-        <p class="error"><fmt:message key="${param.message}"/></p>
-    </c:if>
+    <tag:message-session message="${message}"/>
     <form action="<c:url value='/user/delete.html'/>" method="post">
         <table border="1">
             <caption>${title}</caption>

@@ -17,6 +17,7 @@
 
 <fmt:message key="assignment.list.title" var="title"/>
 <tag:head title="${title}">
+    <tag:message-session message="${message}"/>
     <form action="<c:url value='/assignment/delete.html'/>" method="post">
         <table border="1">
             <caption>${title}</caption>
@@ -56,7 +57,12 @@
         </table>
         <button type="submit"><fmt:message key="label.delete"/></button>
     </form>
-    <a href="<c:url value='/assignment/edit.html'/>"><fmt:message key="assignment.list.label.add"/></a>
+    <c:url var="assignmentEditUrl" value="/assignment/edit.html">
+        <c:if test="${not empty instructorId}">
+            <c:param name="instructorId" value="${instructorId}"/>
+        </c:if>
+    </c:url>
+    <a href="${assignmentEditUrl}"><fmt:message key="assignment.list.label.add"/></a>
     <form action="<c:url value='/assignment/search.html'/>">
         <fmt:message key="assignment.list.label.search"/>
         <p><label>

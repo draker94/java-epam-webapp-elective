@@ -17,6 +17,7 @@
 
 <fmt:message key="assignment.student_list.title" var="title"/>
 <tag:head title="${title}">
+    <tag:message-session message="${message}"/>
     <table border="1">
         <caption>${title}</caption>
         <tr>

@@ -7,6 +7,7 @@ import by.training.domain.Assignment;
 import by.training.domain.Course;
 import by.training.domain.Student;
 import by.training.domain.User;
+import by.training.enums.Roles;
 import by.training.service.AssignmentService;
 import by.training.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -31,17 +32,14 @@ public class AssignmentSaveAction extends Action {
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean isForwardFromStudentList = Boolean.parseBoolean(request.getParameter("isForwardFromStudentList"));
-        boolean isForwardFromInstructorList = Boolean.parseBoolean(request.getParameter("isForwardFromInstructorList"));
-        LOGGER.error(isForwardFromInstructorList);
         try {
             Long studentId = Long.parseLong(request.getParameter("studentId"));
             Long courseId = Long.parseLong(request.getParameter("courseId"));
             // Don't give the students write down on courses no one except themselves
-            if (isForwardFromStudentList) {
-                HttpSession httpSession = request.getSession();
-                User student = (User) httpSession.getAttribute("sessionUser");
-                if (!studentId.equals(student.getId())) {
+            HttpSession httpSession = request.getSession();
+            User user = (User) httpSession.getAttribute("sessionUser");
+            if (user.getRole() == Roles.STUDENT) {
+                if (!studentId.equals(user.getId())) {
                     response.sendError(403);
                     return null;
                 }
@@ -52,12 +50,13 @@ public class AssignmentSaveAction extends Action {
                 id = Long.parseLong(request.getParameter("id"));
             } catch (NumberFormatException e) {
                 LOGGER.error(e);
-                // Is the student already enrolled in this course?
-                List<Assignment> assignmentListThisStudent = assignmentService.findByStudent(studentId);
-                for (Assignment assignment : assignmentListThisStudent) {
-                    if (assignment.getCourse().getId().equals(courseId)) {
-                        return new Forward("/assignment/list.html");
-                    }
+            }
+            // Is the student already enrolled in this course?
+            List<Assignment> assignmentListThisStudent = assignmentService.findByStudent(studentId);
+            for (Assignment assignment : assignmentListThisStudent) {
+                if (assignment.getCourse().getId().equals(courseId)) {
+                    request.getSession().setAttribute("message", "assignment.save.message.error");
+                    return new Forward(request.getSession().getAttribute("backToAssignmentList").toString());
                 }
             }
             // Optional fields
@@ -88,9 +87,7 @@ public class AssignmentSaveAction extends Action {
             response.sendError(400, "Student or course parameters isn't valid");
             return null;
         }
-        if (isForwardFromStudentList) {
-            return new Forward("/assignment/student-list.html");
-        }
-        return new Forward("/assignment/list.html");
+        request.getSession().setAttribute("message", "application.message.success");
+        return new Forward(request.getSession().getAttribute("backToAssignmentList").toString());
     }
 }

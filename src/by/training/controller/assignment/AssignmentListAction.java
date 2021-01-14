@@ -30,6 +30,7 @@ public class AssignmentListAction extends Action {
             List<Assignment> freeAssignments = assignmentService.findAllFreeAssignments();
             request.setAttribute("assignmentList", assignmentList);
             request.setAttribute("freeAssignments", freeAssignments);
+            request.getSession().setAttribute("backToAssignmentList", "/assignment/list.html");
             return null;
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e);

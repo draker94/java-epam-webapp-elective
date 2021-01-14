@@ -14,6 +14,14 @@
         <name>buttons</name>
         <path>/WEB-INF/tags/buttons.tag</path>
     </tag-file>
+    <tag-file>
+        <name>locale</name>
+        <path>/WEB-INF/tags/locale.tag</path>
+    </tag-file>
+    <tag-file>
+        <name>message-session</name>
+        <path>/WEB-INF/tags/message-session.tag</path>
+    </tag-file>
     <function>
         <name>contains</name>
         <function-class>by.training.util.JstlArrayContainsCheck</function-class>

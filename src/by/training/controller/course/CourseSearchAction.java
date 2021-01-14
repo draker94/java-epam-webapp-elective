@@ -29,7 +29,10 @@ public class CourseSearchAction extends Action {
             CourseService courseService = getServiceCreator().getCourseService();
             if (condition != null && !condition.isBlank()) {
                 List<Course> searchResult = courseService.findByInstructor(condition);
+                List<Course> freeCourses = courseService.findAllFreeCourses();
                 request.setAttribute("coursesList", searchResult);
+                request.setAttribute("freeCourses", freeCourses);
+                request.getSession().setAttribute("backToCourseList", String.format("/course/search.html?condition=%s", condition));
                 return new Forward("/course/list", false);
             }
         } catch (ServiceCreationException | ServiceException e) {

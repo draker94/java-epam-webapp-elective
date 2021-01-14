@@ -13,6 +13,7 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="by/training/resources/translate" />
 
+<tag:locale/>
 <div class="title"><fmt:message key="account.title" var="title"/>
 <tag:head title="${title}">
     <p><a href="<c:url value='/assignment/student-list.html'/>"><fmt:message key="account.label.student.my_assignment"/></a></p>

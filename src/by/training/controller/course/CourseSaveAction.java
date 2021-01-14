@@ -38,12 +38,13 @@ public class CourseSaveAction extends Action {
                     id = Long.parseLong(request.getParameter("id"));
                 } catch (NumberFormatException e) {
                     LOGGER.error(e);
-                    //The course with the same name already?
-                    List<Course> courseList = courseService.findAll();
-                    for (Course course : courseList) {
-                        if (course.getName().equals(name)) {
-                            return new Forward("/course/list.html");
-                        }
+                }
+                //The course with the same name already exists?
+                List<Course> courseList = courseService.findAll();
+                for (Course course : courseList) {
+                    if (course.getName().equals(name)) {
+                        request.getSession().setAttribute("message", "course.save.message.error");
+                        return new Forward(request.getSession().getAttribute("backToCourseList").toString());
                     }
                 }
                 Course course = new Course();
@@ -59,12 +60,12 @@ public class CourseSaveAction extends Action {
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             LOGGER.error(e);
             response.sendError(400, "Instructor ID or hour format isn't valid!");
             return null;
         }
-        return new Forward("/course/list.html");
+        request.getSession().setAttribute("message", "application.message.success");
+        return new Forward(request.getSession().getAttribute("backToCourseList").toString());
     }
 }

@@ -6,7 +6,10 @@ import by.training.di.ServiceCreationException;
 import by.training.domain.Assignment;
 import by.training.domain.Course;
 import by.training.domain.Student;
-import by.training.service.*;
+import by.training.service.AssignmentService;
+import by.training.service.CourseService;
+import by.training.service.ServiceException;
+import by.training.service.StudentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,13 +29,17 @@ public class AssignmentEditAction extends Action {
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
+        String instructorId = request.getParameter("instructorId");
         try {
             StudentService studentService = getServiceCreator().getStudentService();
             CourseService courseService = getServiceCreator().getCourseService();
+            List<Course> courseList;
             List<Student> studentList = studentService.findAll();
-            List<Course> courseList = courseService.findAll();
-            request.setAttribute("studentList", studentList);
-            request.setAttribute("courseList", courseList);
+            if (instructorId != null) {
+                courseList = courseService.findByInstructor(instructorId);
+            } else {
+                courseList = courseService.findAll();
+            }
             if (id != null) {
                 AssignmentService assignmentService = getServiceCreator().getAssignmentService();
                 Assignment assignment = assignmentService.findById(Long.parseLong(id));
@@ -43,11 +50,12 @@ public class AssignmentEditAction extends Action {
                     throw new IllegalArgumentException("Assignment is wrong!");
                 }
             }
+            request.setAttribute("studentList", studentList);
+            request.setAttribute("courseList", courseList);
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
             throw new ServletException(e);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             response.sendError(404, e.getMessage());
         }
         return null;

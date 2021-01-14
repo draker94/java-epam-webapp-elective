@@ -40,12 +40,13 @@ public class ResultSaveAction extends Action {
                     id = Long.parseLong(request.getParameter("id"));
                 } catch (NumberFormatException e) {
                     LOGGER.error(e);
-                    //Is there already a rating for this entry on this date?
-                    List<Result> resultList = resultService.findAll();
-                    for (Result result : resultList) {
-                        if (result.getDate().equals(date) && result.getAssignment().getId().equals(assignmentId)) {
-                            return new Forward("/result/list.html");
-                        }
+                }
+                //Is there already a rating for this entry on this date?
+                List<Result> resultList = resultService.findAll();
+                for (Result result : resultList) {
+                    if (result.getDate().equals(date) && result.getAssignment().getId().equals(assignmentId)) {
+                        request.getSession().setAttribute("message", "result.save.message.error");
+                        return new Forward("/result/list.html");
                     }
                 }
                 Result result = new Result();
@@ -71,6 +72,7 @@ public class ResultSaveAction extends Action {
             response.sendError(400, "Assignment or mark isn't valid");
             return null;
         }
+        request.getSession().setAttribute("message", "application.message.success");
         return new Forward("/result/list.html");
     }
 }

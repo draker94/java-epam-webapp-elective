@@ -33,6 +33,7 @@ public class UserDeleteAction extends Action {
                     idStrArr.add(Long.valueOf(id));
                 }
                 userService.delete(idStrArr);
+                request.getSession().setAttribute("message", "application.message.delete_success");
             }
         }
         catch (ServiceCreationException | ServiceException e) {

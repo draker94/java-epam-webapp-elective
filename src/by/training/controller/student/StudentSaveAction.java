@@ -40,6 +40,7 @@ public class StudentSaveAction extends Action {
                 } else {
                     studentService.update(student);
                 }
+                request.getSession().setAttribute("message", "application.message.success");
             }
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);

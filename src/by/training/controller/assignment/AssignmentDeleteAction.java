@@ -33,11 +33,12 @@ public class AssignmentDeleteAction extends Action {
                     idStrArr.add(Long.valueOf(id));
                 }
                 assignmentService.delete(idStrArr);
+                request.getSession().setAttribute("message", "application.message.delete_success");
             }
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e);
             throw new ServletException(e);
         }
-        return new Forward("/assignment/list.html");
+        return new Forward(request.getSession().getAttribute("backToAssignmentList").toString());
     }
 }

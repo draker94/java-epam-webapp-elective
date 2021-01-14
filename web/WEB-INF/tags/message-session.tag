@@ -1,4 +1,5 @@
 <%@tag language="java" pageEncoding="UTF-8" %>
+<%@attribute name="message" required="true" rtexprvalue="true" type="java.lang.String" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="language"
@@ -7,5 +8,10 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="by/training/resources/translate"/>
 
-<p><button onclick="history.back()"><fmt:message key="label.back"/></button></p>
-<p><button onclick="location.href='<c:url value="/index.html"/>'"><fmt:message key="label.main"/></button></p>
+<c:if test="${not empty message}">
+    <p class="notification"><fmt:message key="${message}"/></p>
+    <c:remove var="message" scope="session" />
+</c:if>
+
+
+

@@ -18,7 +18,6 @@
 <fmt:message key="assignment.enroll.label.title" var="title"/>
 <tag:head title="${title} ${student.surname} ${student.name}">
     <form action="<c:url value='/assignment/save.html'/>" method="post">
-        <input type="hidden" name="isForwardFromStudentList" value="${true}">
         <input type="hidden" name="studentId" value="${student.id}">
         <p><fmt:message key="assignment.enroll.label.student"/> ${student.surname} ${student.name}</p>
         <p><fmt:message key="assignment.enroll.label.course"/>

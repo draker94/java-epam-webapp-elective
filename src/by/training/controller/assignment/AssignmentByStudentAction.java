@@ -33,7 +33,8 @@ public class AssignmentByStudentAction extends Action {
             User student = (User) session.getAttribute("sessionUser");
             List<Assignment> assignmentList = assignmentService.findByStudent(student.getId());
             request.setAttribute("assignmentList", assignmentList);
-            return new Forward("/assignment/studentList.html", false);
+            request.getSession().setAttribute("backToAssignmentList", "/assignment/student-list.html");
+            return new Forward("/assignment/studentList", false);
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e);
             throw new ServletException(e);

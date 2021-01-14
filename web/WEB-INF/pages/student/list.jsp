@@ -9,12 +9,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tags/implicit.tld" prefix="tag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${language}" />
-<fmt:setBundle basename="by/training/resources/translate" />
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="by/training/resources/translate"/>
 
 <fmt:message key="student.list.title" var="title"/>
 <tag:head title="${title}">
+    <tag:message-session message="${message}"/>
     <form action="<c:url value='/student/delete.html'/>" method="post">
         <table border="1">
             <caption>${title}</caption>
@@ -37,7 +40,7 @@
                 <tr>
                     <td><label>
                         <input type="checkbox" ${contains ? "" : "disabled=''"} name="id"
-                                   value="${student.id}">
+                               value="${student.id}">
                     </label></td>
                     <td><a href="${studentEditUrl}">ред.</a></td>
                     <td>${student.id}</td>

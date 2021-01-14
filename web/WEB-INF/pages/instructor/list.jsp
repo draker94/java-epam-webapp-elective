@@ -17,6 +17,7 @@
 
 <fmt:message key="instructor.list.title" var="title"/>
 <tag:head title="${title}">
+    <tag:message-session message="${message}"/>
     <form action="<c:url value='/instructor/delete.html'/>" method="post">
         <table border="1">
             <caption>${title}</caption>

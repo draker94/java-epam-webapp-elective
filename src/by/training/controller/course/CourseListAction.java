@@ -30,6 +30,7 @@ public class CourseListAction extends Action {
             List<Course> freeCourses = courseService.findAllFreeCourses();
             request.setAttribute("coursesList", coursesList);
             request.setAttribute("freeCourses", freeCourses);
+            request.getSession().setAttribute("backToCourseList", "/course/list.html");
             return null;
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e);

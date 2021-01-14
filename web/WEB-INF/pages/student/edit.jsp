@@ -74,7 +74,7 @@
                 </c:otherwise>
             </c:choose>
         </c:if>
-        <button ${canSave ? ""  : "disabled=''"} type="submit"><fmt:message key="label.save"/></button>
+        <p><button ${canSave ? ""  : "disabled=''"} type="submit"><fmt:message key="label.save"/></button></p>
     </form>
     <tag:buttons/>
 </tag:head>

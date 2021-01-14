@@ -15,9 +15,10 @@
 
 <fmt:message key="account.edit.title" var="title"/>
 <tag:head title="${title}">
+    <p><b>${surnameName}</b></p>
     <c:url var="changeUserUrl" value="/account/update.html"/>
     <c:if test="${not empty message}">
-        <p class="error"><fmt:message key="${message}"/></p>
+        <p class="notification"><fmt:message key="${message}"/></p>
     </c:if>
     <fmt:message key="account.edit.label.change_pass"/>
     <form action="${changeUserUrl}" method="post">

@@ -17,6 +17,7 @@
 <c:set var="visibility" value="${sessionUser.role == Roles.INSTRUCTOR ? '' : 'hide'}"/>
 <fmt:message key="result.list.title" var="title"/>
 <tag:head title="${title}">
+    <tag:message-session message="${message}"/>
     <form action="<c:url value='/result/delete.html'/>" method="post">
         <table border="1">
             <caption>${title}</caption>

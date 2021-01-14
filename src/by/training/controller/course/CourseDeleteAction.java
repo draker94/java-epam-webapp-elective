@@ -33,11 +33,12 @@ public class CourseDeleteAction extends Action {
                     idStrArr.add(Long.valueOf(id));
                 }
                 courseService.delete(idStrArr);
+                request.getSession().setAttribute("message", "application.message.delete_success");
             }
         } catch (ServiceCreationException | ServiceException e) {
             LOGGER.error(e);
             throw new ServletException(e);
         }
-        return new Forward("/course/list.html");
+        return new Forward(request.getSession().getAttribute("backToCourseList").toString());
     }
 }

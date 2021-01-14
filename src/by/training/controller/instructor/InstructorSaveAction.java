@@ -41,6 +41,7 @@ public class InstructorSaveAction extends Action {
                 } else {
                     instructorService.update(instructor);
                 }
+                request.getSession().setAttribute("message", "application.message.success");
             }
         } catch (ServiceException | ServiceCreationException e) {
             LOGGER.error(e);
