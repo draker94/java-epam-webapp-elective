@@ -15,9 +15,9 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="by/training/resources/translate"/>
 
-<c:set var="create" value="${empty assignment}"/>
+<c:set var="isCreate" value="${empty assignment}"/>
 <c:choose>
-    <c:when test="${not create}">
+    <c:when test="${not isCreate}">
         <fmt:message key="assignment.edit.label.edit" var="title"/>
     </c:when>
     <c:otherwise>
@@ -26,13 +26,13 @@
 </c:choose>
 <tag:head title="${title}">
     <form action="<c:url value='/assignment/save.html'/>" method="post">
-        <c:if test="${not create}">
+        <c:if test="${not isCreate}">
             <input type="hidden" name="id" value="${assignment.id}">
             <input type="hidden" name="studentId" value="${assignment.student.id}">
         </c:if>
         <p><fmt:message key="assignment.edit.label.student"/>
             <label>
-                <select name="studentId" ${create ? ""  : "disabled=''"}>
+                <select name="studentId" ${isCreate ? ""  : "disabled=''"}>
                     <c:forEach var="student" items="${studentList}">
                         <c:choose>
                             <c:when test="${assignment.student.id == student.id}">
@@ -49,7 +49,7 @@
         </p>
         <p><fmt:message key="assignment.edit.label.course"/>
             <label>
-                <select name="courseId">
+                <select name="courseId"}>
                     <c:forEach var="course" items="${courseList}">
                         <c:choose>
                             <c:when test="${assignment.course.id == course.id}">

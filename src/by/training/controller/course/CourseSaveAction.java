@@ -38,13 +38,13 @@ public class CourseSaveAction extends Action {
                     id = Long.parseLong(request.getParameter("id"));
                 } catch (NumberFormatException e) {
                     LOGGER.error(e);
-                }
-                //The course with the same name already exists?
-                List<Course> courseList = courseService.findAll();
-                for (Course course : courseList) {
-                    if (course.getName().equals(name)) {
-                        request.getSession().setAttribute("message", "course.save.message.error");
-                        return new Forward(request.getSession().getAttribute("backToCourseList").toString());
+                    //The course with the same name already exists?
+                    List<Course> courseList = courseService.findAll();
+                    for (Course course : courseList) {
+                        if (course.getName().equals(name)) {
+                            request.getSession().setAttribute("message", "course.save.message.error");
+                            return new Forward(request.getSession().getAttribute("backToCourseList").toString());
+                        }
                     }
                 }
                 Course course = new Course();

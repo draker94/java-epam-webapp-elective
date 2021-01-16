@@ -15,10 +15,10 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="by/training/resources/translate"/>
 
-<c:set var="create" value="${empty result}"/>
+<c:set var="isCreate" value="${empty result}"/>
 <c:set var="createBasedOn" value="${not empty param.assignmentIdForCreate}"/>
 <c:choose>
-    <c:when test="${not create}">
+    <c:when test="${not isCreate}">
         <fmt:message key="result.edit.label.edit" var="title"/>
     </c:when>
     <c:otherwise>
@@ -29,7 +29,7 @@
     <h1>${title}</h1>
     <form action="<c:url value='/result/save.html'/>" method="post">
         <c:choose>
-            <c:when test="${not create}">
+            <c:when test="${not isCreate}">
                 <input type="hidden" name="id" value="${result.id}">
                 <input type="hidden" name="assignmentId" value="${result.assignment.id}">
             </c:when>
@@ -39,7 +39,7 @@
         </c:choose>
         <fmt:message key="result.edit.label.student"/>
         <label>
-            <select name="assignmentId" ${create && not createBasedOn ? ""  : "disabled=''"}>
+            <select name="assignmentId" ${isCreate && not createBasedOn ? ""  : "disabled=''"}>
                 <c:forEach var="assignment" items="${assignmentList}">
                     <c:choose>
                         <c:when test="${result.assignment.id == assignment.id || param.assignmentIdForCreate == assignment.id}">

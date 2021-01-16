@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Andrey Kliuchnikov
@@ -30,7 +32,7 @@ public class LoginAction extends Action {
             UserService service = getServiceCreator().getUserService();
             if (login != null && password != null) {
                 User user = service.findByLoginAndPass(login, password);
-                if (user != null) {
+                if (user != null && !service.findAllFreeUsers().contains(user)) {
                     HttpSession session = request.getSession();
                     session.setAttribute("sessionUser", user);
                     LOGGER.info(String.format("%s successfully authenticated.", user.getLogin()));

@@ -15,8 +15,9 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="by/training/resources/translate"/>
 
+<c:set var="isCreate" value="${empty user}"/>
 <c:choose>
-    <c:when test="${not empty user}">
+    <c:when test="${not isCreate}">
         <fmt:message key="user.edit.label.edit" var="title"/>
     </c:when>
     <c:otherwise>
@@ -25,7 +26,7 @@
 </c:choose>
 <tag:head title="${title}">
     <form action="<c:url value='/user/save.html'/>" method="post">
-        <c:if test="${not empty user}">
+        <c:if test="${not isCreate}">
             <input type="hidden" name="id" value="${user.id}">
         </c:if>
         <p><fmt:message key="user.edit.label.name"/>
