@@ -36,8 +36,10 @@ public class StudentSaveAction extends Action {
                 student.setSurname(surname);
                 student.setStudyYear(studyYear);
                 if (Boolean.parseBoolean(request.getParameter("isNewStudent"))) {
+                    LOGGER.debug("This is create method!");
                     studentService.create(student);
                 } else {
+                    LOGGER.debug("This is edit method!");
                     studentService.update(student);
                 }
                 request.getSession().setAttribute("message", "application.message.success");

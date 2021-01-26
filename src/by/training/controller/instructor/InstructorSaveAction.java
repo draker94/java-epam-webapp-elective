@@ -37,8 +37,10 @@ public class InstructorSaveAction extends Action {
                 instructor.setSurname(surname);
                 instructor.setRank(rank);
                 if (Boolean.parseBoolean(request.getParameter("isNewInstructor"))) {
+                    LOGGER.debug("This is create method!");
                     instructorService.create(instructor);
                 } else {
+                    LOGGER.debug("This is edit method!");
                     instructorService.update(instructor);
                 }
                 request.getSession().setAttribute("message", "application.message.success");

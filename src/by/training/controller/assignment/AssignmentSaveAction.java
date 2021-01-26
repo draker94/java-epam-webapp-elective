@@ -48,15 +48,16 @@ public class AssignmentSaveAction extends Action {
             Long id = null;
             try {
                 id = Long.parseLong(request.getParameter("id"));
+                LOGGER.debug("This is edit method!");
             } catch (NumberFormatException e) {
-                LOGGER.error(e);
-                // Is the student already enrolled in this course?
-                List<Assignment> assignmentListThisStudent = assignmentService.findByStudent(studentId);
-                for (Assignment assignment : assignmentListThisStudent) {
-                    if (assignment.getCourse().getId().equals(courseId)) {
-                        request.getSession().setAttribute("message", "assignment.save.message.error");
-                        return new Forward(request.getSession().getAttribute("backToAssignmentList").toString());
-                    }
+                LOGGER.debug("This is create method!");
+            }
+            // Is the student already enrolled in this course?
+            List<Assignment> assignmentListThisStudent = assignmentService.findByStudent(studentId);
+            for (Assignment assignment : assignmentListThisStudent) {
+                if (!assignment.getId().equals(id) && assignment.getCourse().getId().equals(courseId)) {
+                    request.getSession().setAttribute("message", "assignment.save.message.error");
+                    return new Forward(request.getSession().getAttribute("backToAssignmentList").toString());
                 }
             }
             // Optional fields

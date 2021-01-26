@@ -34,14 +34,15 @@ public class UserSaveAction extends Action {
                 Long id = null;
                 try {
                     id = Long.parseLong(request.getParameter("id"));
+                    LOGGER.debug("This is edit method!");
                 } catch (NumberFormatException e) {
-                    LOGGER.error(e);
-                    //Does a user with this login already exist?
-                    User userFromDb = userService.findByLogin(login);
-                    if (userFromDb != null) {
-                        request.getSession().setAttribute("message", "user.save.error.exist");
-                        return new Forward("/user/list.html");
-                    }
+                    LOGGER.debug("This is create method!");
+                }
+                //Does a user with this login already exist?
+                User userFromDb = userService.findByLogin(login);
+                if (userFromDb != null && !userFromDb.getId().equals(id)) {
+                    request.getSession().setAttribute("message", "user.save.error.exist");
+                    return new Forward("/user/list.html");
                 }
                 User user = new User();
                 user.setId(id);

@@ -36,15 +36,16 @@ public class CourseSaveAction extends Action {
                 Long id = null;
                 try {
                     id = Long.parseLong(request.getParameter("id"));
+                    LOGGER.debug("This is edit method!");
                 } catch (NumberFormatException e) {
-                    LOGGER.error(e);
-                    //The course with the same name already exists?
-                    List<Course> courseList = courseService.findAll();
-                    for (Course course : courseList) {
-                        if (course.getName().equals(name)) {
-                            request.getSession().setAttribute("message", "course.save.message.error");
-                            return new Forward(request.getSession().getAttribute("backToCourseList").toString());
-                        }
+                    LOGGER.debug("This is create method!");
+                }
+                //The course with the same name already exists?
+                List<Course> courseList = courseService.findAll();
+                for (Course course : courseList) {
+                    if (!course.getId().equals(id) && course.getName().equals(name)) {
+                        request.getSession().setAttribute("message", "course.save.message.error");
+                        return new Forward(request.getSession().getAttribute("backToCourseList").toString());
                     }
                 }
                 Course course = new Course();
