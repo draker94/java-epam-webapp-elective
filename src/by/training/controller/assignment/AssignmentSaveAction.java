@@ -48,9 +48,8 @@ public class AssignmentSaveAction extends Action {
             Long id = null;
             try {
                 id = Long.parseLong(request.getParameter("id"));
-                LOGGER.debug("This is edit method!");
             } catch (NumberFormatException e) {
-                LOGGER.debug("This is create method!");
+                LOGGER.debug(e);
             }
             // Is the student already enrolled in this course?
             List<Assignment> assignmentListThisStudent = assignmentService.findByStudent(studentId);
@@ -84,7 +83,7 @@ public class AssignmentSaveAction extends Action {
             LOGGER.error(e);
             throw new ServletException(e);
         } catch (NumberFormatException e) {
-            LOGGER.error(e);
+            LOGGER.debug(e);
             response.sendError(400, "Student or course parameters isn't valid");
             return null;
         }

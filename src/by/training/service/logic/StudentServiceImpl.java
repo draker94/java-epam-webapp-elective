@@ -46,6 +46,7 @@ public class StudentServiceImpl implements StudentService {
     public Long create(Student student) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
+            LOGGER.info("Creating a new student - " + student);
             return studentDao.create(student);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -56,6 +57,7 @@ public class StudentServiceImpl implements StudentService {
     public void update(Student student) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
+            LOGGER.info("Updating the student with ID - " + student.getId());
             studentDao.update(student);
         } catch (DaoException e) {
             throw new ServiceException(e);

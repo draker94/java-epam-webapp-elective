@@ -15,7 +15,7 @@
 
 <fmt:message key="account.edit.title" var="title"/>
 <tag:head title="${title}">
-    <p><b>${surnameName}</b></p>
+    <p><b>${fullName}</b></p>
     <c:url var="changeUserUrl" value="/account/update.html"/>
     <c:if test="${not empty message}">
         <p class="notification"><fmt:message key="${message}"/></p>

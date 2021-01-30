@@ -114,8 +114,10 @@ public class ResultServiceImpl implements ResultService {
         LOGGER.debug("Method entering.");
         try {
             if (id != null) {
+                LOGGER.info("Updating the result with ID - " + result.getId());
                 resultDao.update(result);
             } else {
+                LOGGER.info("Creating a new result - " + result);
                 id = resultDao.create(result);
             }
         } catch (DaoException e) {

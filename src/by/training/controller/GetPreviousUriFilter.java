@@ -11,7 +11,6 @@ public class GetPreviousUriFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
         servletRequest.setAttribute("lastURI", ((HttpServletRequest) servletRequest).getRequestURI());
         filterChain.doFilter(servletRequest, servletResponse);
     }

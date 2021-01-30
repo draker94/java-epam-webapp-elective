@@ -37,10 +37,8 @@ public class InstructorSaveAction extends Action {
                 instructor.setSurname(surname);
                 instructor.setRank(rank);
                 if (Boolean.parseBoolean(request.getParameter("isNewInstructor"))) {
-                    LOGGER.debug("This is create method!");
                     instructorService.create(instructor);
                 } else {
-                    LOGGER.debug("This is edit method!");
                     instructorService.update(instructor);
                 }
                 request.getSession().setAttribute("message", "application.message.success");
@@ -50,7 +48,7 @@ public class InstructorSaveAction extends Action {
             throw new ServletException(e);
         }
         catch (NullPointerException | NumberFormatException e) {
-            LOGGER.error(e);
+            LOGGER.debug(e);
             response.sendError(400, "Rank isn't valid!");
             return null;
         }

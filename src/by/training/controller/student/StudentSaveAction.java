@@ -36,10 +36,8 @@ public class StudentSaveAction extends Action {
                 student.setSurname(surname);
                 student.setStudyYear(studyYear);
                 if (Boolean.parseBoolean(request.getParameter("isNewStudent"))) {
-                    LOGGER.debug("This is create method!");
                     studentService.create(student);
                 } else {
-                    LOGGER.debug("This is edit method!");
                     studentService.update(student);
                 }
                 request.getSession().setAttribute("message", "application.message.success");
@@ -48,7 +46,7 @@ public class StudentSaveAction extends Action {
             LOGGER.error(e);
             throw new ServletException(e);
         } catch (NumberFormatException e) {
-            LOGGER.error(e);
+            LOGGER.debug(e);
             response.sendError(400, "Study year value isn't valid!");
             return null;
         }

@@ -135,8 +135,10 @@ public class AssignmentServiceImpl implements AssignmentService {
         LOGGER.debug("Method entering.");
         try {
             if (id != null) {
+                LOGGER.info("Updating the assignment with ID - " + assignment.getId());
                 assignmentDao.update(assignment);
             } else {
+                LOGGER.info("Creating a new assignment - " + assignment);
                 id = assignmentDao.create(assignment);
             }
         } catch (DaoException e) {

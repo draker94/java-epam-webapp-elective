@@ -38,8 +38,10 @@ public class UserServiceImpl implements UserService {
         LOGGER.debug("Method entering.");
         try {
             if (id != null) {
+                LOGGER.info("Updating the user with ID - " + user.getId());
                 userDao.update(user);
             } else {
+                LOGGER.info("Creating a new user - " + user);
                 id = userDao.create(user);
             }
         } catch (DaoException e) {

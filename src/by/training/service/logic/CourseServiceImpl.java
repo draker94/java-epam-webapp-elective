@@ -91,8 +91,10 @@ public class CourseServiceImpl implements CourseService {
         LOGGER.debug("Method entering.");
         try {
             if (id != null) {
+                LOGGER.info("Updating the course with ID - " + course.getId());
                 courseDao.update(course);
             } else {
+                LOGGER.info("Creating a new course - " + course);
                 id = courseDao.create(course);
             }
         } catch (DaoException e) {

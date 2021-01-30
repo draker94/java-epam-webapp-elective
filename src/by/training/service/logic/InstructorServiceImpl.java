@@ -46,6 +46,7 @@ public class InstructorServiceImpl implements InstructorService {
     public Long create(Instructor instructor) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
+            LOGGER.info("Creating a new instructor - " + instructor);
             return instructorDao.create(instructor);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -56,6 +57,7 @@ public class InstructorServiceImpl implements InstructorService {
     public void update(Instructor instructor) throws ServiceException {
         LOGGER.debug("Method entering.");
         try {
+            LOGGER.info("Updating the instructor with ID - " + instructor.getId());
             instructorDao.update(instructor);
         } catch (DaoException e) {
             throw new ServiceException(e);

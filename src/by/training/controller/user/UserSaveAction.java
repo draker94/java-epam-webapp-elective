@@ -34,9 +34,8 @@ public class UserSaveAction extends Action {
                 Long id = null;
                 try {
                     id = Long.parseLong(request.getParameter("id"));
-                    LOGGER.debug("This is edit method!");
                 } catch (NumberFormatException e) {
-                    LOGGER.debug("This is create method!");
+                    LOGGER.debug(e);
                 }
                 //Does a user with this login already exist?
                 User userFromDb = userService.findByLogin(login);
@@ -55,7 +54,7 @@ public class UserSaveAction extends Action {
             LOGGER.error(e);
             throw new ServletException(e);
         } catch (NullPointerException | IllegalArgumentException e) {
-            LOGGER.error(e);
+            LOGGER.debug(e);
             response.sendError(400, "Role isn't valid!");
             return null;
         }

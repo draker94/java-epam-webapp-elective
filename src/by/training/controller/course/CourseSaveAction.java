@@ -36,9 +36,8 @@ public class CourseSaveAction extends Action {
                 Long id = null;
                 try {
                     id = Long.parseLong(request.getParameter("id"));
-                    LOGGER.debug("This is edit method!");
                 } catch (NumberFormatException e) {
-                    LOGGER.debug("This is create method!");
+                    LOGGER.debug(e);
                 }
                 //The course with the same name already exists?
                 List<Course> courseList = courseService.findAll();
@@ -62,7 +61,7 @@ public class CourseSaveAction extends Action {
             LOGGER.error(e);
             throw new ServletException(e);
         } catch (NumberFormatException e) {
-            LOGGER.error(e);
+            LOGGER.debug(e);
             response.sendError(400, "Instructor ID or hour format isn't valid!");
             return null;
         }

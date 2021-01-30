@@ -38,9 +38,8 @@ public class ResultSaveAction extends Action {
                 Long id = null;
                 try {
                     id = Long.parseLong(request.getParameter("id"));
-                    LOGGER.debug("This is edit method!");
                 } catch (NumberFormatException e) {
-                    LOGGER.debug("This is create method!");
+                    LOGGER.debug(e);
                 }
                 //Is there already a rating for this entry on this date?
                 List<Result> resultList = resultService.findAll();
@@ -64,11 +63,11 @@ public class ResultSaveAction extends Action {
             LOGGER.error(e);
             throw new ServletException(e);
         } catch (DateTimeParseException | NullPointerException e) {
-            LOGGER.error(e);
+            LOGGER.debug(e);
             response.sendError(400, "Date isn't valid!");
             return null;
         } catch (NumberFormatException e) {
-            LOGGER.error(e);
+            LOGGER.debug(e);
             response.sendError(400, "Assignment or mark isn't valid");
             return null;
         }
